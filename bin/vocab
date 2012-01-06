@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+begin
+  require 'rubygems'
+  gem 'vocab'
+rescue LoadError
+end
+
+require 'vocab'
+
+Vocab::Application.run
