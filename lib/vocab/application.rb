@@ -1,4 +1,3 @@
-
 module Vocab
   class Application
 
@@ -13,6 +12,8 @@ module Vocab
       when "import"
         puts "this is import"
       end
+
+      puts "Vocab.settings.update_translation = #{Vocab.settings.update_translation}"
     end
 
   end
