@@ -20,9 +20,7 @@ module Vocab
     end
 
     def write_settings
-      File.open( config_file, 'w' ) do |f|
-        f.write( @local_config.to_yaml )
-      end
+      File.open( config_file, 'w' ) { |f| f.write( @local_config.to_yaml ) }
     end
   end
 end
