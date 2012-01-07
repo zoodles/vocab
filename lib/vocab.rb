@@ -1,9 +1,9 @@
+require 'fileutils'
+require 'pathname'
+
 require 'vocab/application'
 require 'vocab/settings'
 require 'vocab/version'
-
-require 'fileutils'
-require 'pathname'
 
 module Vocab
 
