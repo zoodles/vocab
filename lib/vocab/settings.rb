@@ -22,5 +22,10 @@ module Vocab
     def write_settings
       File.open( config_file, 'w' ) { |f| f.write( @local_config.to_yaml ) }
     end
+
+    # TODO extract this from a settings file
+    def string_path
+      ""
+    end
   end
 end
