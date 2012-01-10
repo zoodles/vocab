@@ -13,18 +13,12 @@ module Vocab
       def handle_command
         case ARGV.first
         when "init"
-          init
+          Vocab::Settings.create
         when "extract"
           Extractor.extract
         when "import"
           puts "this is import"
         end
-
-        puts "Vocab.settings.update_translation = #{Vocab.settings.update_translation}"
-      end
-
-      def init
-        Vocab::Settings.create
       end
     end
   end
