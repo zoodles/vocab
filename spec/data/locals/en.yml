@@ -2,4 +2,5 @@ en:
   marketing:
     banner: This product is so good
   dashboard:
-    chart: Growth Year over Year
+    chart: This value has changed
+    details: This key/value has been added

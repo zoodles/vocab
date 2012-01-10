@@ -43,9 +43,9 @@ module Vocab
       end
 
       # TODO move to rails only subclass
-      def extract_current( root = nil )
-        root ||= Vocab.root
-        return translations( Dir.glob( "#{root}/config/locales/**/*.{yml,rb}" ) )
+      def extract_current( locales_root = nil )
+        locales_root ||= "#{Vocab.root}/config/locales"
+        return translations( Dir.glob( "#{locales_root}/**/*.{yml,rb}" ) )
       end
 
       # TODO move to rails only subclass
