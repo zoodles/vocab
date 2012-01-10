@@ -23,18 +23,18 @@ module Vocab
       end
 
       # TODO move to rails only subclass
-      def extract_previous( locals_root = "config/locales" )
+      def extract_previous( locales_root = "config/locales" )
         tmpdir = "#{Vocab.root}/tmp/last_translation"
         FileUtils.rm_rf( "#{tmpdir}/*" )
 
         sha = Vocab.settings.last_translation
-        translation_files = `git ls-tree --name-only -r #{sha}:#{locals_root}`.split( "\n" )
+        translation_files = `git ls-tree --name-only -r #{sha}:#{locales_root}`.split( "\n" )
         translation_files = translation_files.select { |f| f =~ /en.(yml|rb)$/ }
         translation_files.each do |path|
           tmpdir_path = "#{tmpdir}/#{path}"
           FileUtils.mkdir_p( File.dirname( tmpdir_path ) )
           File.open( tmpdir_path, "w+" ) do |f|
-            yml = `git show #{sha}:#{locals_root}/#{path}`
+            yml = `git show #{sha}:#{locales_root}/#{path}`
             f.write( yml )
           end
         end
@@ -43,8 +43,9 @@ module Vocab
       end
 
       # TODO move to rails only subclass
-      def extract_current
-        return translations( Dir.glob( "#{Vocab.root}/config/locales/**/*.{yml,rb}" ) )
+      def extract_current( root = nil )
+        root ||= Vocab.root
+        return translations( Dir.glob( "#{root}/config/locales/**/*.{yml,rb}" ) )
       end
 
       # TODO move to rails only subclass
