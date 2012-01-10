@@ -13,12 +13,16 @@ module Vocab
       def handle_command
         case ARGV.first
         when "init"
-          Vocab::Settings.create
+          init
         when "extract"
           Extractor.extract
         when "import"
           puts "this is import"
         end
+      end
+
+      def init
+        Vocab::Settings.create
       end
     end
   end
