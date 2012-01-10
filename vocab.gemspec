@@ -10,11 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = ""
   s.summary     = %q{Automate management of i18n locale files}
   s.description = %q{Export strings that need to be translated and integrate the completed translations}
-
   s.rubyforge_project = "vocab"
-
-  s.add_dependency "i18n"
-
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.bindir        = 'bin'
@@ -22,6 +18,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   # specify any dependencies here; for example:
-  # s.add_development_dependency "rspec"
+  s.add_dependency "i18n"
+  s.add_development_dependency "rspec", "~> 2.7.0"
   # s.add_runtime_dependency "rest-client"
 end

@@ -14,7 +14,7 @@ module Vocab
     end
 
     def update_translation
-      current_sha = `git rev-parse HEAD`
+      current_sha = `git rev-parse HEAD`.strip
       @local_config[ 'last_translation' ] = current_sha
       write_settings
     end
@@ -26,6 +26,13 @@ module Vocab
     # TODO extract this from a settings file
     def string_path
       ""
+    end
+
+    def self.create
+      puts "Writing new .vocab file"
+      settings = Vocab::Settings.new( Dir.pwd )
+      settings.update_translation
+      settings.write_settings
     end
   end
 end
