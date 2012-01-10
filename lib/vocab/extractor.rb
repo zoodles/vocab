@@ -23,16 +23,18 @@ module Vocab
       end
 
       # TODO move to rails only subclass
-      def extract_previous
+      def extract_previous( locals_root = "config/locales" )
         tmpdir = "#{Vocab.root}/tmp/last_translation"
-        Dir.rm_rf( "#{tempdir}/*" )
+        FileUtils.rm_rf( "#{tmpdir}/*" )
 
-        sha = Settings.last_translation
-        translation_files = `git ls-tree --name-only -r #{sha}:config/locales`.split( "\n" )
-        translation_files.select! { |f| f =~ /en.(yml|rb)$/ }
+        sha = Vocab.settings.last_translation
+        translation_files = `git ls-tree --name-only -r #{sha}:#{locals_root}`.split( "\n" )
+        translation_files = translation_files.select { |f| f =~ /en.(yml|rb)$/ }
         translation_files.each do |path|
-          File.open( "#{tempdir}/#{path}" ) do |f|
-            yml = `git-show #{sha}:#{path}`
+          tmpdir_path = "#{tmpdir}/#{path}"
+          FileUtils.mkdir_p( File.dirname( tmpdir_path ) )
+          File.open( tmpdir_path, "w+" ) do |f|
+            yml = `git show #{sha}:#{locals_root}/#{path}`
             f.write( yml )
           end
         end
@@ -54,7 +56,7 @@ module Vocab
         backend = I18n::Backend::Simple.new
         backend.send( :init_translations )
         data = backend.send( :translations )
-        translations = backend.flatten_translations( :en, data, true, true )
+        translations = backend.flatten_translations( :en, data, true, false )
         return translations
       end
     end
