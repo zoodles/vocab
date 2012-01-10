@@ -1,0 +1,10 @@
+--- 
+en: 
+  models: 
+    product:
+      id_125: 
+        :description: Green with megawatts
+        :name: Lazer
+      id_36: 
+        :description: Polarized and lazer resistant
+        :name: Sunglasses
