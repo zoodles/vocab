@@ -6,8 +6,14 @@ module Vocab
         handle_command
       end
 
+      ##############################
+      # CLI
+      ##############################
+
       def handle_command
         case ARGV.first
+        when "init"
+          init
         when "extract"
           Extractor.extract
         when "import"
@@ -18,5 +24,10 @@ module Vocab
       end
     end
 
+    def init
+      puts "Writing new .vocab file"
+      Settings.update_translation
+      Settings.write_settings
+    end
   end
 end
