@@ -4,6 +4,7 @@ require 'pathname'
 require 'vocab/application'
 require 'vocab/extractor'
 require 'vocab/settings'
+require 'vocab/ui'
 require 'vocab/version'
 
 module Vocab
@@ -11,6 +12,10 @@ module Vocab
   class << self
     def settings
       @settings ||= Settings.new( root )
+    end
+
+    def ui
+      @ui ||= UI.new
     end
 
     # Returns root directory where .vocab is located

@@ -29,7 +29,7 @@ module Vocab
     end
 
     def self.create
-      puts "Writing new .vocab file"
+      Vocab.ui.say( "Writing new .vocab file" )
       settings = Vocab::Settings.new( Dir.pwd )
       settings.update_translation
       settings.write_settings
