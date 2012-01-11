@@ -15,7 +15,7 @@ module Vocab
         when "init"
           init
         when "extract"
-          Extractor.extract
+          RailsExtractor.extract
         when "import"
           puts "this is import"
         end

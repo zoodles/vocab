@@ -2,7 +2,7 @@ require 'i18n'
 require 'fileutils'
 
 module Vocab
-  class Extractor
+  class RailsExtractor
     class << self
       def extract( path = nil )
         path ||= "#{Vocab.root}/en.yml"

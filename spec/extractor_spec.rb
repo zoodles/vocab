@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "extractor" do
+describe "RailsExtractor" do
 
   describe "previous" do
 
@@ -12,7 +12,7 @@ describe "extractor" do
     end
 
     it "creates a hash of the english translation strings from the last translation" do
-      actual = Vocab::Extractor.extract_previous( @locales_root )
+      actual = Vocab::RailsExtractor.extract_previous( @locales_root )
       expected = { :"en.models.product.id_36.name"=>"Sunglasses",
                    :"en.marketing.banner"=>"This product is so good",
                    :"en.models.product.id_125.name"=>"Lazer",
@@ -32,7 +32,7 @@ describe "extractor" do
     end
 
     it "creates a hash of the english translation strings currently in the config" do
-      actual = Vocab::Extractor.extract_current( @locales_root )
+      actual = Vocab::RailsExtractor.extract_current( @locales_root )
       expected = {:"en.marketing.banner"=>"This product is so good",
                   :"en.models.product.id_125.name"=>"Lazer",
                   :"en.dashboard.details"=>"This key/value has been added",
@@ -52,14 +52,14 @@ describe "extractor" do
     it "finds the new keys in the current hash" do
       @current = { 1 => 2, 3 => 4 }
       @previous = { 1 => 2 }
-      diff = Vocab::Extractor.diff( @previous, @current )
+      diff = Vocab::RailsExtractor.diff( @previous, @current )
       diff.should == { 3 => 4 }
     end
 
     it "finds the udpated keys in the current hash" do
       @current = { 1 => 10 }
       @previous = { 1 => 2 }
-      diff = Vocab::Extractor.diff( @previous, @current )
+      diff = Vocab::RailsExtractor.diff( @previous, @current )
       diff.should == { 1 => 10 }
     end
 
@@ -69,7 +69,7 @@ describe "extractor" do
                     :"en.models.product.id_126.name"=>"This is new"}
       @previous = { :"en.marketing.banner"=>"This product is so good",
                     :"en.models.product.id_125.name"=>"Lazer"}
-      diff = Vocab::Extractor.diff( @previous, @current )
+      diff = Vocab::RailsExtractor.diff( @previous, @current )
       diff.should == { :"en.models.product.id_125.name"=>"This has been updated",
                        :"en.models.product.id_126.name"=>"This is new"}
     end
@@ -84,9 +84,9 @@ describe "extractor" do
     end
 
     it "extracts the strings that need to be translated into a yml file" do
-      Vocab::Extractor.should_receive( :extract_current ).and_return( { 1 => 5, 3 => 4 } )
-      Vocab::Extractor.should_receive( :extract_previous ).and_return( { 1 => 2 } )
-      Vocab::Extractor.extract( @path )
+      Vocab::RailsExtractor.should_receive( :extract_current ).and_return( { 1 => 5, 3 => 4 } )
+      Vocab::RailsExtractor.should_receive( :extract_previous ).and_return( { 1 => 2 } )
+      Vocab::RailsExtractor.extract( @path )
       YAML.load_file( @path ).should == { 1 => 5, 3 => 4 }
     end
 
