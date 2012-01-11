@@ -76,4 +76,10 @@ describe "extractor" do
 
   end
 
+  describe "extract" do
+
+    it "extracts the strings that need to be translated into a yml file"
+
+  end
+
 end

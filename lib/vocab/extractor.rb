@@ -7,7 +7,7 @@ module Vocab
       def extract
         current = extract_current
         previous = extract_previous
-        need_translations = diff( previous, current )
+        diff( previous, current )
       end
 
       # make a hash of all the translations that are new or changed in the current yml
@@ -50,8 +50,9 @@ module Vocab
         # TODO get rid of this hack.  Subclass Simple?  Move to Vocab::Application?
         I18n::Backend::Simple.send( :include, I18n::Backend::Flatten )
 
-        I18n.load_path += filenames
+        I18n.load_path = filenames
         backend = I18n::Backend::Simple.new
+        backend.reload!
         backend.send( :init_translations )
         data = backend.send( :translations )
         translations = backend.flatten_translations( :en, data, true, false )
