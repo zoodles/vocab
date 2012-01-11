@@ -22,7 +22,6 @@ module Vocab
         return diff
       end
 
-      # TODO move to rails only subclass
       def extract_previous( locales_root = "config/locales" )
         tmpdir = "#{Vocab.root}/tmp/last_translation"
         FileUtils.rm_rf( "#{tmpdir}/*" )
@@ -42,13 +41,11 @@ module Vocab
         return translations( Dir.glob( "#{tmpdir}/**/*.{yml,rb}" ) )
       end
 
-      # TODO move to rails only subclass
       def extract_current( locales_root = nil )
         locales_root ||= "#{Vocab.root}/config/locales"
         return translations( Dir.glob( "#{locales_root}/**/*.{yml,rb}" ) )
       end
 
-      # TODO move to rails only subclass
       def translations( filenames )
         # TODO get rid of this hack.  Subclass Simple?  Move to Vocab::Application?
         I18n::Backend::Simple.send( :include, I18n::Backend::Flatten )
