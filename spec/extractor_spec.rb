@@ -78,7 +78,17 @@ describe "extractor" do
 
   describe "extract" do
 
-    it "extracts the strings that need to be translated into a yml file"
+    before( :each ) do
+      @path = "#{vocab_root}/spec/tmp/en.yml"
+      File.delete( @path ) if File.exists?( @path )
+    end
+
+    it "extracts the strings that need to be translated into a yml file" do
+      Vocab::Extractor.should_receive( :extract_current ).and_return( { 1 => 5, 3 => 4 } )
+      Vocab::Extractor.should_receive( :extract_previous ).and_return( { 1 => 2 } )
+      Vocab::Extractor.extract( @path )
+      YAML.load_file( @path ).should == { 1 => 5, 3 => 4 }
+    end
 
   end
 

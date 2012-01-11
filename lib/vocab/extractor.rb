@@ -4,10 +4,12 @@ require 'fileutils'
 module Vocab
   class Extractor
     class << self
-      def extract
+      def extract( path = nil )
+        path ||= "#{Vocab.root}/en.yml"
         current = extract_current
         previous = extract_previous
-        diff( previous, current )
+        diff = diff( previous, current )
+        File.open( path, "w+" ) { |f| f.write( diff.to_yaml ) }
       end
 
       # make a hash of all the translations that are new or changed in the current yml
