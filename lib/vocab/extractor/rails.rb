@@ -23,22 +23,18 @@ module Vocab
             end
           end
 
-          return translations( Dir.glob( "#{tmpdir}/**/*.{yml,rb}" ) )
+          return translations( tmpdir )
         end
 
         def extract_current( locales_root = nil )
           locales_root ||= "#{Vocab.root}/config/locales"
-          return translations( Dir.glob( "#{locales_root}/**/*.{yml,rb}" ) )
+          return translations( locales_root )
         end
 
-        def translations( filenames )
-          I18n.load_path = filenames
-          backend = I18n::Backend::Simple.new
-          backend.reload!
-          backend.send( :init_translations )
-          data = backend.send( :translations )
-          translations = backend.flatten_translations( :en, data, true, false )
-          return translations
+        def translations( dir )
+          translator = Translator.new
+          translator.load_dir( dir )
+          return translator.flattened_translations
         end
       end
     end
