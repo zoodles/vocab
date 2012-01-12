@@ -4,7 +4,7 @@ require 'pathname'
 
 require 'vocab/application'
 require 'vocab/extractor'
-require 'vocab/translator'
+#require 'vocab/translator'
 require 'vocab/merger'
 require 'vocab/settings'
 require 'vocab/ui'

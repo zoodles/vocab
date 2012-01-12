@@ -5,15 +5,15 @@ describe "Vocab::Merger::Rails" do
   it 'defaults to reasonable paths' do
     merger = Vocab::Merger::Rails.new
     merger.data_path.should eql( 'tmp/translations.yml' )
-    merger.locals_path.should eql( 'config/locales' )
+    merger.locales_path.should eql( 'config/locales' )
   end
 
   it 'allows custom paths' do
     data_path = 'custom/data/path'
-    locals_path = 'custom/locals_path/path'
-    merger = Vocab::Merger::Rails.new( data_path, locals_path )
+    locales_path = 'custom/locales_path/path'
+    merger = Vocab::Merger::Rails.new( data_path, locales_path )
     merger.data_path.should eql( data_path )
-    merger.locals_path.should eql( locals_path )
+    merger.locales_path.should eql( locales_path )
   end
 
   describe "load" do
