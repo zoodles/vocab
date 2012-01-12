@@ -1,6 +1,3 @@
-require 'i18n'
-require 'fileutils'
-
 module Vocab
   module Extractor
     class Rails < Base
@@ -35,9 +32,6 @@ module Vocab
         end
 
         def translations( filenames )
-          # TODO get rid of this hack.  Subclass Simple?  Move to Vocab::Application?
-          I18n::Backend::Simple.send( :include, I18n::Backend::Flatten )
-
           I18n.load_path = filenames
           backend = I18n::Backend::Simple.new
           backend.reload!

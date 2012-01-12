@@ -1,12 +1,16 @@
 require 'fileutils'
+require 'i18n'
 require 'pathname'
 
 require 'vocab/application'
 require 'vocab/extractor'
+require 'vocab/translator'
 require 'vocab/merger'
 require 'vocab/settings'
 require 'vocab/ui'
 require 'vocab/version'
+
+I18n::Backend::Simple.include( I18n::Backend::Flatten )
 
 module Vocab
 

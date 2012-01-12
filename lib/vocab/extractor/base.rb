@@ -1,6 +1,3 @@
-require 'i18n'
-require 'fileutils'
-
 module Vocab
   module Extractor
     class Base
