@@ -1,3 +1,8 @@
+# Warning: this object has some sharp edges because it is an abuse of the i18n gem
+# For example:
+#   - we are calling private methods
+#   - instances share the I18n.load_path, which could lead to unexpected behavior
+
 module Vocab
   class Translator
 

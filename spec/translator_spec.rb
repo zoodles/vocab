@@ -27,6 +27,8 @@ describe 'Vocab::Translator' do
       actual.should eql( expected )
     end
 
+    it "caches the translations to protect against someone swapping I18n.load_path"
+
   end
 
   describe 'flattened_translations' do
