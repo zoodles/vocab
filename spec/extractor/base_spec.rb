@@ -1,20 +1,20 @@
 require "spec_helper"
 
-describe "ExtractorBase" do
+describe "Vocab::Extractor::Base" do
 
   describe "diff" do
 
     it "finds the new keys in the current hash" do
       @current = { 1 => 2, 3 => 4 }
       @previous = { 1 => 2 }
-      diff = Vocab::RailsExtractor.diff( @previous, @current )
+      diff = Vocab::Extractor::Base.diff( @previous, @current )
       diff.should == { 3 => 4 }
     end
 
     it "finds the udpated keys in the current hash" do
       @current = { 1 => 10 }
       @previous = { 1 => 2 }
-      diff = Vocab::RailsExtractor.diff( @previous, @current )
+      diff = Vocab::Extractor::Base.diff( @previous, @current )
       diff.should == { 1 => 10 }
     end
 
@@ -24,7 +24,7 @@ describe "ExtractorBase" do
                     :"en.models.product.id_126.name"=>"This is new"}
       @previous = { :"en.marketing.banner"=>"This product is so good",
                     :"en.models.product.id_125.name"=>"Lazer"}
-      diff = Vocab::RailsExtractor.diff( @previous, @current )
+      diff = Vocab::Extractor::Base.diff( @previous, @current )
       diff.should == { :"en.models.product.id_125.name"=>"This has been updated",
                        :"en.models.product.id_126.name"=>"This is new"}
     end
@@ -39,10 +39,10 @@ describe "ExtractorBase" do
     end
 
     it "extracts the strings that need to be translated into a yml file" do
-      Vocab::RailsExtractor.should_receive( :extract_current ).and_return( { 1 => 5, 3 => 4 } )
-      Vocab::RailsExtractor.should_receive( :extract_previous ).and_return( { 1 => 2 } )
-      Vocab::RailsExtractor.extract( @path )
-      YAML.load_file( @path ).should == { 1 => 5, 3 => 4 }
+      Vocab::Extractor::Base.should_receive( :extract_current ).and_return( { 1 => 5, 3 => 4 } )
+      Vocab::Extractor::Base.should_receive( :extract_previous ).and_return( { 1 => 2 } )
+      Vocab::Extractor::Base.should_receive( :write_diff ).with( { 1 => 5, 3 => 4 }, @path )
+      Vocab::Extractor::Base.extract( @path )
     end
 
   end

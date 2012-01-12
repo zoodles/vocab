@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "RailsExtractor" do
+describe "Vocab::Extractor::Rails" do
 
   describe "previous" do
 
@@ -12,7 +12,7 @@ describe "RailsExtractor" do
     end
 
     it "creates a hash of the english translation strings from the last translation" do
-      actual = Vocab::RailsExtractor.extract_previous( @locales_root )
+      actual = Vocab::Extractor::Rails.extract_previous( @locales_root )
       expected = { :"en.models.product.id_36.name"=>"Sunglasses",
                    :"en.marketing.banner"=>"This product is so good",
                    :"en.models.product.id_125.name"=>"Lazer",
@@ -32,7 +32,7 @@ describe "RailsExtractor" do
     end
 
     it "creates a hash of the english translation strings currently in the config" do
-      actual = Vocab::RailsExtractor.extract_current( @locales_root )
+      actual = Vocab::Extractor::Rails.extract_current( @locales_root )
       expected = {:"en.marketing.banner"=>"This product is so good",
                   :"en.models.product.id_125.name"=>"Lazer",
                   :"en.dashboard.details"=>"This key/value has been added",
@@ -43,6 +43,22 @@ describe "RailsExtractor" do
                   :"en.models.product.id_36.description"=>"Polarized and lazer resistant",
                   :"en.models.product.id_36.name"=>"This nested value has changed"}
       actual.should eql( expected )
+    end
+
+  end
+
+  describe "extract" do
+
+    before( :each ) do
+      @path = "#{vocab_root}/spec/tmp/en.yml"
+      File.delete( @path ) if File.exists?( @path )
+    end
+
+    it "extracts the strings that need to be translated into a yml file" do
+      Vocab::Extractor::Rails.should_receive( :extract_current ).and_return( { 1 => 5, 3 => 4 } )
+      Vocab::Extractor::Rails.should_receive( :extract_previous ).and_return( { 1 => 2 } )
+      Vocab::Extractor::Rails.extract( @path )
+      YAML.load_file( @path ).should == { 1 => 5, 3 => 4 }
     end
 
   end
