@@ -2,26 +2,11 @@ require 'i18n'
 require 'fileutils'
 
 module Vocab
-  class RailsExtractor
+  class RailsExtractor < ExtractorBase
     class << self
-      def extract( path = nil )
+      def write_diff( diff, path )
         path ||= "#{Vocab.root}/en.yml"
-        current = extract_current
-        previous = extract_previous
-        diff = diff( previous, current )
         File.open( path, "w+" ) { |f| f.write( diff.to_yaml ) }
-      end
-
-      # make a hash of all the translations that are new or changed in the current yml
-      def diff( previous, current )
-        diff = {}
-        current.each do |key, value|
-          previous_value = previous[ key ]
-          if( previous_value.nil? || previous_value != value )
-            diff[ key ] = value
-          end
-        end
-        return diff
       end
 
       def extract_previous( locales_root = "config/locales" )

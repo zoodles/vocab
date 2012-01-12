@@ -2,6 +2,7 @@ require 'fileutils'
 require 'pathname'
 
 require 'vocab/application'
+require 'vocab/extractor_base'
 require 'vocab/rails_extractor'
 require 'vocab/settings'
 require 'vocab/ui'
