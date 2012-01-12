@@ -13,6 +13,12 @@ module Vocab
         @data = YAML.load_file( @data_path )
       end
 
+      def merge_file( file )
+        old = YAML.load_file( file )
+
+
+      end
+
     end
   end
 end

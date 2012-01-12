@@ -34,4 +34,28 @@ describe "Vocab::Merger::Rails" do
 
   end
 
+  describe "merge_file" do
+
+    before( :each ) do
+      @data_path = 'spec/data/translations/en.yml'
+      @file = "#{vocab_root}/spec/tmp/en.yml"
+      old = { 'en' => { 'dashboard' => { 'headline' => 'welcome!' } },
+                        'edu'       => { 'subject'   => 'math' } }
+      File.open( @file, "w+" ) { |f| f.write( old.to_yaml ) }
+    end
+
+    it "merges a single file" do
+      merger = Vocab::Merger::Rails.new
+      merger.data = { 'en' => { 'dashboard' => { 'headline' => 'Really welcome!' } },
+                                'foo'       => { 'bar'      => 'baz' } }
+      merger.merge_file( @file )
+      actual = YAML.load_file( @file )
+      expected = { 'en' => { 'dashboard' => { 'headline' => 'Really welcome!' } },
+                             'edu'       => { 'subject'   => 'math' },
+                             'foo'       => { 'bar'      => 'baz' } }
+      actual.should eql( expected )
+    end
+
+  end
+
 end
