@@ -7,6 +7,10 @@ Features include:
   * Generate a list all English translations that have been updated or added since the last translation
   * Integrate a list of newly translated strings into the right place in the project translation file(s)
 
+# Requirements
+
+  * Must be used in context of git controlled project
+
 # Installation
 
 Install the gem in your project
