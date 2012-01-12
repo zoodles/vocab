@@ -3,6 +3,7 @@ require 'pathname'
 
 require 'vocab/application'
 require 'vocab/extractor'
+require 'vocab/merger'
 require 'vocab/settings'
 require 'vocab/ui'
 require 'vocab/version'
