@@ -4,7 +4,7 @@ describe "init" do
 
   before( :each ) do
     @tmpdir = File.join( vocab_root, "spec", "tmp" )
-    FileUtils.rm( Dir.glob( "#{@tmpdir}/*" ) )
+    FileUtils.rm_rf( Dir.glob( "#{@tmpdir}/*" ) )
     Dir.chdir( @tmpdir )
   end
 

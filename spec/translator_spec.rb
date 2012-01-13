@@ -4,16 +4,20 @@ describe 'Vocab::Translator' do
 
   describe 'load_dir' do
 
+    before( :each ) do
+      @translator = Vocab::Translator.new
+      @translator.load_dir( "#{vocab_root}/spec/data/locales" )
+    end
+
     it 'loads translations from a directory of yml files' do
-      translator = Vocab::Translator.new
-      translator.load_dir( "#{vocab_root}/spec/data/locales" )
-      actual = translator.translations
-      expected = { :en => { :models    => { :product => { :id_125 => { :description => "Green with megawatts", :name=>"Lazer"},
-                                                          :id_55  => { :description => "A new nested description", :name=>"a new nested name"},
-                                                          :id_36  => { :description => "Polarized and lazer resistant", :name=>"This nested value has changed"}}},
-                            :dashboard => { :chart => "This value has changed",
-                                            :details=>"This key/value has been added"},
-                            :marketing => { :banner => "This product is so good" } } }
+
+      actual = @translator.translations
+      expected = { :models    => { :product => { :id_125 => { :description => "Green with megawatts", :name=>"Lazer" },
+                                                 :id_55  => { :description => "A new nested description", :name=>"a new nested name" },
+                                                 :id_36  => { :description => "Polarized and lazer resistant", :name=>"This nested value has changed" } } },
+                   :dashboard => { :chart  => "This value has changed",
+                                   :details=>"This key/value has been added" },
+                   :marketing => { :banner => "This product is so good" } }
       actual.should eql( expected )
     end
 
@@ -23,8 +27,9 @@ describe 'Vocab::Translator' do
 
     before( :each ) do
       @file = "#{vocab_root}/spec/tmp/en.yml"
-      @data = { :en => { :foo => :bar } }
-      File.open( @file, "w+" ) { |f| f.write( @data.to_yaml ) }
+      @data = { :foo => :bar }
+      @yml_hash = { :en => @data }
+      File.open( @file, "w+" ) { |f| f.write( @yml_hash.to_yaml ) }
     end
 
     it 'loads translations from a yml file' do
@@ -67,16 +72,40 @@ describe 'Vocab::Translator' do
       translator = Vocab::Translator.new
       translator.load_dir( "#{vocab_root}/spec/data/locales" )
       actual = translator.flattened_translations
-      expected = { :"en.dashboard.details"                => "This key/value has been added",
-                   :"en.models.product.id_55.description" => "A new nested description",
-                   :"en.models.product.id_36.name"=>"This nested value has changed",
-                   :"en.models.product.id_55.name"=>"a new nested name",
-                   :"en.dashboard.chart"=>"This value has changed",
-                   :"en.marketing.banner"=>"This product is so good",
-                   :"en.models.product.id_125.description"=>"Green with megawatts",
-                   :"en.models.product.id_36.description"=>"Polarized and lazer resistant",
-                   :"en.models.product.id_125.name"=>"Lazer" }
+      expected = { :"models.product.id_125.name"       =>"Lazer",
+                   :"marketing.banner"                 =>"This product is so good",
+                   :"models.product.id_36.description" =>"Polarized and lazer resistant",
+                   :"dashboard.details"                =>"This key/value has been added",
+                   :"models.product.id_36.name"        =>"This nested value has changed",
+                   :"models.product.id_55.description" =>"A new nested description",
+                   :"dashboard.chart"                  =>"This value has changed",
+                   :"models.product.id_125.description"=>"Green with megawatts",
+                   :"models.product.id_55.name"        =>"a new nested name" }
       actual.should == expected
+    end
+
+  end
+
+  describe 'store' do
+
+    it 'stores translation' do
+      @key = 'foo.bar'
+      @value = 'baz'
+      translator = Vocab::Translator.new
+      translator.store( @key, @value )
+      translator.flattened_translations[ @key.to_sym ].should eql( @value )
+    end
+
+  end
+
+  describe 'fetch' do
+
+    it 'fetch a translation' do
+      @key = 'foo.bar'
+      @value = 'baz'
+      translator = Vocab::Translator.new
+      translator.store( @key, @value )
+      translator.fetch( @key ).should eql( @value )
     end
 
   end

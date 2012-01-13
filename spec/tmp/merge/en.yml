@@ -1,0 +1,14 @@
+--- 
+:marketing: 
+  :banner: this marketing message has changed
+:edu: 
+  :subject: math
+  :name: this is a new top level name
+:models: 
+  :product: 
+    :id_55: 
+      :description: This description changed
+      :name: a new nested name
+    :id_56: 
+      :description: This is a new nested description
+      :name: This is a new nested name
