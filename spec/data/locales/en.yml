@@ -4,3 +4,5 @@ en:
   dashboard:
     chart: This value has changed
     details: This key/value has been added
+  menu:
+    first: First menu item

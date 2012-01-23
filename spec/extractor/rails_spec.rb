@@ -33,15 +33,16 @@ describe "Vocab::Extractor::Rails" do
 
     it "creates a hash of the english translation strings currently in the config" do
       actual = Vocab::Extractor::Rails.extract_current( @locales_root )
-      expected = {:"marketing.banner"=>"This product is so good",
-                  :"models.product.id_125.name"=>"Lazer",
-                  :"dashboard.details"=>"This key/value has been added",
-                  :"dashboard.chart"=>"This value has changed",
-                  :"models.product.id_55.description"=>"A new nested description",
-                  :"models.product.id_125.description"=>"Green with megawatts",
-                  :"models.product.id_55.name"=>"a new nested name",
-                  :"models.product.id_36.description"=>"Polarized and lazer resistant",
-                  :"models.product.id_36.name"=>"This nested value has changed"}
+      expected = { :"models.product.id_125.description"=>"Green with megawatts",
+                   :"models.product.id_36.description" =>"Polarized and lazer resistant",
+                   :"menu.first"                       =>"First menu item",
+                   :"models.product.id_36.name"        =>"This nested value has changed",
+                   :"dashboard.details"                =>"This key/value has been added",
+                   :"marketing.banner"                 =>"This product is so good",
+                   :"models.product.id_55.description" =>"A new nested description",
+                   :"models.product.id_125.name"       =>"Lazer",
+                   :"models.product.id_55.name"        =>"a new nested name",
+                   :"dashboard.chart"                  =>"This value has changed" }
       actual.should eql( expected )
     end
 

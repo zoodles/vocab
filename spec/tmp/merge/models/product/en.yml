@@ -1,0 +1,13 @@
+--- 
+en: 
+  models: 
+    product:
+      id_125: 
+        :description: Green with megawatts
+        :name: Lazer
+      id_36: 
+        :description: Polarized and lazer resistant
+        :name: This nested value has changed
+      id_55:
+        :description: A new nested description
+        :name: a new nested name

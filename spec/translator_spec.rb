@@ -12,12 +12,16 @@ describe 'Vocab::Translator' do
     it 'loads translations from a directory of yml files' do
 
       actual = @translator.translations
-      expected = { :models    => { :product => { :id_125 => { :description => "Green with megawatts", :name=>"Lazer" },
-                                                 :id_55  => { :description => "A new nested description", :name=>"a new nested name" },
-                                                 :id_36  => { :description => "Polarized and lazer resistant", :name=>"This nested value has changed" } } },
-                   :dashboard => { :chart  => "This value has changed",
-                                   :details=>"This key/value has been added" },
-                   :marketing => { :banner => "This product is so good" } }
+      expected = { :marketing=>{ :banner=>"This product is so good" },
+                   :models   =>{ :product=>{ :id_125=>{ :description=>"Green with megawatts",
+                                                        :name       =>"Lazer" },
+                                             :id_55 =>{ :description=>"A new nested description",
+                                                        :name       =>"a new nested name" },
+                                             :id_36 =>{ :description=>"Polarized and lazer resistant",
+                                                        :name       =>"This nested value has changed" } } },
+                   :menu     =>{ :first=>"First menu item" },
+                   :dashboard=>{ :chart  =>"This value has changed",
+                                 :details=>"This key/value has been added" } }
       actual.should eql( expected )
     end
 
@@ -72,14 +76,15 @@ describe 'Vocab::Translator' do
       translator = Vocab::Translator.new
       translator.load_dir( "#{vocab_root}/spec/data/locales" )
       actual = translator.flattened_translations
-      expected = { :"models.product.id_125.name"       =>"Lazer",
-                   :"marketing.banner"                 =>"This product is so good",
+      expected = { :"models.product.id_125.description"=>"Green with megawatts",
                    :"models.product.id_36.description" =>"Polarized and lazer resistant",
-                   :"dashboard.details"                =>"This key/value has been added",
                    :"models.product.id_36.name"        =>"This nested value has changed",
+                   :"menu.first"                       =>"First menu item",
+                   :"marketing.banner"                 =>"This product is so good",
+                   :"dashboard.details"                =>"This key/value has been added",
+                   :"models.product.id_125.name"       =>"Lazer",
                    :"models.product.id_55.description" =>"A new nested description",
                    :"dashboard.chart"                  =>"This value has changed",
-                   :"models.product.id_125.description"=>"Green with megawatts",
                    :"models.product.id_55.name"        =>"a new nested name" }
       actual.should == expected
     end

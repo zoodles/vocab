@@ -1,8 +1,12 @@
 --- 
+:menu: 
+  :first: First menu item
+:dashboard: 
+  :chart: This value has changed
+  :details: This key/value has been added
 :marketing: 
   :banner: this marketing message has changed
 :edu: 
-  :subject: math
   :name: this is a new top level name
 :models: 
   :product: 
