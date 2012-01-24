@@ -34,8 +34,7 @@ module Vocab
           locales_translator.store( key, value ) if locales.has_key?( key )
         end
 
-        master = { :en => locales_translator.translations }
-        File.open( locales_path, 'w+' ) { |f| f.write( master.to_yaml ) }
+        locales_translator.write_file( locales_path )
       end
 
     end

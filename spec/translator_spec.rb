@@ -42,6 +42,18 @@ describe 'Vocab::Translator' do
       translator.translations.should == @data
     end
 
+    it 'sets the language based on the file loaded' do
+      @file = "#{vocab_root}/spec/data/locales/en.yml"
+      translator = Vocab::Translator.new
+      translator.load_file( @file )
+      translator.locale.should eql( :en )
+
+      @file = "#{vocab_root}/spec/data/locales/es.yml"
+      translator = Vocab::Translator.new
+      translator.load_file( @file )
+      translator.locale.should eql( :es )
+    end
+
   end
 
   describe 'translations' do
@@ -68,9 +80,9 @@ describe 'Vocab::Translator' do
       translator_1.translations.should eql( data_1 )
     end
 
-    it 'returns an empty hash for languages without a translation' do
+    it 'returns nil languages without a translation' do
       translator = Vocab::Translator.new
-      translator.translations.should eql( {} )
+      translator.translations.should eql( nil )
     end
 
   end

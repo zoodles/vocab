@@ -6,8 +6,11 @@
 module Vocab
   class Translator
 
+    attr_accessor :locale
+
     def initialize
       @backend = I18n::Backend::Simple.new
+      @locale = :en
     end
 
     def load_dir( dir )
@@ -16,24 +19,29 @@ module Vocab
     end
 
     def load_file( file )
+      @locale = File.basename( file ).gsub( /\..*$/, '' ).to_sym
       I18n.load_path = [ file ]
       load_translations
     end
 
+    def write_file( file )
+      yaml = { @locale => self.translations }.to_yaml
+      File.open( file, 'w+' ) { |f| f.write( yaml ) }
+    end
+
     def translations
-      return @backend.send( :translations )[ :en ] || {}
+      return @backend.send( :translations )[ @locale ]
     end
 
     def flattened_translations
-      translations = self.translations
-      return @backend.flatten_translations( :en, translations, true, false )
+      return @backend.flatten_translations( @locale, translations, true, false )
     end
 
-    def store( key, value, locale = :en )
-      keys = I18n.normalize_keys( locale, key, [], nil)
+    def store( key, value )
+      keys = I18n.normalize_keys( @locale, key, [], nil)
       keys.shift # remove locale
       data = keys.reverse.inject( value ) { |result, _key| { _key => result } }
-      @backend.store_translations( locale, data )
+      @backend.store_translations( @locale, data )
     end
 
     def fetch( key )

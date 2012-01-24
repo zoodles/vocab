@@ -76,12 +76,13 @@ describe "Vocab::Merger::Rails" do
 
     before( :each ) do
       clear_merge_dir
-      @update_file = "#{vocab_root}/spec/data/translations/en.yml"
-      merger = Vocab::Merger::Rails.new( @merge_dir, @update_file )
-      merger.merge
     end
 
     it 'merges nested files' do
+      @update_file = "#{vocab_root}/spec/data/translations/en.yml"
+      merger = Vocab::Merger::Rails.new( @merge_dir, @update_file )
+      merger.merge
+
       @merged = YAML.load_file( "#{@merge_dir}/models/product/en.yml" )
       @merged[:en][:models][:product][:id_125][:description].should eql( 'Green with megawatts' )
       @merged[:en][:models][:product][:id_125][:name].should eql( 'Lazer' )
@@ -89,7 +90,21 @@ describe "Vocab::Merger::Rails" do
       @merged[:en][:models][:product][:id_55][:name].should eql( 'a new nested name' )
     end
 
-    it 'merges non-english translations'
+    it 'merges non-english translations' do
+      @update_file = "#{vocab_root}/spec/data/translations/es.yml"
+      merger = Vocab::Merger::Rails.new( @merge_dir, @update_file )
+      merger.merge
+
+      puts "@merged = #{@merged.inspect}"
+      @merged[:es][:marketing][:product][:banner].should eql( 'hola mi amigo' )
+      @merged[:en][:marketing][:dashboard][:chart][:name].should eql( 'Es muy bonita' )
+    end
+
+  end
+
+  describe 'write_file' do
+
+    it 'writes translations to a file'
 
   end
 
