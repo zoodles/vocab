@@ -11,3 +11,4 @@ en:
       id_56:
         :description: This is a new nested description
         :name: This is a new nested name
+  translator_cruft: This was accidentially added by a translator

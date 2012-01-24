@@ -18,31 +18,24 @@ module Vocab
       end
 
       def merge_file( filename )
-        old_path = "#{@locales_dir}/#{filename}"
+        locales_path = "#{@locales_dir}/#{filename}"
         update_path = "#{@updates_dir}/#{filename}"
-        return unless File.exists?( old_path ) && File.exists?( update_path )
+        return unless File.exists?( locales_path ) && File.exists?( update_path )
 
-        old_translator = Vocab::Translator.new
-        old_translator.load_file( old_path )
-        old = old_translator.flattened_translations
+        locales_translator = Vocab::Translator.new
+        locales_translator.load_file( locales_path )
+        locales = locales_translator.flattened_translations
 
         updates_translator = Vocab::Translator.new
         updates_translator.load_file( update_path )
         updates = updates_translator.flattened_translations
 
-        new = Vocab::Translator.new
-
-        # updates
-        old.each do |key, value|
-          new.store( key, updates[ key ] || value )
-        end
-
-        # new keys
+        # apply updated keys to locales hash
         updates.each do |key, value|
-          new.store( key, value ) if old[ key ].nil?
+          locales_translator.store( key, value ) if locales.has_key?( key )
         end
 
-        File.open( old_path, 'w+' ) { |f| f.write( new.translations.to_yaml ) }
+        File.open( locales_path, 'w+' ) { |f| f.write( locales_translator.translations.to_yaml ) }
       end
 
     end

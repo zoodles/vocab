@@ -1,6 +1,17 @@
 require "spec_helper"
 require "fileutils"
 
+module MergerRailsSpecHelper
+
+  def clear_merge_dir
+    @merge_dir = "#{vocab_root}/spec/tmp/merge"
+    FileUtils.rm_rf( @merge_dir ) if File.exists?( @merge_dir )
+    FileUtils.mkdir_p( @merge_dir )
+    FileUtils.cp_r( "#{vocab_root}/spec/data/locales/.", @merge_dir )
+  end
+
+end
+
 describe "Vocab::Merger::Rails" do
 
   it 'defaults to reasonable paths' do
@@ -19,12 +30,10 @@ describe "Vocab::Merger::Rails" do
 
   describe "merge_file" do
 
+    include MergerRailsSpecHelper
+
     before( :each ) do
-      # Simulate config/locals files (where files are merged)
-      @merge_dir = "#{vocab_root}/spec/tmp/merge"
-      FileUtils.rm_rf( @merge_dir ) if File.exists?( @merge_dir )
-      FileUtils.mkdir_p( @merge_dir )
-      FileUtils.cp_r( "#{vocab_root}/spec/data/locales/.", @merge_dir )
+      clear_merge_dir
 
       @file = "#{@merge_dir}/en.yml"
       @updates_dir = "#{vocab_root}/spec/data/translations"
@@ -39,17 +48,31 @@ describe "Vocab::Merger::Rails" do
       @merged[:marketing][:banner].should eql('this marketing message has changed')
     end
 
-    it "merges new translations" do
-      @merged[:edu][:name].should eql('this is a new top level name')
-      @merged[:models][:product][:id_56][:description].should eql('This is a new nested description')
-      @merged[:models][:product][:id_56][:name].should eql('This is a new nested name')
+    it "ignores key accidentally introduced by the translators" do
+      @merged[:translator_cruft].should be( nil )
     end
 
     it "retains unchanged translations" do
       @merged[:menu][:first].should eql('First menu item')
     end
 
+    it "does not include translations from nested files" do
+      @merged[:models].should eql( nil )
+    end
+
+    it "does not include translations from other languages" do
+      @merged[:marketing][:banner].should_not eql( 'hola' )
+    end
+
     it "skips file if matching old and update file not found"
+
+  end
+
+  describe "merge" do
+
+    include MergerRailsSpecHelper
+
+
 
   end
 
