@@ -6,9 +6,6 @@ en:
   models:
     product:
       id_55:
-        :description: This description changed
-        :name: a new nested name
-      id_56:
-        :description: This is a new nested description
-        :name: This is a new nested name
+        description: This description changed
+        name: a new nested name
   translator_cruft: This was accidentially added by a translator

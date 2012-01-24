@@ -68,6 +68,11 @@ describe 'Vocab::Translator' do
       translator_1.translations.should eql( data_1 )
     end
 
+    it 'returns an empty hash for languages without a translation' do
+      translator = Vocab::Translator.new
+      translator.translations.should eql( {} )
+    end
+
   end
 
   describe 'flattened_translations' do

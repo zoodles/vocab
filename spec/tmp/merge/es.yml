@@ -1,6 +1,3 @@
-es:
-  marketing:
-    banner: hola
-  dashboard:
-    chart: Es muy bonita
-    details: grande
+--- 
+:en: {}
+

@@ -21,10 +21,11 @@ module Vocab
     end
 
     def translations
-      return @backend.send( :translations )[ :en ]
+      return @backend.send( :translations )[ :en ] || {}
     end
 
     def flattened_translations
+      translations = self.translations
       return @backend.flatten_translations( :en, translations, true, false )
     end
 
