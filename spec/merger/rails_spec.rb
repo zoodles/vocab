@@ -14,6 +14,8 @@ end
 
 describe "Vocab::Merger::Rails" do
 
+  include MergerRailsSpecHelper
+
   it 'defaults to reasonable paths' do
     merger = Vocab::Merger::Rails.new
     merger.locales_dir.should eql( 'config/locales' )
@@ -30,8 +32,6 @@ describe "Vocab::Merger::Rails" do
 
   describe "merge_file" do
 
-    include MergerRailsSpecHelper
-
     before( :each ) do
       clear_merge_dir
 
@@ -39,8 +39,8 @@ describe "Vocab::Merger::Rails" do
       @updates_dir = "#{vocab_root}/spec/data/translations"
       @update_file = "#{@updates_dir}/en.yml"
 
-      merger = Vocab::Merger::Rails.new( @merge_dir, @updates_dir )
-      merger.merge_file( 'en.yml' )
+      @merger = Vocab::Merger::Rails.new( @merge_dir, @updates_dir )
+      @merger.merge_file( 'en.yml' )
       @merged = YAML.load_file( @file )
     end
 
@@ -64,15 +64,27 @@ describe "Vocab::Merger::Rails" do
       @merged[:marketing][:banner].should_not eql( 'hola' )
     end
 
-    it "skips file if matching old and update file not found"
+    it "skips file if matching old and update file not found" do
+      missing = "missing_file/en.yml"
+      @merger = Vocab::Merger::Rails.new( @merge_dir, @updates_dir )
+      @merger.merge_file( missing )
+      File.exists?( "#{@merge_dir}/#{missing}" ).should be_false
+    end
 
   end
 
   describe "merge" do
 
-    include MergerRailsSpecHelper
+    before( :each ) do
+      clear_merge_dir
+      @updates_dir = "#{vocab_root}/spec/data/translations"
+      merger = Vocab::Merger::Rails.new( @merge_dir, @updates_dir )
+      merger.merge
+    end
 
+    it "" do
 
+    end
 
   end
 

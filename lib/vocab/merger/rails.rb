@@ -10,7 +10,7 @@ module Vocab
       end
 
       def merge
-        update_files = Dir.glob( "#{updates_path}/**/*.yml" )
+        update_files = Dir.glob( "#{updates_dir}/**/*.yml" )
         update_files.each do |path|
           filename = File.basename( path )
           merge_file( filename )
