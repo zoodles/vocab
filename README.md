@@ -1,6 +1,6 @@
 # Description
 
-Command line tool to automate the process of getting new translations.
+Command line tool to automate the process of i18n string files in Rails and Android.
 
 Features include:
 
@@ -25,7 +25,7 @@ Set the current git commit to be the starting point for the next translation dif
 
 ## Extracting Changed and Updated Strings For Translation
 
-    vocab extract
+    vocab extract_rails
 
 ## Extracting Changed and Updated Strings For Translation
 

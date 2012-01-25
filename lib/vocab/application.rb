@@ -14,10 +14,10 @@ module Vocab
         case ARGV.first
         when "init"
           init
-        when "extract"
+        when "extract_rails"
           Extractor::Rails.extract
-        when "import"
-          puts "this is import"
+        when "merge_rails"
+          Merger::Rails.merge
         end
       end
 
