@@ -33,8 +33,9 @@ module Vocab
       return @backend.send( :translations )[ @locale ]
     end
 
-    def flattened_translations
-      return @backend.flatten_translations( @locale, translations, true, false )
+    def flattened_translations( options = {} )
+      t = options[ :prefix ] == true ? { @locale => translations } : translations
+      return @backend.flatten_translations( @locale, t, true, false )
     end
 
     def store( key, value )

@@ -35,7 +35,7 @@ module Vocab
         def translations( dir )
           translator = Translator.new
           translator.load_dir( dir )
-          return translator.flattened_translations
+          return translator.flattened_translations( :prefix => true )
         end
       end
     end
