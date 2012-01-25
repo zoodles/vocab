@@ -5,6 +5,7 @@ module Vocab
         def write_diff( diff, path )
           path ||= "#{Vocab.root}/en.yml"
           File.open( path, "w+" ) { |f| f.write( diff.to_yaml ) }
+          Vocab.ui.say( "Extracted to #{path}" )
         end
 
         def extract_previous( locales_root = "config/locales" )
