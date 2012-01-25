@@ -18,14 +18,24 @@ module Vocab
 
       def merge_file( filename )
         locales_path = filename
-        return unless File.exists?( locales_path )
+
+        unless File.exists?( locales_path )
+          Vocab.ui.say( "Missing locale file: #{locales_path}" )
+          return
+        end
 
         locales_translator = Vocab::Translator.new
         locales_translator.load_file( locales_path )
         locales = locales_translator.flattened_translations
 
+        update_path = "#{@updates_dir}/#{locales_translator.locale}.yml"
+        unless File.exists?( update_path )
+          Vocab.ui.say( "Missing update file: #{update_path} to translate #{locales_path}" )
+          return
+        end
+
         updates_translator = Vocab::Translator.new
-        updates_translator.load_file( "#{@updates_dir}/#{locales_translator.locale}.yml" )
+        updates_translator.load_file( update_path )
         updates = updates_translator.flattened_translations
 
         # apply updated keys to locales hash
@@ -34,6 +44,12 @@ module Vocab
         end
 
         locales_translator.write_file( locales_path )
+      end
+
+    protected
+
+      def translation_file( locale )
+        return "#{@updates_dir}/#{locales_translator.locale}.yml"
       end
 
     end

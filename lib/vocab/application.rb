@@ -19,7 +19,7 @@ module Vocab
         when "extract_rails"
           Extractor::Rails.extract
         when "merge_rails"
-          Merger::Rails.merge
+          Merger::Rails.new.merge
         else
           puts usage
         end
