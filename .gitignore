@@ -2,7 +2,5 @@
 .bundle
 Gemfile.lock
 pkg/*
-spec/tmp/.vocab
-spec/tmp/*.yml
-spec/tmp/merge
+spec/tmp
 tmp/last_translation/*
