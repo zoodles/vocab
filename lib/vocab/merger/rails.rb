@@ -2,15 +2,14 @@ module Vocab
   module Merger
     class Rails
 
-      attr_accessor :locales_dir, :updates_path
+      attr_accessor :locales_dir, :updates_dir
 
-      def initialize( locales_dir = nil, updates_path = nil )
+      def initialize( locales_dir = nil, updates_dir = nil )
         @locales_dir = locales_dir || 'config/locales'
-        @updates_path = updates_path || 'tmp/translations/en.yml'
+        @updates_dir = updates_dir || 'tmp/translations'
       end
 
       def merge
-        return unless File.exists?( @updates_path )
         locales_files = Dir.glob( "#{locales_dir}/**/*.yml" )
         locales_files.each do |path|
           merge_file( path )
@@ -26,7 +25,7 @@ module Vocab
         locales = locales_translator.flattened_translations
 
         updates_translator = Vocab::Translator.new
-        updates_translator.load_file( @updates_path )
+        updates_translator.load_file( "#{@updates_dir}/#{locales_translator.locale}.yml" )
         updates = updates_translator.flattened_translations
 
         # apply updated keys to locales hash
