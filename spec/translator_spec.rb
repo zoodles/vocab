@@ -19,7 +19,8 @@ describe 'Vocab::Translator' do
                                                         :name       =>"a new nested name" },
                                              :id_36 =>{ :description=>"Polarized and lazer resistant",
                                                         :name       =>"This nested value has changed" } } },
-                   :menu     =>{ :first=>"First menu item" },
+                   :menu     =>{ :second=>"Second menu item",
+                                 :first=>"First menu item" },
                    :dashboard=>{ :chart  =>"This value has changed",
                                  :details=>"This key/value has been added" } }
       actual.should eql( expected )
@@ -97,6 +98,7 @@ describe 'Vocab::Translator' do
                    :"models.product.id_36.description" =>"Polarized and lazer resistant",
                    :"models.product.id_36.name"        =>"This nested value has changed",
                    :"menu.first"                       =>"First menu item",
+                   :"menu.second"                      =>"Second menu item",
                    :"marketing.banner"                 =>"This product is so good",
                    :"dashboard.details"                =>"This key/value has been added",
                    :"models.product.id_125.name"       =>"Lazer",

@@ -5,7 +5,7 @@ describe "Vocab::Extractor::Rails" do
   describe "previous" do
 
     before( :each ) do
-      @last_translation = '74f41c96976620d7058eb1cea76391c182793f68'
+      @last_translation = 'f3e9ccaf589f54d69e55fd2200dc9a899adf459f'
       @locales_root = "spec/data/locales"
       Vocab.settings.stub!( :last_translation ).and_return( @last_translation )
       Dir.chdir( vocab_root )
@@ -13,12 +13,16 @@ describe "Vocab::Extractor::Rails" do
 
     it "creates a hash of the english translation strings from the last translation" do
       actual = Vocab::Extractor::Rails.extract_previous( @locales_root )
-      expected = { :"models.product.id_36.name"=>"Sunglasses",
-                   :"marketing.banner"=>"This product is so good",
-                   :"models.product.id_125.name"=>"Lazer",
-                   :"dashboard.chart"=>"Growth Year over Year",
+      expected = { :"models.product.id_125.name"       =>"Lazer",
+                   :"models.product.id_55.description" =>"A new nested description",
+                   :"dashboard.chart"                  =>"This value has changed",
+                   :"models.product.id_55.name"        =>"a new nested name",
                    :"models.product.id_125.description"=>"Green with megawatts",
-                   :"models.product.id_36.description"=>"Polarized and lazer resistant"}
+                   :"models.product.id_36.description" =>"Polarized and lazer resistant",
+                   :"models.product.id_36.name"        =>"This nested value has changed",
+                   :"menu.first"                       =>"First menu item",
+                   :"marketing.banner"                 =>"This product is so good",
+                   :"dashboard.details"                =>"This key/value has been added" }
       actual.should eql( expected )
     end
 
@@ -36,6 +40,7 @@ describe "Vocab::Extractor::Rails" do
       expected = { :"models.product.id_125.description"=>"Green with megawatts",
                    :"models.product.id_36.description" =>"Polarized and lazer resistant",
                    :"menu.first"                       =>"First menu item",
+                   :"menu.second"                      =>"Second menu item",
                    :"models.product.id_36.name"        =>"This nested value has changed",
                    :"dashboard.details"                =>"This key/value has been added",
                    :"marketing.banner"                 =>"This product is so good",
