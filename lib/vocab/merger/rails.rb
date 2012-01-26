@@ -1,6 +1,6 @@
 module Vocab
   module Merger
-    class Rails
+    class Rails < Base
 
       attr_accessor :locales_dir, :updates_dir
 
@@ -14,6 +14,7 @@ module Vocab
         locales_files.each do |path|
           merge_file( path )
         end
+        finalize
       end
 
       def merge_file( filename )

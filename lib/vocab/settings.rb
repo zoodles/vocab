@@ -17,6 +17,7 @@ module Vocab
       current_sha = `git rev-parse HEAD`.strip
       @local_config[ 'last_translation' ] = current_sha
       write_settings
+      return current_sha
     end
 
     def write_settings
