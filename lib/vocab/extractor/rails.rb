@@ -4,7 +4,8 @@ module Vocab
       class << self
         def write_diff( diff, path )
           path ||= "#{Vocab.root}/en.yml"
-          File.open( path, "w+" ) { |f| f.write( diff.to_yaml ) }
+          data = hasherize( diff ).to_yaml
+          File.open( path, "w+" ) { |f| f.write( data ) }
           Vocab.ui.say( "Extracted to #{path}" )
         end
 
@@ -36,6 +37,15 @@ module Vocab
           translator = Translator.new
           translator.load_dir( dir )
           return translator.flattened_translations( :prefix => true )
+        end
+
+        def hasherize( diff )
+          translator = Vocab::Translator.new
+          diff.each do |key, value|
+            key = key.to_s.gsub!( /^en\./, '' )
+            translator.store( key, value )
+          end
+          return translator.translations( :prefix => true )
         end
       end
     end

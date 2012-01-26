@@ -2,6 +2,25 @@ require "spec_helper"
 
 describe "Vocab::Extractor::Rails" do
 
+  describe 'write_diff' do
+
+    it 'writes the diff to the correct file'
+
+  end
+
+  describe 'hasherize' do
+
+    it 'writes the diff in standard rails locale yaml format' do
+      flattened = { :"en.video_mail.kid.approve"     => "To let %{kid} start sending video mail",
+                    :"en.models.subject.id_125.name" => "Recording Data Stuff" }
+      hash = Vocab::Extractor::Rails.hasherize( flattened )
+      expected = { :en=> { :models => { :subject => { :id_125=> { :name => "Recording Data Stuff" } } },
+                           :video_mail=> { :kid=>{ :approve=>"To let %{kid} start sending video mail" } } } }
+      hash.should == expected
+    end
+
+  end
+
   describe "previous" do
 
     before( :each ) do
@@ -61,10 +80,10 @@ describe "Vocab::Extractor::Rails" do
     end
 
     it "extracts the strings that need to be translated into a yml file" do
-      Vocab::Extractor::Rails.should_receive( :extract_current ).and_return( { 1 => 5, 3 => 4 } )
-      Vocab::Extractor::Rails.should_receive( :extract_previous ).and_return( { 1 => 2 } )
+      Vocab::Extractor::Rails.should_receive( :extract_current ).and_return( { :en => { 1 => 5, 3 => 4 } } )
+      Vocab::Extractor::Rails.should_receive( :extract_previous ).and_return( { :en => { 1 => 2 } } )
       Vocab::Extractor::Rails.extract( @path )
-      YAML.load_file( @path ).should == { 1 => 5, 3 => 4 }
+      YAML.load_file( @path ).should == { :en => { 1 => 5, 3 => 4 } }
     end
 
   end

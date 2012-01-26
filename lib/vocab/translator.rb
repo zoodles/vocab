@@ -29,13 +29,13 @@ module Vocab
       File.open( file, 'w+' ) { |f| f.write( yaml ) }
     end
 
-    def translations
-      return @backend.send( :translations )[ @locale ]
+    def translations( options = {} )
+      trans = @backend.send( :translations )[ @locale ]
+      return options[ :prefix ] == true ? { @locale => trans } : trans
     end
 
     def flattened_translations( options = {} )
-      t = options[ :prefix ] == true ? { @locale => translations } : translations
-      return @backend.flatten_translations( @locale, t, true, false )
+      return @backend.flatten_translations( @locale, translations( options ), true, false )
     end
 
     def store( key, value )
