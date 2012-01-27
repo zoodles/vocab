@@ -34,15 +34,19 @@ describe "Vocab::Extractor::Base" do
   describe "extract" do
 
     before( :each ) do
-      @path = "#{vocab_root}/spec/tmp/en.yml"
-      File.delete( @path ) if File.exists?( @path )
+      @diff_path = "#{vocab_root}/spec/tmp/en.yml"
+      @full_path = "#{vocab_root}/spec/tmp/en.yml"
+      File.delete( @diff_path ) if File.exists?( @diff_path )
     end
 
     it "extracts the strings that need to be translated into a yml file" do
-      Vocab::Extractor::Base.should_receive( :extract_current ).and_return( { 1 => 5, 3 => 4 } )
-      Vocab::Extractor::Base.should_receive( :extract_previous ).and_return( { 1 => 2 } )
-      Vocab::Extractor::Base.should_receive( :write_diff ).with( { 1 => 5, 3 => 4 }, @path )
-      Vocab::Extractor::Base.extract( @path )
+      current = { 1 => 5, 3 => 4 }
+      previous = { 1 => 2 }
+      Vocab::Extractor::Base.should_receive( :extract_current ).and_return( current )
+      Vocab::Extractor::Base.should_receive( :extract_previous ).and_return( previous )
+      Vocab::Extractor::Base.should_receive( :write_diff ).with( { 1 => 5, 3 => 4 }, @diff_path )
+      Vocab::Extractor::Base.should_receive( :write_full ).with( current, @full_path )
+      Vocab::Extractor::Base.extract( @diff_path, @full_path )
     end
 
   end

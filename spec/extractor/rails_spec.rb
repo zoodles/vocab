@@ -8,6 +8,18 @@ describe "Vocab::Extractor::Rails" do
 
   end
 
+  describe 'write_full' do
+
+    it 'writes the full en translation to a file' do
+      translation = { :en => { :full => 'translation' } }
+      path = "#{vocab_root}/spec/tmp/en.full.yml"
+      Vocab::Extractor::Rails.write_full( translation, path )
+      YAML.load_file( path ).should eql( translation )
+      File.delete( path )
+    end
+
+  end
+
   describe 'hasherize' do
 
     it 'writes the diff in standard rails locale yaml format' do
@@ -75,15 +87,18 @@ describe "Vocab::Extractor::Rails" do
   describe "extract" do
 
     before( :each ) do
-      @path = "#{vocab_root}/spec/tmp/en.yml"
-      File.delete( @path ) if File.exists?( @path )
+      @diff_path = "#{vocab_root}/spec/tmp/en.yml"
+      @full_path = "#{vocab_root}/spec/tmp/en.full.yml"
     end
 
     it "extracts the strings that need to be translated into a yml file" do
       Vocab::Extractor::Rails.should_receive( :extract_current ).and_return( { :en => { 1 => 5, 3 => 4 } } )
       Vocab::Extractor::Rails.should_receive( :extract_previous ).and_return( { :en => { 1 => 2 } } )
-      Vocab::Extractor::Rails.extract( @path )
-      YAML.load_file( @path ).should == { :en => { 1 => 5, 3 => 4 } }
+      Vocab::Extractor::Rails.extract( @diff_path, @full_path )
+      YAML.load_file( @diff_path ).should == { :en => { 1 => 5, 3 => 4 } }
+
+      File.delete( @diff_path ) if File.exists?( @diff_path )
+      File.delete( @full_path ) if File.exists?( @full_path )
     end
 
   end

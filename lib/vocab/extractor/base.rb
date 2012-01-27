@@ -2,11 +2,12 @@ module Vocab
   module Extractor
     class Base
       class << self
-        def extract( path = nil )
+        def extract( diff_path = nil, full_path = nil )
           current = extract_current
           previous = extract_previous
           diff = diff( previous, current )
-          write_diff( diff, path )
+          write_diff( diff, diff_path )
+          write_full( current, full_path )
         end
 
         # make a hash of all the translations that are new or changed in the current yml

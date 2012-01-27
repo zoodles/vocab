@@ -4,7 +4,16 @@ module Vocab
       class << self
         def write_diff( diff, path )
           path ||= "#{Vocab.root}/en.yml"
-          data = hasherize( diff ).to_yaml
+          write( diff, path )
+        end
+
+        def write_full( full, path )
+          path ||= "#{Vocab.root}/en.full.yml"
+          write( full, path )
+        end
+
+        def write( translations, path )
+          data = hasherize( translations ).to_yaml
           File.open( path, "w+" ) { |f| f.write( data ) }
           Vocab.ui.say( "Extracted to #{path}" )
         end
