@@ -5,6 +5,8 @@ require "rspec"
 require "vocab"
 require "support/matchers"
 
+Vocab.ui.silent = true
+
 RSpec.configure do |config|
   config.include Vocab::Spec::Matchers
 end
