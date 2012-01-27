@@ -1,0 +1,11 @@
+cn:
+  marketing:
+    banner: 這改變了營銷信息
+  edu:
+    name: 這是一個新的頂級名
+  models:
+    product:
+      id_55:
+        description: 這說明改變
+        name: 一個新的嵌套的名稱
+  translator_cruft: 這是不小心添加了一個翻譯

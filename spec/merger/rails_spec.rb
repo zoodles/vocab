@@ -72,6 +72,28 @@ describe "Vocab::Merger::Rails" do
 
   end
 
+  describe "create_file" do
+
+    before( :each ) do
+      clear_merge_dir
+
+      @file = "#{@merge_dir}/cn.yml"
+      @update_dir = "#{vocab_root}/spec/data/translations"
+    end
+
+    it "creates a file for missing translations" do
+      File.exists?( @file ).should be_false
+      @merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
+      @merger.merge_file( @file )
+      File.exists?( @file ).should be_true
+
+      @merged = YAML.load_file( @file )
+      @merged[:cn][:marketing][:banner].should eql( '這改變了營銷信息' )
+      @merged[:cn][:translator_cruft].should eql( nil )
+    end
+
+  end
+
   describe "merge" do
 
     before( :each ) do
@@ -104,6 +126,18 @@ describe "Vocab::Merger::Rails" do
   describe 'write_file' do
 
     it 'writes translations to a file'
+
+  end
+
+  describe "keys_for_file" do
+
+    it "returns the keys that should be in a file" do
+      path = "#{vocab_root}/spec/data/locales/es.yml"
+      actual = Vocab::Merger::Rails.keys_for_file( path )
+      expected = [:"dashboard.details", :"menu.first", :"dashboard.chart", :"menu.second", :"marketing.banner"]
+      actual.each { |key| expected.should include( key ) }
+      actual.size.should eql( expected.size )
+    end
 
   end
 
