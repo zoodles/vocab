@@ -1,11 +1,21 @@
 cn:
   marketing:
     banner: 這改變了營銷信息
-  edu:
-    name: 這是一個新的頂級名
+  dashboard:
+    chart: 此值已更改
+    details: 此鍵 /值已添加
+  menu:
+    first: 第一個菜單項
+    second: 第二個菜單項
   models:
     product:
+      id_125:
+        description: 綠色與兆瓦
+        name: 休閒
+      id_36:
+        description: 極化和激光耐
+        name: 此嵌套值已更改
       id_55:
-        description: 這說明改變
+        description: 一個新的嵌套描述
         name: 一個新的嵌套的名稱
   translator_cruft: 這是不小心添加了一個翻譯

@@ -90,21 +90,37 @@ describe 'Vocab::Translator' do
 
   describe 'flattened_translations' do
 
-    it 'returns the translations with flattened keys' do
+    it 'returns the translations with flattened keys in english' do
       translator = Vocab::Translator.new
       translator.load_dir( "#{vocab_root}/spec/data/locales" )
       actual = translator.flattened_translations
-      expected = { :"models.product.id_125.description"=>"Green with megawatts",
-                   :"models.product.id_36.description" =>"Polarized and lazer resistant",
-                   :"models.product.id_36.name"        =>"This nested value has changed",
-                   :"menu.first"                       =>"First menu item",
-                   :"menu.second"                      =>"Second menu item",
-                   :"marketing.banner"                 =>"This product is so good",
-                   :"dashboard.details"                =>"This key/value has been added",
+      expected = { :"dashboard.details"                =>"This key/value has been added",
                    :"models.product.id_125.name"       =>"Lazer",
-                   :"models.product.id_55.description" =>"A new nested description",
+                   :"models.product.id_55.name"        =>"a new nested name",
+                   :"models.product.id_36.name"        =>"This nested value has changed",
+                   :"menu.second"                      =>"Second menu item",
                    :"dashboard.chart"                  =>"This value has changed",
-                   :"models.product.id_55.name"        =>"a new nested name" }
+                   :"menu.first"                       =>"First menu item",
+                   :"marketing.banner"                 =>"This product is so good",
+                   :"models.product.id_125.description"=>"Green with megawatts",
+                   :"models.product.id_55.description" =>"A new nested description",
+                   :"models.product.id_36.description" =>"Polarized and lazer resistant" }
+      actual.should == expected
+    end
+
+    it 'returns the translations with flattened keys in other languages' do
+      translator = Vocab::Translator.new( :es )
+      translator.load_dir( "#{vocab_root}/spec/data/locales" )
+      actual = translator.flattened_translations
+      expected = { :"models.product.id_125.name"       =>"Lazero",
+                   :"marketing.banner"                 =>"hola",
+                   :"models.product.id_55.name"        =>"Muy bonita",
+                   :"models.product.id_125.description"=>"Verde",
+                   :"models.product.id_36.name"        =>"No Lazero",
+                   :"models.product.id_55.description" =>"Azul",
+                   :"models.product.id_36.description" =>"Negro",
+                   :"dashboard.chart"                  =>"Es muy bonita",
+                   :"dashboard.details"                =>"grande" }
       actual.should == expected
     end
 

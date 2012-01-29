@@ -35,7 +35,7 @@ describe "Vocab::Merger::Rails" do
     before( :each ) do
       clear_merge_dir
 
-      @file = "#{@merge_dir}/en.yml"
+      @file = "#{@merge_dir}/es.yml"
       @update_dir = "#{vocab_root}/spec/data/translations"
 
       @merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
@@ -44,30 +44,23 @@ describe "Vocab::Merger::Rails" do
     end
 
     it "merges updated translations" do
-      @merged[:en][:marketing][:banner].should eql('this marketing message has changed')
+      @merged[:es][:marketing][:banner].should eql( 'hola mi amigo' )
     end
 
     it "ignores key accidentally introduced by the translators" do
-      @merged[:en][:translator_cruft].should be( nil )
+      @merged[:es][:translator_cruft].should be( nil )
     end
 
     it "retains unchanged translations" do
-      @merged[:en][:menu][:first].should eql('First menu item')
+      @merged[:es][:dashboard][:chart].should eql( 'Es muy bonita' )
     end
 
     it "does not include translations from nested files" do
-      @merged[:en][:models].should eql( nil )
+      @merged[:es][:models].should eql( nil )
     end
 
     it "does not include translations from other languages" do
-      @merged[:en][:marketing][:banner].should_not eql( 'hola' )
-    end
-
-    it "skips file if matching old and update file not found" do
-      missing = "missing_file/en.yml"
-      @merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
-      @merger.merge_file( missing )
-      File.exists?( "#{@merge_dir}/#{missing}" ).should be_false
+      @merged[:es][:marketing][:banner].should_not eql( '這改變了營銷信息' )
     end
 
   end
@@ -105,11 +98,11 @@ describe "Vocab::Merger::Rails" do
       merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
       merger.merge
 
-      @merged = YAML.load_file( "#{@merge_dir}/models/product/en.yml" )
-      @merged[:en][:models][:product][:id_125][:description].should eql( 'Green with megawatts' )
-      @merged[:en][:models][:product][:id_125][:name].should eql( 'Lazer' )
-      @merged[:en][:models][:product][:id_55][:description].should eql( 'This description changed' )
-      @merged[:en][:models][:product][:id_55][:name].should eql( 'a new nested name' )
+      @merged = YAML.load_file( "#{@merge_dir}/models/product/es.yml" )
+      @merged[:es][:models][:product][:id_125][:description].should eql( 'mucho Verde' )
+      @merged[:es][:models][:product][:id_125][:name].should eql( 'mucho Lazero' )
+      @merged[:es][:models][:product][:id_55][:description].should eql( 'Azul' )
+      @merged[:es][:models][:product][:id_55][:name].should eql( 'Muy bonita' )
     end
 
     it 'merges non-english translations' do
@@ -119,6 +112,7 @@ describe "Vocab::Merger::Rails" do
       @merged = YAML.load_file( "#{@merge_dir}/es.yml" )
       @merged[:es][:marketing][:banner].should eql( 'hola mi amigo' )
       @merged[:es][:dashboard][:chart].should eql( 'Es muy bonita' )
+      @merged[:es][:menu][:first].should eql( 'Uno' )
     end
 
   end
@@ -137,6 +131,33 @@ describe "Vocab::Merger::Rails" do
       expected = [:"dashboard.details", :"menu.first", :"dashboard.chart", :"menu.second", :"marketing.banner"]
       actual.each { |key| expected.should include( key ) }
       actual.size.should eql( expected.size )
+    end
+
+  end
+
+  describe "translatable?" do
+
+    before( :each ) do
+      @merger = Vocab::Merger::Rails.new
+    end
+
+    it "doesn't translate english files because that should be the reference language anyway" do
+      @merger.translatable?( "#{vocab_root}/spec/data/locales/es.yml" ).should be_true
+      @merger.translatable?( "#{vocab_root}/spec/data/locales/en.yml" ).should be_false
+    end
+
+    it "doesn't translate files that don't have equivalent en.yml reference file"
+
+    it "ignores files that don't have matching filename and contents" do
+      spanish_file = "#{vocab_root}/spec/tmp/es.yml"
+      english_file = Vocab::Merger::Rails.en_equivalent_path( spanish_file )
+      english_contents = { :en => { :english => 'stuff here' } }
+      File.open( spanish_file, 'w+' ) { |file| file.write( english_contents.to_yaml ) }
+      File.open( english_file, 'w+' ) { |file| file.write( english_contents.to_yaml ) }
+      Vocab.ui.should_receive( :say ).with( 'File extension does not match file contents' )
+      @merger.translatable?( spanish_file ).should be_false
+      File.delete( spanish_file ) if File.exists?( spanish_file )
+      File.delete( english_file ) if File.exists?( english_file )
     end
 
   end

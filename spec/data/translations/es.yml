@@ -1,6 +1,12 @@
 es:
+  menu:
+    first: Uno
+    second: Dos
   marketing:
     banner: hola mi amigo
-  dashboard:
-    chart: Es muy bonita
-    details: grande
+  models:
+    product:
+      id_125:
+        description: mucho Verde
+        name: mucho Lazero
+  translator_cruft: estúpido

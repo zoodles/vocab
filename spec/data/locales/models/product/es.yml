@@ -1,0 +1,13 @@
+---
+es:
+  models:
+    product:
+      id_125:
+        description: Verde
+        name: Lazero
+      id_36:
+        description: Negro
+        name: No Lazero
+      id_55:
+        description: Azul
+        name: Muy bonita

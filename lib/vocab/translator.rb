@@ -8,9 +8,9 @@ module Vocab
 
     attr_accessor :locale
 
-    def initialize
+    def initialize( locale = :en )
       @backend = I18n::Backend::Simple.new
-      @locale = :en
+      @locale = locale
     end
 
     def load_dir( dir )
@@ -30,7 +30,8 @@ module Vocab
     end
 
     def translations( options = {} )
-      trans = @backend.send( :translations )[ @locale ]
+      t = @backend.send(:translations)
+      trans = t[ @locale ]
       return options[ :prefix ] == true ? { @locale => trans } : trans
     end
 
