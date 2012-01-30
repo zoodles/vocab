@@ -33,6 +33,10 @@ module Vocab
         def write_diff( diff, path )
           raise "not implemented"
         end
+
+        def write_full( diff, path )
+          raise "not implemented"
+        end
       end
     end
   end
