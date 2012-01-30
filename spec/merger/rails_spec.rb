@@ -162,4 +162,18 @@ describe "Vocab::Merger::Rails" do
 
   end
 
+  describe 'translation_locales' do
+
+    before ( :each ) do
+      @updates_dir = "#{vocab_root}/spec/data/translations"
+      @merger = Vocab::Merger::Rails.new
+      @merger.updates_dir = @updates_dir
+    end
+
+    it 'returns a list of locales in the translations' do
+      @merger.translation_locales.sort.should eql( [ 'cn', 'es' ] )
+    end
+
+  end
+
 end

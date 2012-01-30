@@ -86,6 +86,10 @@ module Vocab
         File.open( path, 'w+' ) { |file| file.write( { locale => {} }.to_yaml ) }
       end
 
+      def translation_locales
+        return Dir.glob( "#{@updates_dir}/*.yml" ).collect { |f| File.basename( f, '.yml' ) }
+      end
+
     end
   end
 end
