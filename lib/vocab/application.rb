@@ -16,6 +16,8 @@ module Vocab
         case ARGV.first
         when "init"
           init
+        when "extract_android"
+          Extractor::Android.extract
         when "extract_rails"
           Extractor::Rails.extract
         when "merge_rails"
@@ -30,14 +32,15 @@ module Vocab
       end
 
       def usage
-        <<-EOS
-          Usage: vocab [-v] [-h] command
+<<-EOS
+  Usage: vocab [-v] [-h] command
 
-              -h, --help       Print this help.
+      -h, --help       Print this help.
 
-              extract_rails    Extract English strings that need translation
-              merge_rails      Merge translations from tmp/translations into config/locales yml files
-        EOS
+      extract_rails    Extract English strings that need translation from yml files
+      extract_android  Extract English strings that need translation from strings.xml
+      merge_rails      Merge translations from tmp/translations into config/locales yml files
+EOS
       end
     end
   end
