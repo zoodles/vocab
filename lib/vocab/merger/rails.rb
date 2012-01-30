@@ -46,7 +46,7 @@ module Vocab
 
       def self.keys_for_file( path )
         en_path = Vocab::Merger::Rails.en_equivalent_path( path )
-        translator = Vocab::Translator.new
+        translator = Vocab::Translator::Rails.new
         translator.load_file( en_path )
         return translator.flattened_translations.keys
       end
@@ -72,7 +72,7 @@ module Vocab
       end
 
       def translator( path )
-        translator = Vocab::Translator.new
+        translator = Vocab::Translator::Rails.new
         translator.load_file( path ) if File.exists?( path )
         return translator
       end

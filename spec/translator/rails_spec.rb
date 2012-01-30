@@ -1,11 +1,11 @@
 require "spec_helper"
 
-describe 'Vocab::Translator' do
+describe 'Vocab::Translator::Rails' do
 
   describe 'load_dir' do
 
     before( :each ) do
-      @translator = Vocab::Translator.new
+      @translator = Vocab::Translator::Rails.new
       @translator.load_dir( "#{vocab_root}/spec/data/locales" )
     end
 
@@ -38,19 +38,19 @@ describe 'Vocab::Translator' do
     end
 
     it 'loads translations from a yml file' do
-      translator = Vocab::Translator.new
+      translator = Vocab::Translator::Rails.new
       translator.load_file( @file )
       translator.translations.should == @data
     end
 
     it 'sets the language based on the file loaded' do
       @file = "#{vocab_root}/spec/data/locales/en.yml"
-      translator = Vocab::Translator.new
+      translator = Vocab::Translator::Rails.new
       translator.load_file( @file )
       translator.locale.should eql( :en )
 
       @file = "#{vocab_root}/spec/data/locales/es.yml"
-      translator = Vocab::Translator.new
+      translator = Vocab::Translator::Rails.new
       translator.load_file( @file )
       translator.locale.should eql( :es )
     end
@@ -70,19 +70,19 @@ describe 'Vocab::Translator' do
     end
 
     it 'caches the translations to protect against someone swapping I18n.load_path' do
-      translator_1 = Vocab::Translator.new
+      translator_1 = Vocab::Translator::Rails.new
       translator_1.load_file( @file_1 )
       data_1 = translator_1.translations
 
       # Implicitly changes the I18n.load_path
-      translator_2 = Vocab::Translator.new
+      translator_2 = Vocab::Translator::Rails.new
       translator_2.load_file( @file_2 )
 
       translator_1.translations.should eql( data_1 )
     end
 
     it 'returns nil languages without a translation' do
-      translator = Vocab::Translator.new
+      translator = Vocab::Translator::Rails.new
       translator.translations.should eql( nil )
     end
 
@@ -91,7 +91,7 @@ describe 'Vocab::Translator' do
   describe 'flattened_translations' do
 
     it 'returns the translations with flattened keys in english' do
-      translator = Vocab::Translator.new
+      translator = Vocab::Translator::Rails.new
       translator.load_dir( "#{vocab_root}/spec/data/locales" )
       actual = translator.flattened_translations
       expected = { :"dashboard.details"                =>"This key/value has been added",
@@ -109,7 +109,7 @@ describe 'Vocab::Translator' do
     end
 
     it 'returns the translations with flattened keys in other languages' do
-      translator = Vocab::Translator.new( :es )
+      translator = Vocab::Translator::Rails.new( :es )
       translator.load_dir( "#{vocab_root}/spec/data/locales" )
       actual = translator.flattened_translations
       expected = { :"models.product.id_125.name"       =>"Lazero",
@@ -131,7 +131,7 @@ describe 'Vocab::Translator' do
     it 'stores translation' do
       @key = 'foo.bar'
       @value = 'baz'
-      translator = Vocab::Translator.new
+      translator = Vocab::Translator::Rails.new
       translator.store( @key, @value )
       translator.flattened_translations[ @key.to_sym ].should eql( @value )
     end
@@ -143,7 +143,7 @@ describe 'Vocab::Translator' do
     it 'fetch a translation' do
       @key = 'foo.bar'
       @value = 'baz'
-      translator = Vocab::Translator.new
+      translator = Vocab::Translator::Rails.new
       translator.store( @key, @value )
       translator.fetch( @key ).should eql( @value )
     end

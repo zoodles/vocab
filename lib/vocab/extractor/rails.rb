@@ -43,13 +43,13 @@ module Vocab
         end
 
         def translations( dir )
-          translator = Translator.new
+          translator = Vocab::Translator::Rails.new
           translator.load_dir( dir )
           return translator.flattened_translations( :prefix => true )
         end
 
         def hasherize( diff )
-          translator = Vocab::Translator.new
+          translator = Vocab::Translator::Rails.new
           diff.each do |key, value|
             key = key.to_s.gsub!( /^en\./, '' )
             translator.store( key, value )
