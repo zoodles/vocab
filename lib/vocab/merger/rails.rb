@@ -11,7 +11,7 @@ module Vocab
 
       def merge
         files_to_merge.each { |file| merge_file( file ) }
-        finalize
+        update_settings
       end
 
       def merge_file( locales_path )
