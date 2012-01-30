@@ -20,6 +20,8 @@ module Vocab
           Extractor::Android.extract
         when "extract_rails"
           Extractor::Rails.extract
+        when "merge_android"
+          Merger::Android.new.merge
         when "merge_rails"
           Merger::Rails.new.merge
         else
