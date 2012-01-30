@@ -27,10 +27,14 @@ Set the current git commit to be the starting point for the next translation dif
 
     vocab extract_rails
 
-## Extracting Changed and Updated Strings For Translation
+## Merging new translations into project string files
 
-    TBD
+    vocab merge_rails
 
 # TODO
 
-  * TBD
+  * Add .processed to each tmp/translation after success
+
+# Questions
+
+  * What is the correct behavior is no translation available for key
