@@ -176,4 +176,22 @@ describe "Vocab::Merger::Rails" do
 
   end
 
+  describe 'files_to_merge' do
+
+    before ( :each ) do
+      @locales_dir = "#{vocab_root}/spec/data/locales"
+      @updates_dir = "#{vocab_root}/spec/data/translations"
+      @merger = Vocab::Merger::Rails.new( @locales_dir, @updates_dir )
+    end
+
+    it 'returns an array of files for translation' do
+      expected = ["#{@locales_dir}/cn.yml",
+                  "#{@locales_dir}/es.yml",
+                  "#{@locales_dir}/models/product/cn.yml",
+                  "#{@locales_dir}/models/product/es.yml"]
+      @merger.files_to_merge.sort.should eql( expected )
+    end
+
+  end
+
 end

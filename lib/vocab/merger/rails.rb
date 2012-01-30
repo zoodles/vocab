@@ -10,10 +10,7 @@ module Vocab
       end
 
       def merge
-        locales_files = Dir.glob( "#{locales_dir}/**/*.yml" )
-        locales_files.each do |path|
-          merge_file( path )
-        end
+        files_to_merge.each { |file| merge_file( file ) }
         finalize
       end
 
@@ -88,6 +85,16 @@ module Vocab
 
       def translation_locales
         return Dir.glob( "#{@updates_dir}/*.yml" ).collect { |f| File.basename( f, '.yml' ) }
+      end
+
+      def files_to_merge
+        paths = []
+        Dir.glob( "#{@locales_dir}/**/en.yml" ).each do |en_path|
+          translation_locales.each do |locale|
+            paths << en_path.gsub( /en.yml$/, "#{locale}.yml" )
+          end
+        end
+        return paths
       end
 
     end
