@@ -29,7 +29,7 @@ module Vocab
             tmpdir_path = "#{tmpdir}/#{path}"
             FileUtils.mkdir_p( File.dirname( tmpdir_path ) )
             File.open( tmpdir_path, "w+" ) do |f|
-              yml = `git show #{sha}:#{locales_root}/#{path}`
+              yml = previous_file( "#{locales_root}/#{path}", sha )
               f.write( yml )
             end
           end

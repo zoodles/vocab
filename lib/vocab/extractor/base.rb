@@ -37,6 +37,11 @@ module Vocab
         def write_full( diff, path )
           raise "not implemented"
         end
+
+        def previous_file( path, sha )
+          return `git show #{sha}:#{path}`
+        end
+
       end
     end
   end

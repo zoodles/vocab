@@ -51,4 +51,21 @@ describe "Vocab::Extractor::Base" do
 
   end
 
+  describe "previous_file" do
+
+    before( :each ) do
+      @path = "spec/data/android/locales/strings.xml"
+      Dir.chdir( vocab_root )
+    end
+
+    it "returns the contents of a file from a specific git version" do
+      contents = Vocab::Extractor::Base.previous_file( @path, 'a19f7c5c28c1158792a966c0d2153a04490dd35e' )
+      should_eql_file( contents, 'spec/data/android/versions/strings_1.xml' )
+
+      contents = Vocab::Extractor::Base.previous_file( @path, '0533bcd9a304cd6e74d6a56959dbcabd57b2f1b9' )
+      should_eql_file( contents, 'spec/data/android/versions/strings_2.xml' )
+    end
+
+  end
+
 end
