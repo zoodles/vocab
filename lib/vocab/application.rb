@@ -39,6 +39,7 @@ module Vocab
 
       -h, --help       Print this help.
 
+      init             Create a .vocab file with the current SHA as reference
       extract_rails    Extract English strings that need translation from yml files
       extract_android  Extract English strings that need translation from strings.xml
       merge_rails      Merge translations from tmp/translations into config/locales yml files
