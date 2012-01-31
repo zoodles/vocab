@@ -54,6 +54,7 @@ describe "Vocab::Extractor::Base" do
   describe "previous_file" do
 
     before( :each ) do
+      Dir.chdir( vocab_root )
       @path = "spec/data/android/locales/strings.xml"
     end
 
