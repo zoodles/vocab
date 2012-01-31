@@ -26,7 +26,7 @@ module Vocab
     # Returns root directory where .vocab is located
     # TODO: make this work when not executing command where .vocab is
     def root
-      return File.expand_path( Dir.pwd )
+      return File.expand_path( "../..", __FILE__ )
     end
 
   end

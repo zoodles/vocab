@@ -39,7 +39,8 @@ module Vocab
         end
 
         def previous_file( path, sha )
-          return `git show #{sha}:#{path}`
+          path = path.gsub( "#{Vocab.root}/", '' )
+          return `cd #{Vocab.root} && git show #{sha}:#{path}`
         end
 
       end
