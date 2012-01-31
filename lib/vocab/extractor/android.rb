@@ -22,14 +22,14 @@ module Vocab
           return hash_from_xml( tmpfile )
         end
 
-        def write_diff( diff, path )
-          Vocab.ui.say( 'Implement me in lib/vocab/extractor/android.rb' )
-          # write out a strings.xml file containing the strings that need to be updated
+        def write_diff( diff, path = nil )
+          path ||= "#{Vocab.root}/strings.diff.xml"
+          write( diff, path )
         end
 
-        def write_full( diff, path )
-          Vocab.ui.say( 'Implement me in lib/vocab/extractor/android.rb' )
-          # write out a strings.xml file containing all the strings for a new translation
+        def write_full( diff, path = nil )
+          path ||= "#{Vocab.root}/strings.full.xml"
+          write( diff, path )
         end
 
         def hash_from_xml( path )
@@ -38,6 +38,17 @@ module Vocab
           hash = {}
           children.each { |child| hash[ child['name'] ] = child.text }
           return hash
+        end
+
+        def write( hash, path )
+          builder = Nokogiri::XML::Builder.new do |xml|
+            xml.resources {
+              hash.each do |key, value|
+                xml.string( value, :name => key )
+              end
+            }
+          end
+          File.open( path, 'w' ) { |f| f.write( builder.to_xml ) }
         end
 
       end
