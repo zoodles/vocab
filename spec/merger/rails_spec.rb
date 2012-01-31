@@ -92,12 +92,12 @@ describe "Vocab::Merger::Rails" do
     before( :each ) do
       clear_merge_dir
       @update_dir = "#{vocab_root}/spec/data/translations"
+      Vocab.settings.should_receive( :update_translation )
+      @merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
+      @merger.merge
     end
 
     it 'merges nested files' do
-      merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
-      merger.merge
-
       @merged = YAML.load_file( "#{@merge_dir}/models/product/es.yml" )
       @merged[:es][:models][:product][:id_125][:description].should eql( 'mucho Verde' )
       @merged[:es][:models][:product][:id_125][:name].should eql( 'mucho Lazero' )
@@ -106,9 +106,6 @@ describe "Vocab::Merger::Rails" do
     end
 
     it 'merges non-english translations' do
-      merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
-      merger.merge
-
       @merged = YAML.load_file( "#{@merge_dir}/es.yml" )
       @merged[:es][:marketing][:banner].should eql( 'hola mi amigo' )
       @merged[:es][:dashboard][:chart].should eql( 'Es muy bonita' )
