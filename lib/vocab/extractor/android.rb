@@ -6,12 +6,12 @@ module Vocab
       class << self
 
         def extract_current( path = nil )
-          path ||= "#{Vocab.root}/spec/data/android/locales/strings.xml"
+          path ||= "#{Vocab.root}/tmp/last_translation/strings.xml"
           return hash_from_xml( path )
         end
 
         def extract_previous( path = nil )
-          path ||= "#{Vocab.root}/spec/data/android/locales/strings.xml"
+          path ||= "#{Vocab.root}/tmp/last_translation/strings.xml"
           puts "path = #{path}"
           sha = Vocab.settings.last_translation
           xml = previous_file( path, sha )

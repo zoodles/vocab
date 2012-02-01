@@ -1,4 +1,5 @@
 require 'optparse'
+require 'ostruct'
 
 module Vocab
   class Application
@@ -13,19 +14,36 @@ module Vocab
       ##############################
 
       def handle_command
-        case ARGV.first
-        when "init"
+        options = OpenStruct.new
+        parser = OptionParser.new
+
+        parser.banner = 'Usage: vocab [-h] command [platform] [file]'
+        parser.on( '-h', '--help', 'Show usage' ) { options.help = true }
+        parser.separator ""
+        parser.separator "    vocab init"
+        parser.separator "    vocab extract rails"
+        parser.separator "    vocab extract android path/to/strings.xml"
+        parser.separator "    vocab merge   rails"
+        parser.separator "    vocab merge   android path/to/strings.xml"
+        parser.separator ""
+
+        commands = parser.parse( ARGV )
+        options.command = commands[0]
+        options.platform = commands[1]
+        options.path = commands[2]
+
+        if( options.command == 'init' )
           init
-        when "extract_android"
-          Extractor::Android.extract
-        when "extract_rails"
+        elsif( options.command == 'extract' && options.platform == 'rails' )
           Extractor::Rails.extract
-        when "merge_android"
-          Merger::Android.new.merge
-        when "merge_rails"
-          Merger::Rails.new.merge
+        elsif( options.command == 'extract' && options.platform == 'android' )
+          Extractor::Android.extract
+        elsif( options.command == 'merge' && options.platform == 'rails' )
+          Merger::Rails.merge
+        elsif( options.command == 'merge' && options.platform == 'android' )
+          Merger::Android.merge
         else
-          puts usage
+          puts parser.help
         end
       end
 
@@ -33,18 +51,6 @@ module Vocab
         Vocab::Settings.create
       end
 
-      def usage
-<<-EOS
-  Usage: vocab [-v] [-h] command
-
-      -h, --help       Print this help.
-
-      init             Create a .vocab file with the current SHA as reference
-      extract_rails    Extract English strings that need translation from yml files
-      extract_android  Extract English strings that need translation from strings.xml
-      merge_rails      Merge translations from tmp/translations into config/locales yml files
-EOS
-      end
     end
   end
 end
