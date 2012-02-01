@@ -63,16 +63,12 @@ describe "Vocab::Extractor::Android" do
 
   describe 'write' do
 
-    before( :each ) do
-      @filename = 'strings.xml'
-    end
-
     it 'writes the translation to a xml file' do
       translation = { 'app_name' => 'Kid Mode', 'pd_app_name' => 'Parent Dashboard' }
-      path = "#{vocab_root}/spec/tmp/#{@filename}"
+      path = "#{vocab_root}/spec/tmp/strings.xml"
       Vocab::Extractor::Android.write( translation, path )
       should_eql_file( File.open( path ) { |f| f.read },
-                       "spec/data/android/extract/#{@filename}" )
+                       "spec/data/android/write.xml" )
       File.delete( path )
     end
 
