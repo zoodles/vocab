@@ -10,6 +10,7 @@ Features include:
 # Requirements
 
   * Must be used in context of git controlled project
+  * Assumes that android string files are called strings.xml
 
 # Installation
 

@@ -6,6 +6,7 @@ describe "Vocab::Merger::Rails" do
   def init_merge_dir
     @merge_dir = clear_merge_dir
     FileUtils.cp_r( "#{vocab_root}/spec/data/locales/.", @merge_dir )
+    return @merge_dir
   end
 
   it 'defaults to reasonable paths' do

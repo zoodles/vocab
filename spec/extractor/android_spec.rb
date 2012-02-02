@@ -51,7 +51,7 @@ describe "Vocab::Extractor::Android" do
 
     it 'writes the full translation to the correct xml file' do
       hash = { 'foo' => 'bar' }
-      Vocab::Extractor::Android.should_receive( :write ).
+      Vocab::Translator::Android.should_receive( :write ).
               with( hash, "#{vocab_root}/strings.full.xml" )
       Vocab::Extractor::Android.write_full( hash )
     end
@@ -62,7 +62,7 @@ describe "Vocab::Extractor::Android" do
 
     it 'writes the diff translation to the correct xml file' do
       hash = { 'foo' => 'bar' }
-      Vocab::Extractor::Android.should_receive( :write ).
+      Vocab::Translator::Android.should_receive( :write ).
               with( hash, "#{vocab_root}/strings.diff.xml" )
       Vocab::Extractor::Android.write_diff( hash )
     end
@@ -74,7 +74,7 @@ describe "Vocab::Extractor::Android" do
     it 'writes the translation to a xml file' do
       translation = { 'app_name' => 'Kid Mode', 'pd_app_name' => 'Parent Dashboard' }
       path = "#{vocab_root}/spec/tmp/strings.xml"
-      Vocab::Extractor::Android.write( translation, path )
+      Vocab::Translator::Android.write( translation, path )
       should_eql_file( File.open( path ) { |f| f.read },
                        "spec/data/android/write.xml" )
       File.delete( path )

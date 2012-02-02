@@ -10,6 +10,17 @@ module Vocab
         return hash
       end
 
+      def self.write( hash, path )
+        builder = Nokogiri::XML::Builder.new do |xml|
+          xml.resources {
+            hash.each do |key, value|
+              xml.string( value, :name => key )
+            end
+          }
+        end
+        File.open( path, 'w' ) { |f| f.write( builder.to_xml ) }
+      end
+
     end
   end
 end

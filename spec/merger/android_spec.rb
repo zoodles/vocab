@@ -3,6 +3,7 @@ require "spec_helper"
 describe "Vocab::Merger::Android" do
 
   before( :each ) do
+    @update_dir = "#{vocab_root}/spec/data/android/translations"
     @merge_dir = clear_merge_dir
     FileUtils.cp_r( "#{vocab_root}/spec/data/android/locales/.", @merge_dir )
   end
@@ -23,8 +24,33 @@ describe "Vocab::Merger::Android" do
 
   describe 'merge_file' do
 
-    it '' do
+    before( :each ) do
+      @file = "#{@merge_dir}/values-es/strings.xml"
+      @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      @merger.merge_file( @file )
+      @merged = Vocab::Translator::Android.hash_from_xml( @file )
+      puts "@merged = #{@merged.inspect}"
+    end
 
+    it "merges updated android translations" do
+      @merged['pd_app_name'].should eql( 'el Panel para padres bien' )
+    end
+
+    it "integrates new android translations" do
+      @merged['cancel'].should eql( 'Cancelar' )
+    end
+
+    it "ignores key accidentally introduced by the translators into android translations" do
+      @merged['translator_cruft'].should be( nil )
+    end
+
+    it "retains unchanged android translations" do
+      @merged['app_name'].should eql( 'Modo Niños' )
+    end
+
+    it "does not include android translations from other languages" do
+      pending( "make this work after adding another language to test data" )
+      @merged['app_name'].should_not eql( '這改變了營銷信息' )
     end
 
   end
@@ -35,6 +61,31 @@ describe "Vocab::Merger::Android" do
       merger = Vocab::Merger::Android.new( @merge_dir )
       keys = [ "app_name", "delete", "cancel", "app_current", "pd_app_name" ]
       merger.english_keys.should eql( keys )
+    end
+
+  end
+
+  describe 'current_for_locale' do
+
+    it 'returns hash of the current translations that match a locale file' do
+      merger = Vocab::Merger::Android.new( @merge_dir )
+      expected = { "app_name"   =>"Modo Ni\303\261os",
+                   "app_current"=>"actual",
+                   "pd_app_name"=>"el Panel para padres"}
+      merger.current_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
+    end
+
+  end
+
+  describe 'updates' do
+
+    it 'returns hash of the updates that match a locale file' do
+      merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      expected = { 'cancel'           => 'Cancelar',
+                   'delete'           => 'Eliminar',
+                   'pd_app_name'      => 'el Panel para padres bien',
+                   'translator_cruft' => 'Malo' }
+      merger.updates_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
     end
 
   end
