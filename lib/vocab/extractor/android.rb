@@ -15,8 +15,8 @@ module Vocab
           sha = Vocab.settings.last_translation
           xml = previous_file( path, sha )
 
-          puts "Vocab.root = #{Vocab.root}"
           tmpfile = "#{Vocab.root}/tmp/last_translation/#{File.basename(path)}"
+          FileUtils.mkdir_p( File.dirname( tmpfile ) )
           File.open( tmpfile, 'w' ) { |f| f.write( xml ) }
           return hash_from_xml( tmpfile )
         end
