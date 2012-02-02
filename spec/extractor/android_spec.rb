@@ -17,6 +17,10 @@ describe "Vocab::Extractor::Android" do
                            "pd_app_name"=>"Parent Dashboard" } )
     end
 
+    it "raises an exception if translation file not specified to extract_current" do
+      lambda { Vocab::Extractor::Android.extract_current }.should raise_error
+    end
+
   end
 
   describe 'extract_previous' do
@@ -35,6 +39,10 @@ describe "Vocab::Extractor::Android" do
       actual.should eql( { 'app_name'    => 'Kid Mode',
                            'pd_app_name' => 'Parent Dashboard',
                            'app_current' => 'current' } )
+    end
+
+    it "raises an exception if translation file not specified to extract_previous" do
+      lambda { Vocab::Extractor::Android.extract_previous }.should raise_error
     end
 
   end

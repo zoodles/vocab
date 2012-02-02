@@ -57,6 +57,11 @@ describe "Vocab::Extractor::Rails" do
       actual.should eql( expected )
     end
 
+    it 'uses the correct default locale path even when an explicit nil passed' do
+      pending( "Come back to this" )
+      Vocab::Extractor::Rails.extract_previous( nil )
+    end
+
   end
 
   describe "current" do
@@ -80,6 +85,11 @@ describe "Vocab::Extractor::Rails" do
                    :"en.models.product.id_125.name"       =>"Lazer",
                    :"en.dashboard.details"                =>"This key/value has been added" }
       actual.should eql( expected )
+    end
+
+    it 'uses the correct default locale path even when an explicit nil passed' do
+      pending( "Come back to this" )
+      Vocab::Extractor::Rails.extract_current( nil )
     end
 
   end

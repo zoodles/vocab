@@ -37,7 +37,7 @@ module Vocab
         elsif( options.command == 'extract' && options.platform == 'rails' )
           Extractor::Rails.extract
         elsif( options.command == 'extract' && options.platform == 'android' )
-          Extractor::Android.extract
+          Extractor::Android.extract( nil, nil, :path => options.path )
         elsif( options.command == 'merge' && options.platform == 'rails' )
           Merger::Rails.merge
         elsif( options.command == 'merge' && options.platform == 'android' )
