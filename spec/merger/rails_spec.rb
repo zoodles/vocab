@@ -1,20 +1,12 @@
 require "spec_helper"
 require "fileutils"
 
-module MergerRailsSpecHelper
-
-  def clear_merge_dir
-    @merge_dir = "#{vocab_root}/spec/tmp/merge"
-    FileUtils.rm_rf( @merge_dir ) if File.exists?( @merge_dir )
-    FileUtils.mkdir_p( @merge_dir )
-    FileUtils.cp_r( "#{vocab_root}/spec/data/locales/.", @merge_dir )
-  end
-
-end
-
 describe "Vocab::Merger::Rails" do
 
-  include MergerRailsSpecHelper
+  def init_merge_dir
+    @merge_dir = clear_merge_dir
+    FileUtils.cp_r( "#{vocab_root}/spec/data/locales/.", @merge_dir )
+  end
 
   it 'defaults to reasonable paths' do
     merger = Vocab::Merger::Rails.new
@@ -33,8 +25,7 @@ describe "Vocab::Merger::Rails" do
   describe "merge_file" do
 
     before( :each ) do
-      clear_merge_dir
-
+      init_merge_dir
       @file = "#{@merge_dir}/es.yml"
       @update_dir = "#{vocab_root}/spec/data/translations"
 
@@ -68,8 +59,7 @@ describe "Vocab::Merger::Rails" do
   describe "create_file" do
 
     before( :each ) do
-      clear_merge_dir
-
+      init_merge_dir
       @file = "#{@merge_dir}/cn.yml"
       @update_dir = "#{vocab_root}/spec/data/translations"
     end
@@ -90,7 +80,7 @@ describe "Vocab::Merger::Rails" do
   describe "merge" do
 
     before( :each ) do
-      clear_merge_dir
+      init_merge_dir
       @update_dir = "#{vocab_root}/spec/data/translations"
       Vocab.settings.should_receive( :update_translation )
       @merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )

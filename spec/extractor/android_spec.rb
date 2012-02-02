@@ -3,7 +3,7 @@ require "spec_helper"
 describe "Vocab::Extractor::Android" do
 
   before( :each ) do
-    @locale = "#{vocab_root}/spec/data/android/locales/strings.xml"
+    @locale = "#{vocab_root}/spec/data/android/locales/values/strings.xml"
   end
 
   describe 'extract_current' do

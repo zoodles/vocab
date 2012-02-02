@@ -4,6 +4,7 @@ Bundler.setup
 require "rspec"
 require "vocab"
 require "support/matchers"
+require "support/shared"
 
 Vocab.ui.silent = true
 

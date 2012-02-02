@@ -2,8 +2,6 @@ module Vocab
   module Merger
     class Rails < Base
 
-      attr_accessor :locales_dir, :updates_dir
-
       def initialize( locales_dir = nil, updates_dir = nil )
         @locales_dir = locales_dir || 'config/locales'
         @updates_dir = updates_dir || 'tmp/translations'

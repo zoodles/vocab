@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="cancel">Cancelar</string>
+  <string name="delete">Eliminar</string>
+  <string name="translator_cruft">Malo</string>
+</resources>

@@ -1,5 +1,3 @@
-require 'nokogiri'
-
 module Vocab
   module Extractor
     class Android < Base
@@ -7,7 +5,7 @@ module Vocab
 
         def extract_current( path = nil )
           raise "Invalid path to strings.xml" unless path && File.exists?( path )
-          return hash_from_xml( path )
+          return Vocab::Translator::Android.hash_from_xml( path )
         end
 
         def extract_previous( path = nil )
@@ -18,7 +16,7 @@ module Vocab
           tmpfile = "#{Vocab.root}/tmp/last_translation/#{File.basename(path)}"
           FileUtils.mkdir_p( File.dirname( tmpfile ) )
           File.open( tmpfile, 'w' ) { |f| f.write( xml ) }
-          return hash_from_xml( tmpfile )
+          return Vocab::Translator::Android.hash_from_xml( tmpfile )
         end
 
         def write_diff( diff, path = nil )

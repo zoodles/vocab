@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Modo Niños</string>
+    <string name="pd_app_name">el Panel para padres</string>
+    <string name="app_current">actual</string>
+</resources>

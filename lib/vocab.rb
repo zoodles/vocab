@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'i18n'
 require 'pathname'
+require 'nokogiri'
 
 require 'vocab/application'
 require 'vocab/extractor'
