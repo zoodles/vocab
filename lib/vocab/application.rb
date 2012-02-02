@@ -18,13 +18,13 @@ module Vocab
         parser = OptionParser.new
 
         parser.banner = 'Usage: vocab [-h] command [platform] [file]'
-        parser.on( '-h', '--help', 'Show usage' ) { options.help = true }
+        parser.on( '-h', '--help', 'Show this usage message' ) { options.help = true }
         parser.separator ""
         parser.separator "    vocab init"
         parser.separator "    vocab extract rails"
         parser.separator "    vocab extract android path/to/strings.xml"
-        parser.separator "    vocab merge   rails"
-        parser.separator "    vocab merge   android path/to/strings.xml"
+        parser.separator "    vocab merge rails"
+        parser.separator "    vocab merge android path/to/strings.xml"
         parser.separator ""
 
         commands = parser.parse( ARGV )
