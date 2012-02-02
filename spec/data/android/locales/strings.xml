@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Kid Mode</string>
     <string name="pd_app_name">Parent Dashboard</string>
+    <!-- This is a comment -->
     <string name="app_current">current</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
