@@ -30,7 +30,7 @@ describe "Vocab::Extractor::Android" do
     end
 
     before( :each ) do
-      @sha = 'a19f7c5c28c1158792a966c0d2153a04490dd35e'
+      @sha = '2302e5acb50a9b56d113c46805de5ae0c12d28c0'
       Vocab.settings.stub!( :last_translation ).and_return( @sha )
     end
 
