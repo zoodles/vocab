@@ -8,10 +8,8 @@ module Vocab
       end
 
       def merge
-        Vocab.ui.say( 'Implement me in lib/vocab/merger/android.rb' )
-        # integrate the translations from tmp/translations into the relevant strings.xml files
-        #  - add updates to existing translations
-        #  - write whole files to new translations
+        files_to_merge.each { |file| merge_file( file ) }
+        update_settings
       end
 
       def merge_file( path )
@@ -41,6 +39,20 @@ module Vocab
         name = path.gsub( "#{@locales_dir}/", '' )
         update = "#{updates_dir}/#{name}"
         Vocab::Translator::Android.hash_from_xml( update )
+      end
+
+      def translation_locales
+        locales = []
+        Dir.glob( "#{@updates_dir}/values-*/strings.xml" ).each do |path|
+          locales << $1 if path =~ /values-(.*)\/strings.xml/
+        end
+        return locales
+      end
+
+      def files_to_merge
+        return translation_locales.collect do |locale|
+          "#{@locales_dir}/values-#{locale}/strings.xml"
+        end
       end
 
     end

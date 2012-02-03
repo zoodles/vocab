@@ -22,6 +22,23 @@ describe "Vocab::Merger::Android" do
     merger.updates_dir.should eql( updates_dir )
   end
 
+  describe "merge" do
+
+    before( :each ) do
+      Vocab.settings.should_receive( :update_translation )
+      @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      @merger.merge
+    end
+
+    it 'merges non-english translations' do
+      @merged = Vocab::Translator::Android.hash_from_xml( "#{@merge_dir}/values-es/strings.xml" )
+      @merged['app_name'].should eql( 'Modo Niños' )
+      @merged['pd_app_name'].should eql( 'el Panel para padres bien' )
+      @merged['delete'].should eql( 'Eliminar' )
+    end
+
+  end
+
   describe 'merge_file' do
 
     before( :each ) do
@@ -86,6 +103,30 @@ describe "Vocab::Merger::Android" do
                    'pd_app_name'      => 'el Panel para padres bien',
                    'translator_cruft' => 'Malo' }
       merger.updates_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
+    end
+
+  end
+
+  describe 'translation_locales' do
+
+    it 'returns the locales in the android updates directory' do
+      merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      merger.translation_locales.sort.should eql( [ 'es' ] )
+    end
+
+    it 'ignores res/values directories that are not translations'
+
+  end
+
+  describe 'files_to_merge' do
+
+    before ( :each ) do
+      @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+    end
+
+    it 'returns an array of files for translation' do
+      expected = ["#{@merge_dir}/values-es/strings.xml"]
+      @merger.files_to_merge.sort.should eql( expected )
     end
 
   end
