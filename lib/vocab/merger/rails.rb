@@ -36,7 +36,7 @@ module Vocab
         keys.each do |key|
           value = updates[ key ]
           value ||= locales[ key ]
-          locales_translator.store( key, value )
+          locales_translator.store( key, value ) if value
         end
 
         locales_translator.write_file( locales_path )

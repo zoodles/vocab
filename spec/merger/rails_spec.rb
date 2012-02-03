@@ -55,6 +55,10 @@ describe "Vocab::Merger::Rails" do
       @merged[:es][:marketing][:banner].should_not eql( '這改變了營銷信息' )
     end
 
+    it 'does not include keys where there is no translation in yml' do
+      @merged[:es].keys.should_not include( :not_in_es )
+    end
+
   end
 
   describe "create_file" do
@@ -116,7 +120,7 @@ describe "Vocab::Merger::Rails" do
     it "returns the keys that should be in a file" do
       path = "#{vocab_root}/spec/data/locales/es.yml"
       actual = Vocab::Merger::Rails.keys_for_file( path )
-      expected = [:"dashboard.details", :"menu.first", :"dashboard.chart", :"menu.second", :"marketing.banner"]
+      expected = [:"dashboard.details", :"menu.first", :"dashboard.chart", :"menu.second", :"marketing.banner", :"not_in_es"]
       actual.each { |key| expected.should include( key ) }
       actual.size.should eql( expected.size )
     end

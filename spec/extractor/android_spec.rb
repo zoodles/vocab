@@ -14,7 +14,8 @@ describe "Vocab::Extractor::Android" do
                            "delete"     =>"Delete",
                            "cancel"     =>"Cancel",
                            "app_current"=>"current",
-                           "pd_app_name"=>"Parent Dashboard" } )
+                           "pd_app_name"=>"Parent Dashboard",
+                           "not_in_es"  =>"This key not in spanish",} )
     end
 
   end
@@ -64,7 +65,9 @@ describe "Vocab::Extractor::Android" do
   describe 'write' do
 
     it 'writes the translation to a xml file' do
-      translation = { 'app_name' => 'Kid Mode', 'pd_app_name' => 'Parent Dashboard' }
+      translation = { 'app_name' => 'Kid Mode',
+                      'pd_app_name' => 'Parent Dashboard',
+                      'delete' => "La funci&#xF3;n Child Lock" }
       path = "#{vocab_root}/spec/tmp/strings.xml"
       Vocab::Translator::Android.write( translation, path )
       should_eql_file( File.open( path ) { |f| f.read },

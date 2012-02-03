@@ -22,7 +22,8 @@ describe 'Vocab::Translator::Rails' do
                    :menu     =>{ :second=>"Second menu item",
                                  :first=>"First menu item" },
                    :dashboard=>{ :chart  =>"This value has changed",
-                                 :details=>"This key/value has been added" } }
+                                 :details=>"This key/value has been added" },
+                   :not_in_es=>"This key not in spanish" }
       actual.should eql( expected )
     end
 
@@ -104,7 +105,8 @@ describe 'Vocab::Translator::Rails' do
                    :"marketing.banner"                 =>"This product is so good",
                    :"models.product.id_125.description"=>"Green with megawatts",
                    :"models.product.id_55.description" =>"A new nested description",
-                   :"models.product.id_36.description" =>"Polarized and lazer resistant" }
+                   :"models.product.id_36.description" =>"Polarized and lazer resistant",
+                   :"not_in_es"                        =>"This key not in spanish" }
       actual.should == expected
     end
 

@@ -56,6 +56,10 @@ describe "Vocab::Merger::Android" do
       @merged['cancel'].should eql( 'Cancelar' )
     end
 
+    it "properly encodes html entities" do
+      @merged['delete'].should eql( "La funci\303\263n Child Lock" )
+    end
+
     it "ignores key accidentally introduced by the translators into android translations" do
       @merged['translator_cruft'].should be( nil )
     end
@@ -69,13 +73,17 @@ describe "Vocab::Merger::Android" do
       @merged['app_name'].should_not eql( '這改變了營銷信息' )
     end
 
+    it 'does not include keys where there is no translation' do
+      @merged['not_in_es'].should be( nil )
+    end
+
   end
 
   describe 'english_keys' do
 
     it 'fetches the english keys' do
       merger = Vocab::Merger::Android.new( @merge_dir )
-      keys = [ "app_name", "delete", "cancel", "app_current", "pd_app_name" ]
+      keys = ["app_name", "delete", "cancel", "app_current", "not_in_es", "pd_app_name"]
       merger.english_keys.should eql( keys )
     end
 

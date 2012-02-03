@@ -83,7 +83,8 @@ describe "Vocab::Extractor::Rails" do
                    :"en.dashboard.chart"                  =>"This value has changed",
                    :"en.models.product.id_55.name"        =>"a new nested name",
                    :"en.models.product.id_125.name"       =>"Lazer",
-                   :"en.dashboard.details"                =>"This key/value has been added" }
+                   :"en.dashboard.details"                =>"This key/value has been added",
+                   :"en.not_in_es"                        =>"This key not in spanish" }
       actual.should eql( expected )
     end
 

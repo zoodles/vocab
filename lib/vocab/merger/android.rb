@@ -19,7 +19,8 @@ module Vocab
 
         translation = {}
         keys.each do |key|
-          translation[ key ] = updates[ key ] || current[ key ]
+          value = updates[ key ] || current[ key ]
+          translation[ key ] = value if value
         end
 
         Vocab::Translator::Android.write( translation, path )
