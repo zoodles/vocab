@@ -22,9 +22,9 @@ module Vocab
         parser.separator ""
         parser.separator "    vocab init"
         parser.separator "    vocab extract rails"
-        parser.separator "    vocab extract android path/to/strings.xml"
+        parser.separator "    vocab extract android"
         parser.separator "    vocab merge rails"
-        parser.separator "    vocab merge android path/to/strings.xml"
+        parser.separator "    vocab merge android"
         parser.separator ""
 
         commands = parser.parse( ARGV )
@@ -37,7 +37,7 @@ module Vocab
         elsif( options.command == 'extract' && options.platform == 'rails' )
           Extractor::Rails.extract
         elsif( options.command == 'extract' && options.platform == 'android' )
-          Extractor::Android.extract( nil, nil, :path => options.path )
+          Extractor::Android.extract
         elsif( options.command == 'merge' && options.platform == 'rails' )
           Merger::Rails.merge
         elsif( options.command == 'merge' && options.platform == 'android' )

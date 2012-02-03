@@ -2,9 +2,9 @@ module Vocab
   module Extractor
     class Base
       class << self
-        def extract( diff_path = nil, full_path = nil, options = {} )
-          current = extract_current( options[ :path ] )
-          previous = extract_previous( options[ :path ] )
+        def extract( diff_path = nil, full_path = nil )
+          current = extract_current
+          previous = extract_previous
           diff = diff( previous, current )
           write_diff( diff, diff_path )
           write_full( current, full_path )
@@ -22,11 +22,11 @@ module Vocab
           return diff
         end
 
-        def extract_previous( options = {} )
+        def extract_previous
           raise "not implemented"
         end
 
-        def extract_current( options = {} )
+        def extract_current
           raise "not implemented"
         end
 

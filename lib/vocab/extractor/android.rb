@@ -4,12 +4,12 @@ module Vocab
       class << self
 
         def extract_current( path = nil )
-          raise "Invalid path to strings.xml" unless path && File.exists?( path )
+          path ||= "#{Vocab.root}/res/values/strings.xml"
           return Vocab::Translator::Android.hash_from_xml( path )
         end
 
         def extract_previous( path = nil )
-          raise "Invalid path to strings.xml" unless path && File.exists?( path )
+          path ||= "res/values/strings.xml"
           sha = Vocab.settings.last_translation
           xml = previous_file( path, sha )
 
