@@ -3,8 +3,9 @@ module Vocab
     class Android
 
       def self.hash_from_xml( path )
-        doc = Nokogiri::XML( File.open( path ) ) { |config| config.noblanks }
-        children = doc.search( '/resources/string' )
+        xml = File.open( path ) { |f| f.read }
+        doc = Nokogiri::HTML.fragment( xml ) { |config| config.noblanks }
+        children = doc.search( 'resources/string' )
         hash = {}
         children.each { |child| hash[ child['name'] ] = child.text }
         return hash

@@ -34,7 +34,7 @@ describe "Vocab::Merger::Android" do
       @merged = Vocab::Translator::Android.hash_from_xml( "#{@merge_dir}/values-es/strings.xml" )
       @merged['app_name'].should eql( 'Modo Niños' )
       @merged['pd_app_name'].should eql( 'el Panel para padres bien' )
-      @merged['delete'].should eql( 'Eliminar' )
+      @merged['delete'].should eql( "La funci\303\263n Child Lock" )
     end
 
   end
@@ -98,7 +98,7 @@ describe "Vocab::Merger::Android" do
     it 'returns hash of the updates that match a locale file' do
       merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
       expected = { 'cancel'           => 'Cancelar',
-                   'delete'           => 'Eliminar',
+                   'delete'           => "La funci\303\263n Child Lock",
                    'pd_app_name'      => 'el Panel para padres bien',
                    'translator_cruft' => 'Malo' }
       merger.updates_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected

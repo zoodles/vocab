@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="cancel">Cancelar</string>
-  <string name="delete">Eliminar</string>
+  <string name="delete">La funci&oacute;n Child Lock</string>
   <string name="pd_app_name">el Panel para padres bien</string>
   <string name="translator_cruft">Malo</string>
 </resources>
