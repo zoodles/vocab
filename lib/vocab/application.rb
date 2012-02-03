@@ -39,9 +39,9 @@ module Vocab
         elsif( options.command == 'extract' && options.platform == 'android' )
           Extractor::Android.extract
         elsif( options.command == 'merge' && options.platform == 'rails' )
-          Merger::Rails.merge
+          Merger::Rails.new.merge
         elsif( options.command == 'merge' && options.platform == 'android' )
-          Merger::Android.merge
+          Merger::Android.new.merge
         else
           puts parser.help
         end

@@ -39,8 +39,16 @@ module Vocab
         end
 
         def previous_file( path, sha )
-          path = path.gsub( "#{Vocab.root}/", '' )
+          path = git_path( path )
           return `cd #{Vocab.root} && git show #{sha}:#{path}`
+        end
+
+        def git_root
+          return `git rev-parse --show-toplevel`.strip
+        end
+
+        def git_path( path )
+          return File.expand_path( path ).gsub( "#{git_root}/", '' )
         end
 
       end

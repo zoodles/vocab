@@ -46,7 +46,6 @@ describe "Vocab::Merger::Android" do
       @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
       @merger.merge_file( @file )
       @merged = Vocab::Translator::Android.hash_from_xml( @file )
-      puts "@merged = #{@merged.inspect}"
     end
 
     it "merges updated android translations" do
