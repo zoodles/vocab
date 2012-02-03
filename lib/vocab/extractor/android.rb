@@ -3,6 +3,9 @@ module Vocab
     class Android < Base
       class << self
 
+        DIFF = 'strings.diff.xml'
+        FULL = 'strings.full.xml'
+
         def extract_current( path = nil )
           path ||= "#{Vocab.root}/res/values/strings.xml"
           return Vocab::Translator::Android.hash_from_xml( path )
@@ -20,13 +23,25 @@ module Vocab
         end
 
         def write_diff( diff, path = nil )
-          path ||= "#{Vocab.root}/strings.diff.xml"
+          path ||= "#{Vocab.root}/#{DIFF}"
           Vocab::Translator::Android.write( diff, path )
         end
 
         def write_full( diff, path = nil )
-          path ||= "#{Vocab.root}/strings.full.xml"
+          path ||= "#{Vocab.root}/#{FULL}"
           Vocab::Translator::Android.write( diff, path )
+        end
+
+        def print_instructions( values = {} )
+          values[ :diff ] = DIFF
+          values[ :full ] = FULL
+          values[ :tree ] = <<-EOS
+tmp/translations/values-es/strings.xml
+tmp/translations/values-zh/strings.xml
+tmp/translations/values-zh-cn/strings.xml
+          EOS
+
+          super( values )
         end
 
       end

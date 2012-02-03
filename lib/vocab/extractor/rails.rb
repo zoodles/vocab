@@ -1,14 +1,17 @@
 module Vocab
   module Extractor
     class Rails < Base
+      DIFF = 'en.yml'
+      FULL = 'en.full.yml'
+
       class << self
         def write_diff( diff, path )
-          path ||= "#{Vocab.root}/en.yml"
+          path ||= "#{Vocab.root}/#{DIFF}"
           write( diff, path )
         end
 
         def write_full( full, path )
-          path ||= "#{Vocab.root}/en.full.yml"
+          path ||= "#{Vocab.root}/#{FULL}"
           write( full, path )
         end
 
@@ -56,6 +59,17 @@ module Vocab
             translator.store( key, value )
           end
           return translator.translations( :prefix => true )
+        end
+
+        def print_instructions( values = {} )
+          values[ :diff ] = DIFF
+          values[ :full ] = FULL
+          values[ :tree ] = <<-EOS
+tmp/translations/es.yml
+tmp/translations/zh.yml
+          EOS
+
+          super( values )
         end
       end
     end

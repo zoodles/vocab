@@ -8,6 +8,7 @@ module Vocab
           diff = diff( previous, current )
           write_diff( diff, diff_path )
           write_full( current, full_path )
+          print_instructions
         end
 
         # make a hash of all the translations that are new or changed in the current yml
@@ -23,19 +24,19 @@ module Vocab
         end
 
         def extract_previous
-          raise "not implemented"
+          raise "extract_previous not implemented"
         end
 
         def extract_current
-          raise "not implemented"
+          raise "extract_current not implemented"
         end
 
         def write_diff( diff, path )
-          raise "not implemented"
+          raise "write_diff not implemented"
         end
 
         def write_full( diff, path )
-          raise "not implemented"
+          raise "write_full not implemented"
         end
 
         def previous_file( path, sha )
@@ -49,6 +50,26 @@ module Vocab
 
         def git_path( path )
           return File.expand_path( path ).gsub( "#{git_root}/", '' )
+        end
+
+        def print_instructions( values = {} )
+instructions = <<-EOS
+
+Instructions for integrating new translations:
+
+For existing languages, send #{values[:diff]} to get translations for new keys
+For new languages, send #{values[:full]} to get translations for all keys
+
+To integrate new translations, files must be in tmp/translations.  For example:
+
+#{values[:tree]}
+
+After translations are in place, you can merge them into the project with:
+
+vocab merge rails
+
+EOS
+          Vocab.ui.say( instructions )
         end
 
       end
