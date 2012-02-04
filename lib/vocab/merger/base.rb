@@ -10,7 +10,8 @@ module Vocab
       end
 
       def merge
-        raise "not implemented"
+        files_to_merge.each { |file| merge_file( file ) }
+        update_settings
       end
     end
   end

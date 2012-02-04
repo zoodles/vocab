@@ -7,11 +7,6 @@ module Vocab
         @updates_dir = updates_dir || 'tmp/translations'
       end
 
-      def merge
-        files_to_merge.each { |file| merge_file( file ) }
-        update_settings
-      end
-
       def merge_file( locales_path )
         return unless translatable?( locales_path )
         create_if_missing( locales_path )
