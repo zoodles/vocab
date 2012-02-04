@@ -15,7 +15,11 @@ module Vocab
         translation = {}
         keys.each do |key|
           value = updates[ key ] || current[ key ]
-          translation[ key ] = value if value
+          if value
+            translation[ key ] = value
+          else
+            Vocab.ui.warn( "No translation found for key #{key} while merging #{path}" )
+          end
         end
 
         Vocab::Translator::Android.write( translation, path )

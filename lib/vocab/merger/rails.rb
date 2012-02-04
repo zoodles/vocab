@@ -29,9 +29,12 @@ module Vocab
 
         # apply updated keys to locales hash
         keys.each do |key|
-          value = updates[ key ]
-          value ||= locales[ key ]
-          locales_translator.store( key, value ) if value
+          value = updates[ key ] || locales[ key ]
+          if value
+            locales_translator.store( key, value )
+          else
+            Vocab.ui.warn( "No translation found for key #{key} while merging #{locales_path}" )
+          end
         end
 
         locales_translator.write_file( locales_path )
@@ -80,6 +83,7 @@ module Vocab
       def create_if_missing( path )
         return if File.exists?( path )
         locale = File.basename( path, '.yml' )
+        Vocab.ui.say( "Creating file #{path}" )
         File.open( path, 'w+' ) { |file| file.write( { locale => {} }.to_yaml ) }
       end
 
