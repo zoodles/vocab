@@ -49,14 +49,21 @@ module Vocab
       end
 
       def translatable?( path )
-        return false if File.basename( path ) == 'en.yml'
-        return false unless File.exists?( Vocab::Merger::Rails.en_equivalent_path( path ) )
+        if File.basename( path ) == 'en.yml'
+          Vocab.ui.warn( "can't translate english file #{path}" )
+          return false
+        end
+
+        unless File.exists?( Vocab::Merger::Rails.en_equivalent_path( path ) )
+          Vocab.ui.warn( "skipping because no english equivalent for #{path}" )
+          return false
+        end
 
         if( File.exists?( path ) )
           extension = File.basename( path, '.yml' )
           contents = YAML.load_file( path ).keys.first.to_s
           if( extension != contents )
-            Vocab.ui.say( 'File extension does not match file contents' )
+            Vocab.ui.warn( "File extension does not match file contents in #{path}" )
             return false
           end
         end

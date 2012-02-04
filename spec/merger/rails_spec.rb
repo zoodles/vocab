@@ -146,7 +146,7 @@ describe "Vocab::Merger::Rails" do
       english_contents = { :en => { :english => 'stuff here' } }
       File.open( spanish_file, 'w+' ) { |file| file.write( english_contents.to_yaml ) }
       File.open( english_file, 'w+' ) { |file| file.write( english_contents.to_yaml ) }
-      Vocab.ui.should_receive( :say ).with( 'File extension does not match file contents' )
+      Vocab.ui.should_receive( :warn ).with( "File extension does not match file contents in #{spanish_file}" )
       @merger.translatable?( spanish_file ).should be_false
       File.delete( spanish_file ) if File.exists?( spanish_file )
       File.delete( english_file ) if File.exists?( english_file )

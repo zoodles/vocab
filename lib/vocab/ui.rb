@@ -10,5 +10,10 @@ module Vocab
     def say( message )
       puts message unless silent
     end
+
+    def warn( message )
+      say( "Warning: #{message}" )
+    end
+
   end
 end
