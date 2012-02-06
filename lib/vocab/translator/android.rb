@@ -22,6 +22,12 @@ module Vocab
         File.open( path, 'w' ) { |f| f.write( builder.to_xml ) }
       end
 
+      def self.english_keys( locales_dir )
+        path = "#{locales_dir}/values/strings.xml"
+        translations = Vocab::Translator::Android.hash_from_xml( path )
+        return translations.keys
+      end
+
     end
   end
 end

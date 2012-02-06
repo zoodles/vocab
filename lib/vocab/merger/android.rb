@@ -26,9 +26,7 @@ module Vocab
       end
 
       def english_keys
-        path = "#{@locales_dir}/values/strings.xml"
-        translations = Vocab::Translator::Android.hash_from_xml( path )
-        return translations.keys
+        return Vocab::Translator::Android.english_keys( @locales_dir )
       end
 
       def current_for_locale( path )
