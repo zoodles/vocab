@@ -62,6 +62,13 @@ describe "Vocab::Extractor::Rails" do
       Vocab::Extractor::Rails.extract_previous( nil )
     end
 
+    it 'creates a tmp folder if one does not exist' do
+      dir = "#{vocab_root}/tmp/last_translation"
+      FileUtils.rm_rf( "#{vocab_root}/tmp/last_translation" )
+      Vocab::Extractor::Rails.extract_previous( @locales_root )
+      File.exists?( dir ).should be_true
+    end
+
   end
 
   describe "current" do
