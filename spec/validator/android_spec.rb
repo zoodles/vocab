@@ -19,10 +19,8 @@ describe "Vocab::Validator::Android" do
     end
 
     it 'returns a hash containing the extra keys' do
-      spanish = { 'foo' => 'bar', 'extra' => 'coffee', 'stuff' => 'clutter' }
-      Vocab::Translator::Android.should_receive( :hash_from_xml ).and_return( spanish )
-      @validator.should_receive( :english_keys ).at_least(:once).and_return( [ 'foo' ] )
-
+      @validator.should_receive( :english_keys ).and_return( [ 'foo' ] )
+      @validator.should_receive( :other_keys ).and_return( [ 'foo', 'extra', 'stuff' ] )
       result = @validator.validate_file( @path )
       result[ :extra ].should eql( [ 'extra', 'stuff' ] )
     end

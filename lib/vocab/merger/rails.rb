@@ -41,14 +41,10 @@ module Vocab
       end
 
       def self.keys_for_file( path )
-        en_path = Vocab::Merger::Rails.en_equivalent_path( path )
+        en_path = Vocab::Translator::Rails.en_equivalent_path( path )
         translator = Vocab::Translator::Rails.new
         translator.load_file( en_path )
         return translator.flattened_translations.keys
-      end
-
-      def self.en_equivalent_path( path )
-        return "#{File.dirname( path )}/en.yml"
       end
 
       def translatable?( path )
@@ -57,7 +53,7 @@ module Vocab
           return false
         end
 
-        unless File.exists?( Vocab::Merger::Rails.en_equivalent_path( path ) )
+        unless File.exists?( Vocab::Translator::Rails.en_equivalent_path( path ) )
           Vocab.ui.warn( "skipping because no english equivalent for #{path}" )
           return false
         end

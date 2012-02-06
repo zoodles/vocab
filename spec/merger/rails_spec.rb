@@ -142,7 +142,7 @@ describe "Vocab::Merger::Rails" do
 
     it "ignores files that don't have matching filename and contents" do
       spanish_file = "#{vocab_root}/spec/tmp/es.yml"
-      english_file = Vocab::Merger::Rails.en_equivalent_path( spanish_file )
+      english_file = Vocab::Translator::Rails.en_equivalent_path( spanish_file )
       english_contents = { :en => { :english => 'stuff here' } }
       File.open( spanish_file, 'w+' ) { |file| file.write( english_contents.to_yaml ) }
       File.open( english_file, 'w+' ) { |file| file.write( english_contents.to_yaml ) }

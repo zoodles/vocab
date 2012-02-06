@@ -51,6 +51,10 @@ module Vocab
         return flattened_translations[ key.to_sym ]
       end
 
+      def self.en_equivalent_path( path )
+        return "#{File.dirname( path )}/en.yml"
+      end
+
     private
 
       def load_translations

@@ -26,6 +26,7 @@ module Vocab
         parser.separator "    vocab merge rails"
         parser.separator "    vocab merge android"
         parser.separator "    vocab validate android"
+        parser.separator "    vocab validate rails"
         parser.separator ""
 
         commands = parser.parse( ARGV )
@@ -45,6 +46,8 @@ module Vocab
           Merger::Android.new.merge
         elsif( options.command == 'validate' && options.platform == 'android' )
           Validator::Android.new.validate
+        elsif( options.command == 'validate' && options.platform == 'rails' )
+          Validator::Rails.new.validate
         else
           puts parser.help
         end
