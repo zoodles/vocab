@@ -60,22 +60,22 @@ describe "Vocab::Extractor::Base" do
 
     it "returns the contents of a file from a specific git version" do
       contents = Vocab::Extractor::Base.previous_file( @path, 'a19f7c5c28c1158792a966c0d2153a04490dd35e' )
-      should_eql_file( contents, 'spec/data/android/versions/strings_1.xml' )
+      should_eql_file( contents, 'spec/data/android/previous.xml' )
 
       contents = Vocab::Extractor::Base.previous_file( @path, '0533bcd9a304cd6e74d6a56959dbcabd57b2f1b9' )
-      should_eql_file( contents, 'spec/data/android/versions/strings_2.xml' )
+      should_eql_file( contents, 'spec/data/android/current.xml' )
     end
 
     it "returns the correct contents when a full path is specified" do
       contents = Vocab::Extractor::Base.previous_file( "#{vocab_root}/#{@path}", 'a19f7c5c28c1158792a966c0d2153a04490dd35e' )
-      should_eql_file( contents, 'spec/data/android/versions/strings_1.xml' )
+      should_eql_file( contents, 'spec/data/android/previous.xml' )
     end
 
     it "returns the contents of a file when in a subdir of the git directory" do
       Dir.chdir( "spec" )
       @path = "data/android/locales/strings.xml"
       contents = Vocab::Extractor::Base.previous_file( @path, 'a19f7c5c28c1158792a966c0d2153a04490dd35e' )
-      should_eql_file( contents, 'spec/data/android/versions/strings_1.xml' )
+      should_eql_file( contents, 'spec/data/android/previous.xml' )
     end
 
   end
