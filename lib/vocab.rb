@@ -9,6 +9,7 @@ require 'vocab/translator'
 require 'vocab/merger'
 require 'vocab/settings'
 require 'vocab/ui'
+require 'vocab/validator'
 require 'vocab/version'
 
 I18n::Backend::Simple.include( I18n::Backend::Flatten )
