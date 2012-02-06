@@ -7,7 +7,9 @@ module Vocab
       end
 
       def validate
-        files_to_validate.each do |path|
+        files = files_to_validate
+        Vocab.ui.say( "#{files.size} file(s) to validate in #{@locales_dir}" )
+        files.each do |path|
           validation = validate_file( path )
           print( path, validation )
         end

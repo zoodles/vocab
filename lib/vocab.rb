@@ -12,7 +12,7 @@ require 'vocab/ui'
 require 'vocab/validator'
 require 'vocab/version'
 
-I18n::Backend::Simple.include( I18n::Backend::Flatten )
+I18n::Backend::Simple.send( :include, I18n::Backend::Flatten )
 
 module Vocab
 
