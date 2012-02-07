@@ -85,6 +85,11 @@ describe "Vocab::Extractor::Android" do
       actual.should =~ [ "tmp/translations/values-es" ]
     end
 
+    it 'uses the conventional android locales directory by default' do
+      Vocab::Translator::Android.should_receive( :locales ).with( "#{vocab_root}/res/values" ).and_return( [] )
+      Vocab::Extractor::Android.examples
+    end
+
   end
 
 end

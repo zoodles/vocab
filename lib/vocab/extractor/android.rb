@@ -32,8 +32,9 @@ module Vocab
           Vocab::Translator::Android.write( diff, path )
         end
 
-        def examples( dir = nil )
-          return Vocab::Translator::Android.locales( dir ).collect do |locale|
+        def examples( locales_dir = nil )
+          locales_dir ||= "#{Vocab.root}/res/values"
+          return Vocab::Translator::Android.locales( locales_dir ).collect do |locale|
             "tmp/translations/values-#{locale}"
           end
         end
