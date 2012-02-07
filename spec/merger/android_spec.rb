@@ -68,11 +68,6 @@ describe "Vocab::Merger::Android" do
       @merged['app_name'].should eql( 'Modo Niños' )
     end
 
-    it "does not include android translations from other languages" do
-      pending( "make this work after adding another language to test data" )
-      @merged['app_name'].should_not eql( '這改變了營銷信息' )
-    end
-
     it 'does not include keys where there is no translation' do
       @merged['not_in_es'].should be( nil )
     end
@@ -120,8 +115,6 @@ describe "Vocab::Merger::Android" do
       merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
       merger.translation_locales.sort.should eql( [ 'es' ] )
     end
-
-    it 'ignores res/values directories that are not translations'
 
   end
 

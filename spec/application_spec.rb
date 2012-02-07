@@ -16,6 +16,4 @@ describe "init" do
     YAML.load_file( path ).should == { "last_translation" => `git rev-parse HEAD`.strip }
   end
 
-  it "doesn't over write the config file if it already exists"
-
 end

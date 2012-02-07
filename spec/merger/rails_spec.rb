@@ -109,12 +109,6 @@ describe "Vocab::Merger::Rails" do
 
   end
 
-  describe 'write_file' do
-
-    it 'writes translations to a file'
-
-  end
-
   describe "keys_for_file" do
 
     it "returns the keys that should be in a file" do
@@ -137,8 +131,6 @@ describe "Vocab::Merger::Rails" do
       @merger.translatable?( "#{vocab_root}/spec/data/rails/locales/es.yml" ).should be_true
       @merger.translatable?( "#{vocab_root}/spec/data/rails/locales/en.yml" ).should be_false
     end
-
-    it "doesn't translate files that don't have equivalent en.yml reference file"
 
     it "ignores files that don't have matching filename and contents" do
       spanish_file = "#{vocab_root}/spec/tmp/es.yml"

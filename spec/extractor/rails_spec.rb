@@ -2,12 +2,6 @@ require "spec_helper"
 
 describe "Vocab::Extractor::Rails" do
 
-  describe 'write_diff' do
-
-    it 'writes the diff to the correct file'
-
-  end
-
   describe 'write_full' do
 
     it 'writes the full en translation to a file' do
@@ -57,11 +51,6 @@ describe "Vocab::Extractor::Rails" do
       actual.should eql( expected )
     end
 
-    it 'uses the correct default locale path even when an explicit nil passed' do
-      pending( "Come back to this" )
-      Vocab::Extractor::Rails.extract_previous( nil )
-    end
-
     it 'creates a tmp folder if one does not exist' do
       dir = "#{vocab_root}/tmp/last_translation"
       FileUtils.rm_rf( "#{vocab_root}/tmp/last_translation" )
@@ -93,11 +82,6 @@ describe "Vocab::Extractor::Rails" do
                    :"en.dashboard.details"                =>"This key/value has been added",
                    :"en.not_in_es"                        =>"This key not in spanish" }
       actual.should eql( expected )
-    end
-
-    it 'uses the correct default locale path even when an explicit nil passed' do
-      pending( "Come back to this" )
-      Vocab::Extractor::Rails.extract_current( nil )
     end
 
   end
