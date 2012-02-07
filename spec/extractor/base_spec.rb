@@ -46,6 +46,7 @@ describe "Vocab::Extractor::Base" do
       Vocab::Extractor::Base.should_receive( :extract_previous ).and_return( previous )
       Vocab::Extractor::Base.should_receive( :write_diff ).with( { 1 => 5, 3 => 4 }, @diff_path )
       Vocab::Extractor::Base.should_receive( :write_full ).with( current, @full_path )
+      Vocab::Extractor::Base.should_receive( :mkdir_examples )
       Vocab::Extractor::Base.extract( @diff_path, @full_path )
     end
 
@@ -108,6 +109,17 @@ describe "Vocab::Extractor::Base" do
       path = "android/locales/values/strings.xml"
       git_path = "spec/data/android/locales/values/strings.xml"
       Vocab::Extractor::Base.git_path( path ).should eql( git_path )
+    end
+
+  end
+
+  describe 'mkdir_examples' do
+
+    it 'creates example directories for completed translations' do
+      examples = [ 'tmp/translations/values-zh', 'tmp/translations/values-zh-rCN' ]
+      examples.each { |example| FileUtils.should_receive( :mkdir_p ).with( example ) }
+      Vocab::Extractor::Base.should_receive( :examples ).and_return( examples )
+      Vocab::Extractor::Base.mkdir_examples
     end
 
   end

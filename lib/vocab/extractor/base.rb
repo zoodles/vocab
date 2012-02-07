@@ -8,6 +8,7 @@ module Vocab
           diff = diff( previous, current )
           write_diff( diff, diff_path )
           write_full( current, full_path )
+          mkdir_examples
           print_instructions
         end
 
@@ -50,6 +51,13 @@ module Vocab
 
         def git_path( path )
           return File.expand_path( path ).gsub( "#{git_root}/", '' )
+        end
+
+        def mkdir_examples
+          examples.each do |example|
+            Vocab.ui.say( "Creating placeholder: #{example}" )
+            FileUtils.mkdir_p( example )
+          end
         end
 
         def print_instructions( values = {} )
