@@ -6,5 +6,3 @@ en:
     details: This key/value has been added
   menu:
     first: First menu item
-    second: Second menu item
-  not_in_es: This key not in spanish
