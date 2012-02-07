@@ -77,4 +77,14 @@ describe "Vocab::Extractor::Android" do
 
   end
 
+  describe 'examples' do
+
+    it 'returns file names for completed translations' do
+      dir = "#{vocab_root}/spec/data/android/locales"
+      actual = Vocab::Extractor::Android.examples( dir )
+      actual.should =~ [ "tmp/translations/values-es" ]
+    end
+
+  end
+
 end

@@ -32,6 +32,12 @@ module Vocab
           Vocab::Translator::Android.write( diff, path )
         end
 
+        def examples( dir = nil )
+          return Vocab::Translator::Android.locales( dir ).collect do |locale|
+            "tmp/translations/values-#{locale}"
+          end
+        end
+
         def print_instructions( values = {} )
           values[ :diff ] = DIFF
           values[ :full ] = FULL
