@@ -27,6 +27,7 @@ module Vocab
           FileUtils.rm_rf( "#{tmpdir}/*" )
 
           sha = Vocab.settings.last_translation
+          puts "locales_root = #{locales_root}"
           translation_files = `git ls-tree --name-only -r #{sha}:#{locales_root}`.split( "\n" )
           translation_files = translation_files.select { |f| f =~ /en.(yml|rb)$/ }
           translation_files.each do |path|

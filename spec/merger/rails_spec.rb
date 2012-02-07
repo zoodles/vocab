@@ -5,7 +5,7 @@ describe "Vocab::Merger::Rails" do
 
   def init_merge_dir
     @merge_dir = clear_merge_dir
-    FileUtils.cp_r( "#{vocab_root}/spec/data/locales/.", @merge_dir )
+    FileUtils.cp_r( "#{vocab_root}/spec/data/rails/locales/.", @merge_dir )
     return @merge_dir
   end
 
@@ -28,7 +28,7 @@ describe "Vocab::Merger::Rails" do
     before( :each ) do
       init_merge_dir
       @file = "#{@merge_dir}/es.yml"
-      @update_dir = "#{vocab_root}/spec/data/translations"
+      @update_dir = "#{vocab_root}/spec/data/rails/translations"
 
       @merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
       @merger.merge_file( @file )
@@ -66,7 +66,7 @@ describe "Vocab::Merger::Rails" do
     before( :each ) do
       init_merge_dir
       @file = "#{@merge_dir}/cn.yml"
-      @update_dir = "#{vocab_root}/spec/data/translations"
+      @update_dir = "#{vocab_root}/spec/data/rails/translations"
     end
 
     it "creates a file for missing translations" do
@@ -86,7 +86,7 @@ describe "Vocab::Merger::Rails" do
 
     before( :each ) do
       init_merge_dir
-      @update_dir = "#{vocab_root}/spec/data/translations"
+      @update_dir = "#{vocab_root}/spec/data/rails/translations"
       Vocab.settings.should_receive( :update_translation )
       @merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
       @merger.merge
@@ -118,7 +118,7 @@ describe "Vocab::Merger::Rails" do
   describe "keys_for_file" do
 
     it "returns the keys that should be in a file" do
-      path = "#{vocab_root}/spec/data/locales/es.yml"
+      path = "#{vocab_root}/spec/data/rails/locales/es.yml"
       actual = Vocab::Merger::Rails.keys_for_file( path )
       expected = [:"dashboard.details", :"menu.first", :"dashboard.chart", :"menu.second", :"marketing.banner", :"not_in_es"]
       actual.each { |key| expected.should include( key ) }
@@ -134,8 +134,8 @@ describe "Vocab::Merger::Rails" do
     end
 
     it "doesn't translate english files because that should be the reference language anyway" do
-      @merger.translatable?( "#{vocab_root}/spec/data/locales/es.yml" ).should be_true
-      @merger.translatable?( "#{vocab_root}/spec/data/locales/en.yml" ).should be_false
+      @merger.translatable?( "#{vocab_root}/spec/data/rails/locales/es.yml" ).should be_true
+      @merger.translatable?( "#{vocab_root}/spec/data/rails/locales/en.yml" ).should be_false
     end
 
     it "doesn't translate files that don't have equivalent en.yml reference file"
@@ -157,7 +157,7 @@ describe "Vocab::Merger::Rails" do
   describe 'translation_locales' do
 
     before ( :each ) do
-      @updates_dir = "#{vocab_root}/spec/data/translations"
+      @updates_dir = "#{vocab_root}/spec/data/rails/translations"
       @merger = Vocab::Merger::Rails.new
       @merger.updates_dir = @updates_dir
     end
@@ -171,8 +171,8 @@ describe "Vocab::Merger::Rails" do
   describe 'files_to_merge' do
 
     before ( :each ) do
-      @locales_dir = "#{vocab_root}/spec/data/locales"
-      @updates_dir = "#{vocab_root}/spec/data/translations"
+      @locales_dir = "#{vocab_root}/spec/data/rails/locales"
+      @updates_dir = "#{vocab_root}/spec/data/rails/translations"
       @merger = Vocab::Merger::Rails.new( @locales_dir, @updates_dir )
     end
 

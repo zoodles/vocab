@@ -6,7 +6,7 @@ describe 'Vocab::Translator::Rails' do
 
     before( :each ) do
       @translator = Vocab::Translator::Rails.new
-      @translator.load_dir( "#{vocab_root}/spec/data/locales" )
+      @translator.load_dir( "#{vocab_root}/spec/data/rails/locales" )
     end
 
     it 'loads translations from a directory of yml files' do
@@ -45,12 +45,12 @@ describe 'Vocab::Translator::Rails' do
     end
 
     it 'sets the language based on the file loaded' do
-      @file = "#{vocab_root}/spec/data/locales/en.yml"
+      @file = "#{vocab_root}/spec/data/rails/locales/en.yml"
       translator = Vocab::Translator::Rails.new
       translator.load_file( @file )
       translator.locale.should eql( :en )
 
-      @file = "#{vocab_root}/spec/data/locales/es.yml"
+      @file = "#{vocab_root}/spec/data/rails/locales/es.yml"
       translator = Vocab::Translator::Rails.new
       translator.load_file( @file )
       translator.locale.should eql( :es )
@@ -93,7 +93,7 @@ describe 'Vocab::Translator::Rails' do
 
     it 'returns the translations with flattened keys in english' do
       translator = Vocab::Translator::Rails.new
-      translator.load_dir( "#{vocab_root}/spec/data/locales" )
+      translator.load_dir( "#{vocab_root}/spec/data/rails/locales" )
       actual = translator.flattened_translations
       expected = { :"dashboard.details"                =>"This key/value has been added",
                    :"models.product.id_125.name"       =>"Lazer",
@@ -112,7 +112,7 @@ describe 'Vocab::Translator::Rails' do
 
     it 'returns the translations with flattened keys in other languages' do
       translator = Vocab::Translator::Rails.new( :es )
-      translator.load_dir( "#{vocab_root}/spec/data/locales" )
+      translator.load_dir( "#{vocab_root}/spec/data/rails/locales" )
       actual = translator.flattened_translations
       expected = { :"models.product.id_125.name"       =>"Lazero",
                    :"marketing.banner"                 =>"hola",

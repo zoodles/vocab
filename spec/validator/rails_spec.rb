@@ -3,14 +3,14 @@ require "spec_helper"
 describe "Vocab::Validator::Rails" do
 
   before( :each ) do
-    @locales_dir = "#{vocab_root}/spec/data/locales"
+    @locales_dir = "#{vocab_root}/spec/data/rails/locales"
     @validator = Vocab::Validator::Rails.new( @locales_dir )
   end
 
   describe 'validate_file' do
 
     before( :each ) do
-      @path = "#{vocab_root}/spec/data/locales/es.yml"
+      @path = "#{vocab_root}/spec/data/rails/locales/es.yml"
     end
 
     it 'returns a hash containing the missing keys' do
