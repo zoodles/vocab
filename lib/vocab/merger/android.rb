@@ -40,11 +40,7 @@ module Vocab
       end
 
       def translation_locales
-        locales = []
-        Dir.glob( "#{@updates_dir}/values-*/strings.xml" ).each do |path|
-          locales << $1 if path =~ /values-(.*)\/strings.xml/
-        end
-        return locales
+        return Vocab::Translator::Android.locales( @updates_dir )
       end
 
       def files_to_merge

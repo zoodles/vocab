@@ -113,7 +113,9 @@ describe "Vocab::Merger::Android" do
 
     it 'returns the locales in the android updates directory' do
       merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
-      merger.translation_locales.sort.should eql( [ 'es' ] )
+      locales = [ 'es' ]
+      Vocab::Translator::Android.should_receive ( :locales ).with( @update_dir ).and_return( locales )
+      merger.translation_locales.should eql( locales )
     end
 
   end
