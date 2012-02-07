@@ -36,7 +36,7 @@ describe "Vocab::Extractor::Rails" do
   describe "previous" do
 
     before( :each ) do
-      @last_translation = '3909a81f1481a7c23e745109e8ad2787e379d4bc'
+      @last_translation = '5ab8cf4d081d7ba1d5f020118dd00c3ea2d0437a'
       @locales_root = "spec/data/rails/locales"
       Vocab.settings.stub!( :last_translation ).and_return( @last_translation )
       Dir.chdir( vocab_root )
