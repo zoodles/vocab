@@ -105,4 +105,12 @@ describe "Vocab::Extractor::Rails" do
 
   end
 
+  describe "examples" do
+
+    it 'returns the directory to put the yml files' do
+      Vocab::Extractor::Rails.examples.should eql( [ "#{vocab_root}/tmp/translations" ] )
+    end
+
+  end
+
 end

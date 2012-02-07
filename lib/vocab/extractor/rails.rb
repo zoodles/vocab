@@ -61,6 +61,10 @@ module Vocab
           return translator.translations( :prefix => true )
         end
 
+        def examples
+          return [ "#{Vocab.root}/tmp/translations" ]
+        end
+
         def print_instructions( values = {} )
           values[ :diff ] = DIFF
           values[ :full ] = FULL
