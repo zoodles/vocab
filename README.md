@@ -52,3 +52,4 @@ Set the current git commit to be the starting point for the next translation dif
 # TODO
 
   * Add .processed to each tmp/translation after success
+  * Accept filenames other than strings.xml under tmp/translation/values-xx/yyyy.xml
