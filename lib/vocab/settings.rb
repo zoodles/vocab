@@ -24,11 +24,6 @@ module Vocab
       File.open( config_file, 'w' ) { |f| f.write( @local_config.to_yaml ) }
     end
 
-    # TODO extract this from a settings file
-    def string_path
-      ""
-    end
-
     def self.create
       Vocab.ui.say( "Writing new .vocab file" )
       settings = Vocab::Settings.new( Dir.pwd )
