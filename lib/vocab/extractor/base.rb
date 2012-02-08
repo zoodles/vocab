@@ -16,6 +16,8 @@ module Vocab
         def diff( previous, current )
           diff = {}
           current.each do |key, value|
+            next if key.to_s.start_with?( 'debug_' )
+
             previous_value = previous[ key ]
             if( previous_value.nil? || previous_value != value )
               diff[ key ] = value

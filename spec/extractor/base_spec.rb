@@ -11,11 +11,18 @@ describe "Vocab::Extractor::Base" do
       diff.should == { 3 => 4 }
     end
 
-    it "finds the udpated keys in the current hash" do
+    it "finds the updated keys in the current hash" do
       @current = { 1 => 10 }
       @previous = { 1 => 2 }
       diff = Vocab::Extractor::Base.diff( @previous, @current )
       diff.should == { 1 => 10 }
+    end
+
+    it "ignores updated keys that begin with 'debug_'" do
+      @current = { 'debug_foo' => 'bar' }
+      @previous = {}
+      diff = Vocab::Extractor::Base.diff( @previous, @current )
+      diff.should == {}
     end
 
     it "handles the hash format of the translations" do
