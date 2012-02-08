@@ -29,6 +29,8 @@ module Vocab
 
         # apply updated keys to locales hash
         keys.each do |key|
+          next if Vocab::Translator::Android.ignore_key?( key )
+
           value = updates[ key ] || locales[ key ]
           if value
             locales_translator.store( key, value )

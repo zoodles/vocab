@@ -14,6 +14,8 @@ module Vocab
 
         translation = {}
         keys.each do |key|
+          next if Vocab::Translator::Android.ignore_key?( key )
+
           value = updates[ key ] || current[ key ]
           if value
             translation[ key ] = value
