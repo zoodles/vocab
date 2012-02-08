@@ -44,7 +44,6 @@ module Vocab
           values[ :full ] = FULL
           values[ :tree ] = <<-EOS
 tmp/translations/values-es/strings.xml
-tmp/translations/values-zh/strings.xml
 tmp/translations/values-zh-rCN/strings.xml
           EOS
 
