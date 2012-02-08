@@ -19,7 +19,7 @@ module Vocab
             end
           }
         end
-        File.open( path, 'w' ) { |f| f.write( builder.to_xml ) }
+        File.open( path, 'w' ) { |f| f.write( builder.to_xml( :encoding => 'UTF-8' ) ) }
       end
 
       def self.english_keys( locales_dir )
