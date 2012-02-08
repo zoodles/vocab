@@ -22,6 +22,7 @@ module Vocab
 
     def write_settings
       File.open( config_file, 'w' ) { |f| f.write( @local_config.to_yaml ) }
+      `git add #{config_file}`
     end
 
     def self.create

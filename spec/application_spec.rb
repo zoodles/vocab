@@ -14,6 +14,7 @@ describe "init" do
     path = "#{@tmpdir}/.vocab"
     File.exists?( path ).should be_true
     YAML.load_file( path ).should == { "last_translation" => `git rev-parse HEAD`.strip }
+    `git rm -f #{path}`
   end
 
 end

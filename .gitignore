@@ -3,6 +3,5 @@
 .bundle
 Gemfile.lock
 pkg/*
-spec/tmp
 spec/data/android/versions/*.tmp
 tmp/last_translation/*
