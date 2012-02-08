@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <resources>
   <string name="app_name">Kid Mode</string>
-  <string name="delete">La funci&amp;#xF3;n Child Lock</string>
   <string name="pd_app_name">Parent Dashboard</string>
+  <string name="delete">La funci&amp;#xF3;n Child Lock</string>
 </resources>

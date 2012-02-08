@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require "spec_helper"
 
 describe "Vocab::Merger::Android" do
@@ -79,7 +81,7 @@ describe "Vocab::Merger::Android" do
     it 'fetches the english keys' do
       merger = Vocab::Merger::Android.new( @merge_dir )
       keys = ["app_name", "delete", "cancel", "app_current", "not_in_es", "pd_app_name"]
-      merger.english_keys.should eql( keys )
+      merger.english_keys.should =~ keys
     end
 
   end
@@ -114,7 +116,7 @@ describe "Vocab::Merger::Android" do
     it 'returns the locales in the android updates directory' do
       merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
       locales = [ 'es' ]
-      Vocab::Translator::Android.should_receive ( :locales ).with( @update_dir ).and_return( locales )
+      Vocab::Translator::Android.should_receive( :locales ).with( @update_dir ).and_return( locales )
       merger.translation_locales.should eql( locales )
     end
 
