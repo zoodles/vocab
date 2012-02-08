@@ -33,6 +33,9 @@ Set the current git commit to be the starting point for the next translation dif
 
     vocab extract rails
 
+Note: keys starting with 'debug_' are ignored.  Prepend development-only strings
+with 'debug_' to avoid these keys being sent to translators.
+
 ## Merging new translations into project string files
 
     vocab merge android
