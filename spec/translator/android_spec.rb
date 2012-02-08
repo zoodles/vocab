@@ -16,7 +16,7 @@ describe 'Vocab::Translator::Android' do
 
     it 'returns the locales in the android updates directory' do
       dir = "#{vocab_root}/spec/data/android/translations"
-      Vocab::Translator::Android.locales( dir ).should eql( [ 'es' ] )
+      Vocab::Translator::Android.locales( dir, false ).should eql( [ 'es' ] )
     end
 
   end

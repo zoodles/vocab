@@ -35,12 +35,15 @@ module Vocab
 
       def updates_for_locale( path )
         name = path.gsub( "#{@locales_dir}/", '' )
-        update = "#{updates_dir}/#{name}"
+        dirname = File.dirname( name )
+        entries = Dir.glob( "#{updates_dir}/#{dirname}/*.xml" )
+        Vocab.ui.warn( "Multiple update files for #{path}: #{entries.join( ',' )}" ) if entries.size > 1
+        update = entries.first
         Vocab::Translator::Android.hash_from_xml( update )
       end
 
       def translation_locales
-        return Vocab::Translator::Android.locales( @updates_dir )
+        return Vocab::Translator::Android.locales( @updates_dir, false )
       end
 
       def files_to_merge

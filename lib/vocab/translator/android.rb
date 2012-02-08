@@ -28,10 +28,12 @@ module Vocab
         return translations.keys
       end
 
-      def self.locales( dir )
+      def self.locales( dir, strict = true )
+        xml_pattern = strict ? 'strings.xml' : '*'
+
         locales = []
-        Dir.glob( "#{dir}/values-*/strings.xml" ).each do |path|
-          locales << $1 if path =~ /values-(.*)\/strings.xml/
+        Dir.glob( "#{dir}/values-*/#{xml_pattern}" ).each do |path|
+          locales << $1 if path =~ /values-(.*)\//
         end
         return locales
       end
