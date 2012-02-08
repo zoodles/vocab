@@ -5,7 +5,7 @@ describe "Vocab" do
   describe 'root' do
 
     it 'returns the root of the gem' do
-      Vocab.root.should =~ /vocab$/
+      Vocab.root.should == File.expand_path( Dir.pwd )
     end
 
   end
