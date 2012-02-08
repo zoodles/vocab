@@ -35,7 +35,7 @@ module Vocab
         options.path = commands[2]
 
         if( options.command == 'init' )
-          init
+          Vocab::Settings.create
         elsif( options.command == 'extract' && options.platform == 'rails' )
           Extractor::Rails.extract
         elsif( options.command == 'extract' && options.platform == 'android' )
@@ -51,10 +51,6 @@ module Vocab
         else
           puts parser.help
         end
-      end
-
-      def init
-        Vocab::Settings.create
       end
 
     end

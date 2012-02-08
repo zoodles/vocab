@@ -10,7 +10,7 @@ describe "init" do
 
   it "creates a .vocab file if one doesn't exist" do
     Vocab.ui.should_receive( :say ).with( "Writing new .vocab file" )
-    Vocab::Application.init
+    Vocab::Settings.create
     path = "#{@tmpdir}/.vocab"
     File.exists?( path ).should be_true
     YAML.load_file( path ).should == { "last_translation" => `git rev-parse HEAD`.strip }
