@@ -26,8 +26,7 @@ module Vocab
     end
 
     def self.create
-      Vocab.ui.say( "Writing new .vocab file" )
-      Vocab.ui.say( "Be sure to check the .vocab file into your repo" )
+      Vocab.ui.say( "Writing new .vocab file.  Check this file into your project repo" )
       settings = Vocab::Settings.new( Dir.pwd )
       settings.update_translation
       settings.write_settings

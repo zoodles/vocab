@@ -9,7 +9,7 @@ describe "init" do
   end
 
   it "creates a .vocab file if one doesn't exist" do
-    Vocab.ui.should_receive( :say ).with( "Writing new .vocab file" )
+    Vocab.ui.should_receive( :say ).with( "Writing new .vocab file.  Check this file into your project repo" )
     Vocab::Settings.create
     path = "#{@tmpdir}/.vocab"
     File.exists?( path ).should be_true
