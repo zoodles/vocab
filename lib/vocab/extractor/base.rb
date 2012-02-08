@@ -63,16 +63,20 @@ module Vocab
         def print_instructions( values = {} )
 instructions = <<-EOS
 
-Instructions for integrating new translations:
+Extraction completed. To complete the translation:
 
-For existing languages, send #{values[:diff]} to get translations for new keys
-For new languages, send #{values[:full]} to get translations for all keys
+1. Send the language files to the translators:
 
-To integrate new translations, files must be in tmp/translations.  For example:
+#{values[:diff]} for languages that are already in the app
+#{values[:full]} for languages that need a complete translation
+
+2. To integrate new translations:
+
+Place completed translations under tmp/translations, for example:
 
 #{values[:tree]}
 
-After translations are in place, you can merge them into the project with:
+3. Merge translations into the project with:
 
 vocab merge rails
 
