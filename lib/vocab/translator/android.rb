@@ -1,6 +1,6 @@
 module Vocab
   module Translator
-    class Android
+    class Android < Base
 
       def self.hash_from_xml( path )
         xml = File.open( path ) { |f| f.read }
@@ -36,11 +36,6 @@ module Vocab
           locales << $1 if path =~ /values-(.*)\//
         end
         return locales
-      end
-
-      def self.ignore_key?( key )
-        return true if key.to_s.start_with?( 'debug_' )
-        return false
       end
 
     end

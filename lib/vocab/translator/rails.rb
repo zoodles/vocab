@@ -5,7 +5,7 @@
 
 module Vocab
   module Translator
-    class Rails
+    class Rails < Base
 
       attr_accessor :locale
 
