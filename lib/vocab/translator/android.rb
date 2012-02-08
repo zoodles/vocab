@@ -14,7 +14,7 @@ module Vocab
       def self.write( hash, path )
         builder = Nokogiri::XML::Builder.new do |xml|
           xml.resources {
-            hash.each do |key, value|
+            hash.sort.each do |key, value|
               xml.string( value, :name => key )
             end
           }
