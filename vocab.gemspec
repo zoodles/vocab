@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Vocab::VERSION
   s.authors     = ["Jeff LaBarge"]
   s.email       = ["jefflabarge@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/zoodles/vocab"
   s.summary     = %q{Automate management of i18n locale files}
   s.description = %q{Export strings that need to be translated and integrate the completed translations}
   s.rubyforge_project = "vocab"
