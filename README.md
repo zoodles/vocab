@@ -47,7 +47,7 @@ put the partial language translations in `tmp/translations`.  For example:
 
 The file must be in the properly named folder and end with xml.
 
-For new language files, just put them directly under the res directory.
+For new language files, just put them directly under the `res` directory.
 
 ### Merging new translations into project string files
 
@@ -58,7 +58,7 @@ Integrate the translations with the following command:
 
 ### Validating that all translations have the same keys
 
-    cd RAILS_ROOT
+    cd APP_ROOT
     vocab validate android
 
 ## Rails
@@ -85,6 +85,9 @@ Integrate the translations with the following command:
 
     cd RAILS_ROOT
     vocab merge rails
+
+ Keys will be put in the correct nested yml file.  You can put whole or partial translations
+ in tmp/translations.
 
 ### Validating that all translations have the same keys
 
