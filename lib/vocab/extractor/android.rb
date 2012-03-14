@@ -6,8 +6,10 @@ module Vocab
         DIFF = 'strings.diff.xml'
         FULL = 'strings.full.xml'
 
+        CURRENT = 'res/values/strings.xml'
+
         def extract_current( path = nil )
-          path ||= "#{Vocab.root}/res/values/strings.xml"
+          path ||= "#{Vocab.root}/#{CURRENT}"
           return Vocab::Translator::Android.hash_from_xml( path )
         end
 
@@ -20,6 +22,11 @@ module Vocab
           FileUtils.mkdir_p( File.dirname( tmpfile ) )
           File.open( tmpfile, 'w' ) { |f| f.write( xml ) }
           return Vocab::Translator::Android.hash_from_xml( tmpfile )
+        end
+
+        def current_plurals( path = nil )
+          path ||= "#{Vocab.root}/#{CURRENT}"
+          return Vocab::Translator::Android.plurals_from_xml( path )
         end
 
         def write_diff( diff, path = nil )

@@ -3,12 +3,39 @@ module Vocab
     class Android < Base
 
       def self.hash_from_xml( path )
-        xml = File.open( path ) { |f| f.read }
-        doc = Nokogiri::HTML.fragment( xml ) { |config| config.noblanks }
+        doc = doc_from_xml( path )
         children = doc.search( 'resources/string' )
         hash = {}
         children.each { |child| hash[ child['name'] ] = child.text }
         return hash
+      end
+
+      # Extracts plural definitions from xml to a hash
+      #
+      # For example:
+      #
+      #     <plurals name="user_count">
+      #         <item quantity="one">1 user</item>
+      #         <item quantity="many">%d users</item>
+      #     </plurals>
+      #
+      # Is returned as:
+      #
+      #     { "user_count" => { "one"  => "1 user",
+      #                         "many" => "%d users" } }
+      def self.plurals_from_xml( path )
+        doc = doc_from_xml( path )
+
+        plurals = {}
+        doc.search( 'resources/plurals' ).each do |plural|
+          items = {}
+          plural.search( 'item' ).each do |item|
+            items[ item['quantity' ] ] = item.text
+          end
+
+          plurals[ plural['name'] ] = items
+        end
+        return plurals
       end
 
       def self.write( hash, path )
@@ -37,6 +64,16 @@ module Vocab
           locales << $1 if path =~ /values-(.*)\//
         end
         return locales
+      end
+
+      #########################################################################
+      # Helper methods
+      #########################################################################
+
+      def self.doc_from_xml( path )
+        xml = File.open( path ) { |f| f.read }
+        doc = Nokogiri::HTML.fragment( xml ) { |config| config.noblanks }
+        return doc
       end
 
     end

@@ -41,6 +41,18 @@ describe "Vocab::Extractor::Android" do
 
   end
 
+  describe 'current_plurals' do
+
+    it "extracts the plural definitions from the strings file" do
+      expected = { "user_count" => { "one"  => "1 user",
+                                     "many" => "%d users" },
+                   "fish_count" => { "one"  => "1 fish",
+                                     "many" => "%d fish" } }
+      Vocab::Extractor::Android.current_plurals( @locale ).should eql( expected )
+    end
+
+  end
+
   describe 'write_full' do
 
     it 'writes the full translation to the correct xml file' do

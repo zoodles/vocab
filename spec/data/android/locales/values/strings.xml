@@ -12,4 +12,9 @@
          <item quantity="one">1 user</item>
          <item quantity="many">%d users</item>
     </plurals>
+
+    <plurals name="fish_count">
+         <item quantity="one">1 fish</item>
+         <item quantity="many">%d fish</item>
+    </plurals>
 </resources>
