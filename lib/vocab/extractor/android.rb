@@ -6,27 +6,28 @@ module Vocab
         DIFF = 'strings.diff.xml'
         FULL = 'strings.full.xml'
 
-        CURRENT = 'res/values/strings.xml'
+        STRINGS_XML = 'res/values/strings.xml'
 
         def extract_current( path = nil )
-          path ||= "#{Vocab.root}/#{CURRENT}"
+          path ||= "#{Vocab.root}/#{STRINGS_XML}"
           return Vocab::Translator::Android.hash_from_xml( path )
         end
 
         def extract_previous( path = nil )
-          path ||= "res/values/strings.xml"
-          sha = Vocab.settings.last_translation
-          xml = previous_file( path, sha )
-
-          tmpfile = "#{Vocab.root}/tmp/last_translation/#{File.basename(path)}"
-          FileUtils.mkdir_p( File.dirname( tmpfile ) )
-          File.open( tmpfile, 'w' ) { |f| f.write( xml ) }
+          path ||= STRINGS_XML
+          tmpfile = tmp_file( path )
           return Vocab::Translator::Android.hash_from_xml( tmpfile )
         end
 
         def current_plurals( path = nil )
-          path ||= "#{Vocab.root}/#{CURRENT}"
+          path ||= "#{Vocab.root}/#{STRINGS_XML}"
           return Vocab::Translator::Android.plurals_from_xml( path )
+        end
+
+        def previous_plurals( path = nil )
+          path ||= STRINGS_XML
+          tmpfile = tmp_file( path )
+          return Vocab::Translator::Android.plurals_from_xml( tmpfile )
         end
 
         def write_diff( diff, path = nil )
@@ -55,6 +56,15 @@ tmp/translations/values-zh-rCN/strings.xml
           EOS
 
           super( values )
+        end
+
+        def tmp_file( path )
+          sha = Vocab.settings.last_translation
+          xml = previous_file( path, sha )
+          tmpfile = "#{Vocab.root}/tmp/last_translation/#{File.basename(path)}"
+          FileUtils.mkdir_p( File.dirname( tmpfile ) )
+          File.open( tmpfile, 'w' ) { |f| f.write( xml ) }
+          return tmpfile
         end
 
       end

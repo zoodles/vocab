@@ -53,6 +53,25 @@ describe "Vocab::Extractor::Android" do
 
   end
 
+  describe 'previous_plurals' do
+
+    before( :each ) do
+      Dir.chdir( vocab_root )
+    end
+
+    before( :each ) do
+      @sha = '039f85bdd8aa5b46502c396d70f68e1969b02d02'
+      Vocab.settings.stub!( :last_translation ).and_return( @sha )
+    end
+
+    it "extracts hash of previous string translations" do
+      actual = Vocab::Extractor::Android.previous_plurals( @locale )
+      actual.should eql( { "fish_count" => { "one"  => "1 fishes",
+                                             "many" => "%d fish" } } )
+    end
+
+  end
+
   describe 'write_full' do
 
     it 'writes the full translation to the correct xml file' do
