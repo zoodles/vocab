@@ -36,6 +36,20 @@ describe "Vocab::Extractor::Base" do
                        :"en.models.product.id_126.name"=>"This is new"}
     end
 
+    it "finds new plural definitions" do
+      @current = { 'users' => {}, 'fish' => {} }
+      @previous = { 'users' => {} }
+      diff = Vocab::Extractor::Base.diff( @previous, @current )
+      diff.should == { 'fish' => {} }
+    end
+
+    it "finds updated plural definitions" do
+      @current =  { 'users' => { 'one' => '1 user',   'other' => '%d users' }, 'fish' => {} }
+      @previous = { 'users' => { 'one' => '1 person', 'other' => '%d users' }, 'fish' => {} }
+      diff = Vocab::Extractor::Base.diff( @previous, @current )
+      diff.should == { 'users' => { 'one' => '1 user', 'other' => '%d users' } }
+    end
+
   end
 
   describe "extract" do
