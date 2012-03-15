@@ -65,8 +65,10 @@ describe "Vocab::Extractor::Base" do
       previous = { 1 => 2 }
       Vocab::Extractor::Base.should_receive( :extract_current ).and_return( current )
       Vocab::Extractor::Base.should_receive( :extract_previous ).and_return( previous )
-      Vocab::Extractor::Base.should_receive( :write_diff ).with( { 1 => 5, 3 => 4 }, @diff_path )
-      Vocab::Extractor::Base.should_receive( :write_full ).with( current, @full_path )
+      Vocab::Extractor::Base.should_receive( :current_plurals ).and_return( {} )
+      Vocab::Extractor::Base.should_receive( :previous_plurals ).and_return( {} )
+      Vocab::Extractor::Base.should_receive( :write_diff ).with( { 1 => 5, 3 => 4 }, {}, @diff_path )
+      Vocab::Extractor::Base.should_receive( :write_full ).with( current, {}, @full_path )
       Vocab::Extractor::Base.should_receive( :mkdir_examples )
       Vocab::Extractor::Base.extract( @diff_path, @full_path )
     end

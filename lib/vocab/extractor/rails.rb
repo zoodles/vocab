@@ -5,14 +5,14 @@ module Vocab
       FULL = 'en.full.yml'
 
       class << self
-        def write_diff( diff, path )
+        def write_diff( strings, plurals, path )
           path ||= "#{Vocab.root}/#{DIFF}"
-          write( diff, path )
+          write( strings, path )
         end
 
-        def write_full( full, path )
+        def write_full( strings, plurals, path )
           path ||= "#{Vocab.root}/#{FULL}"
-          write( full, path )
+          write( strings, path )
         end
 
         def write( translations, path )
@@ -44,6 +44,14 @@ module Vocab
         def extract_current( locales_root = nil )
           locales_root ||= "#{Vocab.root}/config/locales"
           return translations( locales_root )
+        end
+
+        def previous_plurals
+          return {}
+        end
+
+        def current_plurals
+          return {}
         end
 
         def translations( dir )

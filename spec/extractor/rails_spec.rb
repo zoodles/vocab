@@ -7,7 +7,7 @@ describe "Vocab::Extractor::Rails" do
     it 'writes the full en translation to a file' do
       translation = { :en => { :full => 'translation' } }
       path = "#{vocab_root}/spec/tmp/en.full.yml"
-      Vocab::Extractor::Rails.write_full( translation, path )
+      Vocab::Extractor::Rails.write_full( translation, {}, path )
       YAML.load_file( path ).should eql( translation )
       File.delete( path )
     end

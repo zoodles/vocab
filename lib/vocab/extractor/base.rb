@@ -3,11 +3,13 @@ module Vocab
     class Base
       class << self
         def extract( diff_path = nil, full_path = nil )
-          current = extract_current
-          previous = extract_previous
-          diff = diff( previous, current )
-          write_diff( diff, diff_path )
-          write_full( current, full_path )
+          all_strings = extract_current
+          all_plurals = current_plurals
+
+          updated_strings = diff( extract_previous, all_strings )
+          updated_plurals = diff( previous_plurals, all_plurals )
+          write_diff( updated_strings, updated_plurals, diff_path )
+          write_full( all_strings, all_plurals, full_path )
           mkdir_examples
           print_instructions
         end
@@ -34,11 +36,19 @@ module Vocab
           raise "extract_current not implemented"
         end
 
-        def write_diff( diff, path )
+        def current_plurals
+          raise "current_plurals not implemented"
+        end
+
+        def previous_plurals
+          raise "previous_plurals not implemented"
+        end
+
+        def write_diff( diff, plurals, path )
           raise "write_diff not implemented"
         end
 
-        def write_full( diff, path )
+        def write_full( diff, plurals, path )
           raise "write_full not implemented"
         end
 
