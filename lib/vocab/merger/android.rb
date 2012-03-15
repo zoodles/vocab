@@ -24,7 +24,7 @@ module Vocab
           end
         end
 
-        Vocab::Translator::Android.write( translation, path )
+        Vocab::Translator::Android.write( translation, {}, path )
       end
 
       def english_keys

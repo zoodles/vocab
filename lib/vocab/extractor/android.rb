@@ -30,14 +30,14 @@ module Vocab
           return Vocab::Translator::Android.plurals_from_xml( tmpfile )
         end
 
-        def write_diff( diff, path = nil )
+        def write_diff( strings, plurals, path = nil )
           path ||= "#{Vocab.root}/#{DIFF}"
-          Vocab::Translator::Android.write( diff, path )
+          Vocab::Translator::Android.write( strings, plurals, path )
         end
 
-        def write_full( diff, path = nil )
+        def write_full( strings, plurals, path = nil )
           path ||= "#{Vocab.root}/#{FULL}"
-          Vocab::Translator::Android.write( diff, path )
+          Vocab::Translator::Android.write( strings, plurals, path )
         end
 
         def examples( locales_dir = nil )

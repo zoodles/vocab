@@ -38,13 +38,21 @@ module Vocab
         return plurals
       end
 
-      def self.write( hash, path )
+      def self.write( strings, plurals, path )
         builder = Nokogiri::XML::Builder.new do |xml|
-          xml.resources {
-            hash.sort.each do |key, value|
+          xml.resources do
+            strings.sort.each do |key, value|
               xml.string( value, :name => key )
             end
-          }
+
+            plurals.keys.sort.each do |key|
+              xml.plurals( :name => key ) do
+                plurals[ key ].each do |quantity, value|
+                  xml.item( value, :quantity => quantity )
+                end
+              end
+            end
+          end
         end
         File.open( path, 'w' ) { |f| f.write( builder.to_xml( :encoding => 'UTF-8' ) ) }
       end

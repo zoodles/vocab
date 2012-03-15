@@ -75,10 +75,12 @@ describe "Vocab::Extractor::Android" do
   describe 'write_full' do
 
     it 'writes the full translation to the correct xml file' do
-      hash = { 'foo' => 'bar' }
+      strings = { 'foo' => 'bar' }
+      plurals = { 'users' => { 'one'  => '1 user',
+                               'many' => '2 users' } }
       Vocab::Translator::Android.should_receive( :write ).
-              with( hash, "#{vocab_root}/strings.full.xml" )
-      Vocab::Extractor::Android.write_full( hash )
+              with( strings, plurals, "#{vocab_root}/strings.full.xml" )
+      Vocab::Extractor::Android.write_full( strings, plurals )
     end
 
   end
@@ -86,25 +88,12 @@ describe "Vocab::Extractor::Android" do
   describe 'write_diff' do
 
     it 'writes the diff translation to the correct xml file' do
-      hash = { 'foo' => 'bar' }
+      strings = { 'foo' => 'bar' }
+      plurals = { 'users' => { 'one'  => '1 user',
+                               'many' => '2 users' } }
       Vocab::Translator::Android.should_receive( :write ).
-              with( hash, "#{vocab_root}/strings.diff.xml" )
-      Vocab::Extractor::Android.write_diff( hash )
-    end
-
-  end
-
-  describe 'write' do
-
-    it 'writes the translation to a xml file' do
-      translation = { 'app_name' => 'Kid Mode',
-                      'pd_app_name' => 'Parent Dashboard',
-                      'delete' => "La funci&#xF3;n Child Lock" }
-      path = "#{vocab_root}/spec/tmp/strings.xml"
-      Vocab::Translator::Android.write( translation, path )
-      strings = File.open( path ) { |f| f.read }
-      strings.should eql_file( "spec/data/android/write.xml" )
-      File.delete( path )
+              with( strings, plurals, "#{vocab_root}/strings.diff.xml" )
+      Vocab::Extractor::Android.write_diff( strings, plurals )
     end
 
   end
