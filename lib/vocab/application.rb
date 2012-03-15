@@ -6,7 +6,7 @@ module Vocab
     
     class << self
       def run
-        handle_command
+        return handle_command
       end
 
       ##############################
@@ -14,6 +14,7 @@ module Vocab
       ##############################
 
       def handle_command
+        success = true
         options = OpenStruct.new
         parser = OptionParser.new
 
@@ -45,14 +46,15 @@ module Vocab
         elsif( options.command == 'merge' && options.platform == 'android' )
           Merger::Android.new.merge
         elsif( options.command == 'validate' && options.platform == 'android' )
-          Validator::Android.new.validate
+          success = Validator::Android.new.validate
         elsif( options.command == 'validate' && options.platform == 'rails' )
-          Validator::Rails.new.validate
+          success = Validator::Rails.new.validate
         else
           puts parser.help
         end
+        
+        return success
       end
-
     end
   end
 end

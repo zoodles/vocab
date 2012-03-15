@@ -8,4 +8,4 @@ end
 
 require 'vocab'
 
-Vocab::Application.run
+exit Vocab::Application.run

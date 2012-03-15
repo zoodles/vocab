@@ -103,3 +103,8 @@ with 'debug_' to avoid these keys being sent to translators.
 
   * Add .processed to each tmp/translation after success
   * Handle full translations under tmp/translations when no existing translation exists in android
+  * Add iOS support
+  * Add AIR support
+  * Add Chrome support
+  * Add Firefox support
+  
