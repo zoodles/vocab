@@ -8,6 +8,11 @@ module Vocab
       end
 
       def merge_file( path )
+        strings = strings( path )
+        Vocab::Translator::Android.write( strings, {}, path )
+      end
+
+      def strings( path )
         keys = english_keys
         current = current_for_locale( path )
         updates = updates_for_locale( path )
@@ -24,7 +29,7 @@ module Vocab
           end
         end
 
-        Vocab::Translator::Android.write( translation, {}, path )
+        return translation
       end
 
       def english_keys
