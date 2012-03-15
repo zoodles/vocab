@@ -2,6 +2,7 @@
 *.tmp
 .bundle
 Gemfile.lock
+coverage/*
 pkg/*
 spec/tmp/*
 !spec/tmp/.vocab

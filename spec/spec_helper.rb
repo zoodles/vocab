@@ -6,6 +6,13 @@ require "vocab"
 require "support/matchers"
 require "support/shared"
 
+require 'simplecov'
+
+SimpleCov.start do
+    coverage_dir 'coverage'
+    add_filter "/spec/"
+  end
+
 Vocab.ui.silent = true
 
 RSpec.configure do |config|
