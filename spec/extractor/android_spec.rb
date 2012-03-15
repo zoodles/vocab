@@ -15,7 +15,8 @@ describe "Vocab::Extractor::Android" do
                            "cancel"     =>"Cancel",
                            "app_current"=>"current",
                            "pd_app_name"=>"Parent Dashboard",
-                           "not_in_es"  =>"This key not in spanish",} )
+                           "not_in_es"  =>"This key not in spanish",
+                           "debug_key"  =>"Should be ignored" } )
     end
 
   end

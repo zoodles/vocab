@@ -25,7 +25,8 @@ module Vocab
       def self.english_keys( locales_dir )
         path = "#{locales_dir}/values/strings.xml"
         translations = Vocab::Translator::Android.hash_from_xml( path )
-        return translations.keys
+        keys = translations.keys.map { |key| Vocab::Translator::Base.ignore_key?( key ) ? nil : key }.compact
+        return keys
       end
 
       def self.locales( dir, strict = true )

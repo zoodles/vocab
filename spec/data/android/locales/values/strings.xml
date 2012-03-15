@@ -7,4 +7,5 @@
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="not_in_es">This key not in spanish</string>
+    <string name="debug_key">Should be ignored</string>
 </resources>
