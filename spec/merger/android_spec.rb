@@ -47,31 +47,53 @@ describe "Vocab::Merger::Android" do
       @file = "#{@merge_dir}/values-es/strings.xml"
       @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
       @merger.merge_file( @file )
-      @merged = Vocab::Translator::Android.hash_from_xml( @file )
     end
 
-    it "merges updated android translations" do
-      @merged['pd_app_name'].should eql( 'el Panel para padres bien' )
+    context "strings" do
+
+      before( :each ) do
+        @merged = Vocab::Translator::Android.hash_from_xml( @file )
+      end
+
+      it "merges updated android translations" do
+        @merged['pd_app_name'].should eql( 'el Panel para padres bien' )
+      end
+
+      it "integrates new android translations" do
+        @merged['cancel'].should eql( 'Cancelar' )
+      end
+
+      it "properly encodes html entities" do
+        @merged['delete'].should eql( "La función Child Lock" )
+      end
+
+      it "ignores key accidentally introduced by the translators into android translations" do
+        @merged['translator_cruft'].should be( nil )
+      end
+
+      it "retains unchanged android translations" do
+        @merged['app_name'].should eql( 'Modo Niños' )
+      end
+
+      it 'does not include keys where there is no translation' do
+        @merged['not_in_es'].should be( nil )
+      end
+
     end
 
-    it "integrates new android translations" do
-      @merged['cancel'].should eql( 'Cancelar' )
-    end
+    context "strings" do
 
-    it "properly encodes html entities" do
-      @merged['delete'].should eql( "La función Child Lock" )
-    end
+      before( :each ) do
+        @merged = Vocab::Translator::Android.plurals_from_xml( @file )
+      end
 
-    it "ignores key accidentally introduced by the translators into android translations" do
-      @merged['translator_cruft'].should be( nil )
-    end
+      it "includes plurals where an item is updated" do
+        @merged[ 'fish_count' ].should eql( { 'one' => '1 pescado', 'many' => '%d peces' } )
+      end
 
-    it "retains unchanged android translations" do
-      @merged['app_name'].should eql( 'Modo Niños' )
-    end
-
-    it 'does not include keys where there is no translation' do
-      @merged['not_in_es'].should be( nil )
+      it "includes new plural definition" do
+        @merged[ 'user_count' ].should eql( {"one"=>"1 usuario", "many"=>"%d usuarios"} )
+      end
     end
 
   end
@@ -82,6 +104,16 @@ describe "Vocab::Merger::Android" do
       merger = Vocab::Merger::Android.new( @merge_dir )
       keys = ["app_name", "delete", "cancel", "app_current", "not_in_es", "pd_app_name"]
       merger.english_keys.should =~ keys
+    end
+
+  end
+
+  describe 'plural_keys' do
+
+    it 'fetches the plural definition keys from the english file' do
+      merger = Vocab::Merger::Android.new( @merge_dir )
+      keys = ["fish_count", "user_count"]
+      merger.plural_keys.should =~ keys
     end
 
   end

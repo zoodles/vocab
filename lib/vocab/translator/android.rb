@@ -64,6 +64,13 @@ module Vocab
         return keys
       end
 
+      def self.plural_keys( locales_dir )
+        path = "#{locales_dir}/values/strings.xml"
+        translations = Vocab::Translator::Android.plurals_from_xml( path )
+        keys = translations.keys.map { |key| Vocab::Translator::Base.ignore_key?( key ) ? nil : key }.compact
+        return keys
+      end
+
       def self.locales( dir, strict = true )
         xml_pattern = strict ? 'strings.xml' : '*'
 

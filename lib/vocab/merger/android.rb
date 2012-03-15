@@ -9,14 +9,25 @@ module Vocab
 
       def merge_file( path )
         strings = strings( path )
-        Vocab::Translator::Android.write( strings, {}, path )
+        plurals = plurals( path )
+        Vocab::Translator::Android.write( strings, plurals, path )
       end
 
       def strings( path )
         keys = english_keys
         current = current_for_locale( path )
         updates = updates_for_locale( path )
+        return translation_hash( keys, current, updates, path )
+      end
 
+      def plurals( path )
+        keys = plural_keys
+        current = current_plurals_for_locale( path )
+        updates = update_plurals_for_locale( path )
+        return translation_hash( keys, current, updates, path )
+      end
+
+      def translation_hash( keys, current, updates, path )
         translation = {}
         keys.each do |key|
           next if Vocab::Translator::Base.ignore_key?( key )
@@ -34,6 +45,10 @@ module Vocab
 
       def english_keys
         return Vocab::Translator::Android.english_keys( @locales_dir )
+      end
+
+      def plural_keys
+        return Vocab::Translator::Android.plural_keys( @locales_dir )
       end
 
       def current_for_locale( path )

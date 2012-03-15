@@ -5,7 +5,7 @@
   <string name="pd_app_name">el Panel para padres bien</string>
   <string name="translator_cruft">Malo</string>
 
-  <plurals name="user_count">
+  <plurals name="g">
        <item quantity="one">1 usuario</item>
        <item quantity="many">%d usuarios</item>
   </plurals>
