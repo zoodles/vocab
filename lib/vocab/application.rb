@@ -3,7 +3,7 @@ require 'ostruct'
 
 module Vocab
   class Application
-
+    
     class << self
       def run
         handle_command

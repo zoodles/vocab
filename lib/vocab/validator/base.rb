@@ -2,13 +2,19 @@ module Vocab
   module Validator
     class Base
 
+      # Returns false if validation fails
       def validate
+        ok = true
+        
         files = files_to_validate
         Vocab.ui.say( "#{files.size} file(s) to validate in #{@locales_dir}" )
         files.each do |path|
           validation = validate_file( path )
           print( path, validation )
+          ok &&= validation[ :missing ] && validation[ :missing ].empty?
         end
+        
+        return ok
       end
 
       def print( path, validation )

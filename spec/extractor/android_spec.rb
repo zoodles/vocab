@@ -71,8 +71,8 @@ describe "Vocab::Extractor::Android" do
                       'delete' => "La funci&#xF3;n Child Lock" }
       path = "#{vocab_root}/spec/tmp/strings.xml"
       Vocab::Translator::Android.write( translation, path )
-      should_eql_file( File.open( path ) { |f| f.read },
-                       "spec/data/android/write.xml" )
+      strings = File.open( path ) { |f| f.read }
+      strings.should eql_file( "spec/data/android/write.xml" )
       File.delete( path )
     end
 

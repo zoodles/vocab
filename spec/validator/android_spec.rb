@@ -40,7 +40,7 @@ describe "Vocab::Validator::Android" do
 
     it 'validates android locales files' do
       files = @validator.files_to_validate
-      files.each { |file| @validator.should_receive( :validate_file ).with( file ) }
+      files.each { |file| @validator.should_receive( :validate_file ).with( file ).and_return( {} ) }
       @validator.should_receive( :print ).exactly( files.size ).times
       @validator.validate
     end
