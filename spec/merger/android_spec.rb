@@ -98,7 +98,7 @@ describe "Vocab::Merger::Android" do
 
   end
 
-  describe 'updates' do
+  describe 'updates_for_locale' do
 
     it 'returns hash of the updates that match a locale file' do
       merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
@@ -107,6 +107,27 @@ describe "Vocab::Merger::Android" do
                    'pd_app_name'      => 'el Panel para padres bien',
                    'translator_cruft' => 'Malo' }
       merger.updates_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
+    end
+
+  end
+
+  describe 'current_plurals_for_locale' do
+
+    it 'returns hash of the current translations that match a locale file' do
+      merger = Vocab::Merger::Android.new( @merge_dir )
+      expected = { "fish_count" => { "one" => "1 pescado", "many" => "%d peces" } }
+      merger.current_plurals_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
+    end
+
+  end
+
+  describe 'update_plurals_for_locale' do
+
+    it 'returns hash of the updates that match a locale file' do
+      merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      expected = { "user_count" => { "one" => "1 usuario", "many" => "%d usuarios" },
+                   "fish_count" => { "one" => "1 pescado", "many" => "%d peces" } }
+      merger.update_plurals_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
     end
 
   end

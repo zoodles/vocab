@@ -3,4 +3,9 @@
     <string name="app_name">Modo Niños</string>
     <string name="pd_app_name">el Panel para padres</string>
     <string name="app_current">actual</string>
+
+    <plurals name="fish_count">
+         <item quantity="one">1 pescado</item>
+         <item quantity="many">%d peces</item>
+    </plurals>
 </resources>

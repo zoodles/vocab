@@ -32,16 +32,21 @@ module Vocab
       end
 
       def current_for_locale( path )
-        Vocab::Translator::Android.hash_from_xml( path )
+        return Vocab::Translator::Android.hash_from_xml( path )
       end
 
       def updates_for_locale( path )
-        name = path.gsub( "#{@locales_dir}/", '' )
-        dirname = File.dirname( name )
-        entries = Dir.glob( "#{updates_dir}/#{dirname}/*.xml" )
-        Vocab.ui.warn( "Multiple update files for #{path}: #{entries.join( ',' )}" ) if entries.size > 1
-        update = entries.first
-        Vocab::Translator::Android.hash_from_xml( update )
+        update = update_file_path( path )
+        return Vocab::Translator::Android.hash_from_xml( update )
+      end
+
+      def current_plurals_for_locale( path )
+        return Vocab::Translator::Android.plurals_from_xml( path )
+      end
+
+      def update_plurals_for_locale( path )
+        update = update_file_path( path )
+        return Vocab::Translator::Android.plurals_from_xml( update )
       end
 
       def translation_locales
@@ -52,6 +57,14 @@ module Vocab
         return translation_locales.collect do |locale|
           "#{@locales_dir}/values-#{locale}/strings.xml"
         end
+      end
+
+      def update_file_path( path )
+        name = path.gsub( "#{@locales_dir}/", '' )
+        dirname = File.dirname( name )
+        entries = Dir.glob( "#{updates_dir}/#{dirname}/*.xml" )
+        Vocab.ui.warn( "Multiple update files for #{path}: #{entries.join( ',' )}" ) if entries.size > 1
+        return entries.first
       end
 
     end

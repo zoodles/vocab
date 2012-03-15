@@ -4,4 +4,14 @@
   <string name="delete">La funci&oacute;n Child Lock</string>
   <string name="pd_app_name">el Panel para padres bien</string>
   <string name="translator_cruft">Malo</string>
+
+  <plurals name="user_count">
+       <item quantity="one">1 usuario</item>
+       <item quantity="many">%d usuarios</item>
+  </plurals>
+
+  <plurals name="fish_count">
+       <item quantity="one">1 pescado</item>
+       <item quantity="many">%d peces</item>
+  </plurals>
 </resources>
