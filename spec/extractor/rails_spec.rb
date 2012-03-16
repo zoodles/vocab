@@ -27,7 +27,7 @@ describe "Vocab::Extractor::Rails" do
 
   end
 
-  describe "extract_previous" do
+  describe "previous_strings" do
 
     before( :each ) do
       @last_translation = '5ab8cf4d081d7ba1d5f020118dd00c3ea2d0437a'
@@ -37,7 +37,7 @@ describe "Vocab::Extractor::Rails" do
     end
 
     it "creates a hash of the english translation strings from the last translation" do
-      actual = Vocab::Extractor::Rails.extract_previous( @locales_root )
+      actual = Vocab::Extractor::Rails.previous_strings( @locales_root )
       expected = { :"en.models.product.id_36.description" =>"Polarized and lazer resistant",
                    :"en.marketing.banner"                 =>"This product is so good",
                    :"en.models.product.id_36.name"        =>"This nested value has changed",
@@ -54,7 +54,7 @@ describe "Vocab::Extractor::Rails" do
     it 'creates a tmp folder if one does not exist' do
       dir = "#{vocab_root}/tmp/last_translation"
       FileUtils.rm_rf( "#{vocab_root}/tmp/last_translation" )
-      Vocab::Extractor::Rails.extract_previous( @locales_root )
+      Vocab::Extractor::Rails.previous_strings( @locales_root )
       File.exists?( dir ).should be_true
     end
 
@@ -97,7 +97,7 @@ describe "Vocab::Extractor::Rails" do
 
     it "extracts the strings that need to be translated into a yml file" do
       Vocab::Extractor::Rails.should_receive( :current_strings ).and_return( { :en => { 1 => 5, 3 => 4 } } )
-      Vocab::Extractor::Rails.should_receive( :extract_previous ).and_return( { :en => { 1 => 2 } } )
+      Vocab::Extractor::Rails.should_receive( :previous_strings ).and_return( { :en => { 1 => 2 } } )
       Vocab::Extractor::Rails.extract( @diff_path, @full_path )
       YAML.load_file( @diff_path ).should == { :en => { 1 => 5, 3 => 4 } }
 

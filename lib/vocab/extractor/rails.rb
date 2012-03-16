@@ -21,7 +21,7 @@ module Vocab
           Vocab.ui.say( "Extracted to #{path}" )
         end
 
-        def extract_previous( locales_root = nil )
+        def previous_strings( locales_root = nil )
           locales_root ||= "config/locales"
           tmpdir = "#{Vocab.root}/tmp/last_translation"
           FileUtils.rm_rf( "#{tmpdir}/*" )

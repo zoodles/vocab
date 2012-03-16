@@ -6,7 +6,7 @@ module Vocab
           all_strings = current_strings
           all_plurals = current_plurals
 
-          updated_strings = diff( extract_previous, all_strings )
+          updated_strings = diff( previous_strings, all_strings )
           updated_plurals = diff( previous_plurals, all_plurals )
           write_diff( updated_strings, updated_plurals, diff_path )
           write_full( all_strings, all_plurals, full_path )
@@ -28,8 +28,8 @@ module Vocab
           return diff
         end
 
-        def extract_previous
-          raise "extract_previous not implemented"
+        def previous_strings
+          raise "previous_strings not implemented"
         end
 
         def current_strings

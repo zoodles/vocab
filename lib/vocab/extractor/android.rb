@@ -13,7 +13,7 @@ module Vocab
           return Vocab::Translator::Android.hash_from_xml( path )
         end
 
-        def extract_previous( path = nil )
+        def previous_strings( path = nil )
           path ||= STRINGS_XML
           tmpfile = tmp_file( path )
           return Vocab::Translator::Android.hash_from_xml( tmpfile )

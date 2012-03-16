@@ -21,7 +21,7 @@ describe "Vocab::Extractor::Android" do
 
   end
 
-  describe 'extract_previous' do
+  describe 'previous_strings' do
 
     before( :each ) do
       Dir.chdir( vocab_root )
@@ -33,7 +33,7 @@ describe "Vocab::Extractor::Android" do
     end
 
     it "extracts hash of previous string translations" do
-      actual = Vocab::Extractor::Android.extract_previous( @locale )
+      actual = Vocab::Extractor::Android.previous_strings( @locale )
       actual.should eql( { 'app_name'    => 'Kid Mode',
                            'pd_app_name' => 'Parent Dashboard',
                            'app_current' => 'current' } )
