@@ -16,7 +16,7 @@ module Vocab
       def strings( path )
         keys = english_keys
         current = current_strings_for_locale( path )
-        updates = updates_for_locale( path )
+        updates = update_strings_for_locale( path )
         return translation_hash( keys, current, updates, path )
       end
 
@@ -55,7 +55,7 @@ module Vocab
         return Vocab::Translator::Android.hash_from_xml( path )
       end
 
-      def updates_for_locale( path )
+      def update_strings_for_locale( path )
         update = update_file_path( path )
         return Vocab::Translator::Android.hash_from_xml( update )
       end

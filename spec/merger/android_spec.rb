@@ -130,7 +130,7 @@ describe "Vocab::Merger::Android" do
 
   end
 
-  describe 'updates_for_locale' do
+  describe 'update_strings_for_locale' do
 
     it 'returns hash of the updates that match a locale file' do
       merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
@@ -138,7 +138,7 @@ describe "Vocab::Merger::Android" do
                    'delete'           => "La función Child Lock",
                    'pd_app_name'      => 'el Panel para padres bien',
                    'translator_cruft' => 'Malo' }
-      merger.updates_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
+      merger.update_strings_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
     end
 
   end
