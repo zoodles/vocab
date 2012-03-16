@@ -118,14 +118,14 @@ describe "Vocab::Merger::Android" do
 
   end
 
-  describe 'current_for_locale' do
+  describe 'current_strings_for_locale' do
 
     it 'returns hash of the current translations that match a locale file' do
       merger = Vocab::Merger::Android.new( @merge_dir )
       expected = { "app_name"   =>"Modo Niños",
                    "app_current"=>"actual",
                    "pd_app_name"=>"el Panel para padres"}
-      merger.current_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
+      merger.current_strings_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
     end
 
   end
