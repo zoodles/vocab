@@ -40,9 +40,9 @@ describe 'Vocab::Translator::Android' do
                   'pd_app_name' => 'Parent Dashboard',
                   'delete' => "La funci&#xF3;n Child Lock" }
       plurals = { 'users' => { 'one'  => '1 user',
-                               'many' => '2 users' },
+                               'other' => '2 users' },
                   'deer'  => { 'one'  => '1 deer',
-                               'many' => '2 deer' } }
+                               'other' => '2 deer' } }
       path = "#{vocab_root}/spec/tmp/strings.xml"
       Vocab::Translator::Android.write( strings, plurals, path )
       strings = File.open( path ) { |f| f.read }

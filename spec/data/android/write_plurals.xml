@@ -5,10 +5,10 @@
   <string name="pd_app_name">Parent Dashboard</string>
   <plurals name="deer">
     <item quantity="one">1 deer</item>
-    <item quantity="many">2 deer</item>
+    <item quantity="other">2 deer</item>
   </plurals>
   <plurals name="users">
     <item quantity="one">1 user</item>
-    <item quantity="many">2 users</item>
+    <item quantity="other">2 users</item>
   </plurals>
 </resources>

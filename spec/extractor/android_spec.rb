@@ -77,7 +77,7 @@ describe "Vocab::Extractor::Android" do
     it 'writes the full translation to the correct xml file' do
       strings = { 'foo' => 'bar' }
       plurals = { 'users' => { 'one'  => '1 user',
-                               'many' => '2 users' } }
+                               'other' => '2 users' } }
       Vocab::Translator::Android.should_receive( :write ).
               with( strings, plurals, "#{vocab_root}/strings.full.xml" )
       Vocab::Extractor::Android.write_full( strings, plurals )
@@ -90,7 +90,7 @@ describe "Vocab::Extractor::Android" do
     it 'writes the diff translation to the correct xml file' do
       strings = { 'foo' => 'bar' }
       plurals = { 'users' => { 'one'  => '1 user',
-                               'many' => '2 users' } }
+                               'other' => '2 users' } }
       Vocab::Translator::Android.should_receive( :write ).
               with( strings, plurals, "#{vocab_root}/strings.diff.xml" )
       Vocab::Extractor::Android.write_diff( strings, plurals )
