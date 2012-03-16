@@ -27,7 +27,7 @@ describe "Vocab::Extractor::Rails" do
 
   end
 
-  describe "previous" do
+  describe "extract_previous" do
 
     before( :each ) do
       @last_translation = '5ab8cf4d081d7ba1d5f020118dd00c3ea2d0437a'
@@ -60,7 +60,7 @@ describe "Vocab::Extractor::Rails" do
 
   end
 
-  describe "current" do
+  describe "extract_current" do
 
     before( :each ) do
       Dir.chdir( vocab_root )
