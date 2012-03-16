@@ -69,18 +69,20 @@ describe "Vocab::Extractor::Rails" do
 
     it "creates a hash of the english translation strings currently in the config" do
       actual = Vocab::Extractor::Rails.extract_current( @locales_root )
-      expected = { :"en.menu.second"                      =>"Second menu item",
-                   :"en.models.product.id_36.description" =>"Polarized and lazer resistant",
-                   :"en.marketing.banner"                 =>"This product is so good",
-                   :"en.models.product.id_36.name"        =>"This nested value has changed",
-                   :"en.menu.first"                       =>"First menu item",
-                   :"en.models.product.id_55.description" =>"A new nested description",
-                   :"en.models.product.id_125.description"=>"Green with megawatts",
-                   :"en.dashboard.chart"                  =>"This value has changed",
-                   :"en.models.product.id_55.name"        =>"a new nested name",
-                   :"en.models.product.id_125.name"       =>"Lazer",
-                   :"en.dashboard.details"                =>"This key/value has been added",
-                   :"en.not_in_es"                        =>"This key not in spanish" }
+      expected = {:"en.marketing.banner"=>"This product is so good",
+                  :"en.dashboard.chart"=>"This value has changed",
+                  :"en.dashboard.details"=>"This key/value has been added",
+                  :"en.menu.first"=>"First menu item",
+                  :"en.menu.second"=>"Second menu item",
+                  :"en.not_in_es"=>"This key not in spanish",
+                  :"en.users.one"=>"1 user",
+                  :"en.users.other"=>"%{count} users",
+                  :"en.models.product.id_125.description"=>"Green with megawatts",
+                  :"en.models.product.id_125.name"=>"Lazer",
+                  :"en.models.product.id_36.description"=>"Polarized and lazer resistant",
+                  :"en.models.product.id_36.name"=>"This nested value has changed",
+                  :"en.models.product.id_55.description"=>"A new nested description",
+                  :"en.models.product.id_55.name"=>"a new nested name"}
       actual.should eql( expected )
     end
 

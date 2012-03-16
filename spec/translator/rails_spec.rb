@@ -12,18 +12,20 @@ describe 'Vocab::Translator::Rails' do
     it 'loads translations from a directory of yml files' do
 
       actual = @translator.translations
-      expected = { :marketing=>{ :banner=>"This product is so good" },
-                   :models   =>{ :product=>{ :id_125=>{ :description=>"Green with megawatts",
-                                                        :name       =>"Lazer" },
-                                             :id_55 =>{ :description=>"A new nested description",
-                                                        :name       =>"a new nested name" },
-                                             :id_36 =>{ :description=>"Polarized and lazer resistant",
-                                                        :name       =>"This nested value has changed" } } },
-                   :menu     =>{ :second=>"Second menu item",
-                                 :first=>"First menu item" },
-                   :dashboard=>{ :chart  =>"This value has changed",
-                                 :details=>"This key/value has been added" },
-                   :not_in_es=>"This key not in spanish" }
+      expected = {:marketing=>{:banner=>"This product is so good"},
+                  :dashboard=>{:chart=>"This value has changed",
+                               :details=>"This key/value has been added"},
+                  :menu=>{:first=>"First menu item",
+                          :second=>"Second menu item"},
+                  :not_in_es=>"This key not in spanish",
+                  :users=>{:one=>"1 user",
+                           :other=>"%{count} users"},
+                  :models=>{:product=>{:id_125=>{:description=>"Green with megawatts",
+                                                 :name=>"Lazer"},
+                                       :id_36=>{:description=>"Polarized and lazer resistant",
+                                                :name=>"This nested value has changed"},
+                                       :id_55=>{:description=>"A new nested description",
+                                                :name=>"a new nested name"}}}}
       actual.should eql( expected )
     end
 
@@ -95,18 +97,20 @@ describe 'Vocab::Translator::Rails' do
       translator = Vocab::Translator::Rails.new
       translator.load_dir( "#{vocab_root}/spec/data/rails/locales" )
       actual = translator.flattened_translations
-      expected = { :"dashboard.details"                =>"This key/value has been added",
-                   :"models.product.id_125.name"       =>"Lazer",
-                   :"models.product.id_55.name"        =>"a new nested name",
-                   :"models.product.id_36.name"        =>"This nested value has changed",
-                   :"menu.second"                      =>"Second menu item",
-                   :"dashboard.chart"                  =>"This value has changed",
-                   :"menu.first"                       =>"First menu item",
-                   :"marketing.banner"                 =>"This product is so good",
-                   :"models.product.id_125.description"=>"Green with megawatts",
-                   :"models.product.id_55.description" =>"A new nested description",
-                   :"models.product.id_36.description" =>"Polarized and lazer resistant",
-                   :"not_in_es"                        =>"This key not in spanish" }
+      expected = {:"marketing.banner"=>"This product is so good",
+                  :"dashboard.chart"=>"This value has changed",
+                  :"dashboard.details"=>"This key/value has been added",
+                  :"menu.first"=>"First menu item",
+                  :"menu.second"=>"Second menu item",
+                  :not_in_es=>"This key not in spanish",
+                  :"users.one"=>"1 user",
+                  :"users.other"=>"%{count} users",
+                  :"models.product.id_125.description"=>"Green with megawatts",
+                  :"models.product.id_125.name"=>"Lazer",
+                  :"models.product.id_36.description"=>"Polarized and lazer resistant",
+                  :"models.product.id_36.name"=>"This nested value has changed",
+                  :"models.product.id_55.description"=>"A new nested description",
+                  :"models.product.id_55.name"=>"a new nested name"}
       actual.should == expected
     end
 

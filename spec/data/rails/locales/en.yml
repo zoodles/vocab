@@ -8,3 +8,7 @@ en:
     first: First menu item
     second: Second menu item
   not_in_es: This key not in spanish
+  users:
+    one: 1 user
+    other: "%{count} users"
+

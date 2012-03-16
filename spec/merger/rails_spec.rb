@@ -116,7 +116,7 @@ describe "Vocab::Merger::Rails" do
     it "returns the keys that should be in a file" do
       path = "#{vocab_root}/spec/data/rails/locales/es.yml"
       actual = Vocab::Merger::Rails.keys_for_file( path )
-      expected = [:"dashboard.details", :"menu.first", :"dashboard.chart", :"menu.second", :"marketing.banner", :"not_in_es"]
+      expected = [:"dashboard.details", :"menu.first", :"dashboard.chart", :"menu.second", :"marketing.banner", :"not_in_es", :"users.one", :"users.other"]
       actual.each { |key| expected.should include( key ) }
       actual.size.should eql( expected.size )
     end

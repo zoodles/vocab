@@ -15,7 +15,7 @@ describe "Vocab::Validator::Rails" do
 
     it 'returns a hash containing the missing keys' do
       result = @validator.validate_file( @path )
-      result[ :missing ].should =~ [ "menu.first", "menu.second", "not_in_es" ]
+      result[ :missing ].should =~ ["menu.first", "menu.second", "not_in_es", "users.one", "users.other"]
     end
 
     it 'returns a hash containing the extra keys' do
@@ -74,7 +74,7 @@ describe "Vocab::Validator::Rails" do
     end
 
     it 'returns the flattened keys from english equivalent file' do
-      keys = ["dashboard.chart", "dashboard.details", "marketing.banner", "menu.first", "menu.second", "not_in_es"]
+      keys = ["dashboard.chart", "dashboard.details", "marketing.banner", "menu.first", "menu.second", "not_in_es", "users.one", "users.other"]
       @validator.english_keys( @file ).should =~ keys
     end
 

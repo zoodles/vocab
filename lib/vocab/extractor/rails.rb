@@ -46,10 +46,12 @@ module Vocab
           return translations( locales_root )
         end
 
+        # Treat this as a no-op because plurals handled like normal strings
         def previous_plurals
           return {}
         end
 
+        # Treat this as a no-op because plurals handled like normal strings
         def current_plurals
           return {}
         end
