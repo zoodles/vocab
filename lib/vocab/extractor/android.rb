@@ -8,7 +8,7 @@ module Vocab
 
         STRINGS_XML = 'res/values/strings.xml'
 
-        def extract_current( path = nil )
+        def current_strings( path = nil )
           path ||= "#{Vocab.root}/#{STRINGS_XML}"
           return Vocab::Translator::Android.hash_from_xml( path )
         end

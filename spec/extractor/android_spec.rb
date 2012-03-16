@@ -6,10 +6,10 @@ describe "Vocab::Extractor::Android" do
     @locale = "#{vocab_root}/spec/data/android/locales/values/strings.xml"
   end
 
-  describe 'extract_current' do
+  describe 'current_strings' do
 
     it "extracts hash of current string translations" do
-      actual = Vocab::Extractor::Android.extract_current( @locale )
+      actual = Vocab::Extractor::Android.current_strings( @locale )
       actual.should eql( { "app_name"   =>"Kid Mode",
                            "delete"     =>"Delete",
                            "cancel"     =>"Cancel",

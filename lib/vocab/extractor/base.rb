@@ -3,7 +3,7 @@ module Vocab
     class Base
       class << self
         def extract( diff_path = nil, full_path = nil )
-          all_strings = extract_current
+          all_strings = current_strings
           all_plurals = current_plurals
 
           updated_strings = diff( extract_previous, all_strings )
@@ -32,8 +32,8 @@ module Vocab
           raise "extract_previous not implemented"
         end
 
-        def extract_current
-          raise "extract_current not implemented"
+        def current_strings
+          raise "current_strings not implemented"
         end
 
         def current_plurals

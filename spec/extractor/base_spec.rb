@@ -63,7 +63,7 @@ describe "Vocab::Extractor::Base" do
     it "extracts the strings that need to be translated into a yml file" do
       current = { 1 => 5, 3 => 4 }
       previous = { 1 => 2 }
-      Vocab::Extractor::Base.should_receive( :extract_current ).and_return( current )
+      Vocab::Extractor::Base.should_receive( :current_strings ).and_return( current )
       Vocab::Extractor::Base.should_receive( :extract_previous ).and_return( previous )
       Vocab::Extractor::Base.should_receive( :current_plurals ).and_return( {} )
       Vocab::Extractor::Base.should_receive( :previous_plurals ).and_return( {} )

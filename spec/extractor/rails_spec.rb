@@ -60,7 +60,7 @@ describe "Vocab::Extractor::Rails" do
 
   end
 
-  describe "extract_current" do
+  describe "current_strings" do
 
     before( :each ) do
       Dir.chdir( vocab_root )
@@ -68,7 +68,7 @@ describe "Vocab::Extractor::Rails" do
     end
 
     it "creates a hash of the english translation strings currently in the config" do
-      actual = Vocab::Extractor::Rails.extract_current( @locales_root )
+      actual = Vocab::Extractor::Rails.current_strings( @locales_root )
       expected = {:"en.marketing.banner"=>"This product is so good",
                   :"en.dashboard.chart"=>"This value has changed",
                   :"en.dashboard.details"=>"This key/value has been added",
@@ -96,7 +96,7 @@ describe "Vocab::Extractor::Rails" do
     end
 
     it "extracts the strings that need to be translated into a yml file" do
-      Vocab::Extractor::Rails.should_receive( :extract_current ).and_return( { :en => { 1 => 5, 3 => 4 } } )
+      Vocab::Extractor::Rails.should_receive( :current_strings ).and_return( { :en => { 1 => 5, 3 => 4 } } )
       Vocab::Extractor::Rails.should_receive( :extract_previous ).and_return( { :en => { 1 => 2 } } )
       Vocab::Extractor::Rails.extract( @diff_path, @full_path )
       YAML.load_file( @diff_path ).should == { :en => { 1 => 5, 3 => 4 } }

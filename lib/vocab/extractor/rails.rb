@@ -41,7 +41,7 @@ module Vocab
           return translations( tmpdir )
         end
 
-        def extract_current( locales_root = nil )
+        def current_strings( locales_root = nil )
           locales_root ||= "#{Vocab.root}/config/locales"
           return translations( locales_root )
         end
