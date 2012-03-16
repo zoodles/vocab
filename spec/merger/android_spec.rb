@@ -98,12 +98,12 @@ describe "Vocab::Merger::Android" do
 
   end
 
-  describe 'english_keys' do
+  describe 'string_keys' do
 
     it 'fetches the english keys' do
       merger = Vocab::Merger::Android.new( @merge_dir )
       keys = ["app_name", "delete", "cancel", "app_current", "not_in_es", "pd_app_name"]
-      merger.english_keys.should =~ keys
+      merger.string_keys.should =~ keys
     end
 
   end

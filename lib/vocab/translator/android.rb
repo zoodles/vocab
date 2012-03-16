@@ -57,7 +57,7 @@ module Vocab
         File.open( path, 'w' ) { |f| f.write( builder.to_xml( :encoding => 'UTF-8' ) ) }
       end
 
-      def self.english_keys( locales_dir )
+      def self.string_keys( locales_dir )
         path = "#{locales_dir}/values/strings.xml"
         translations = Vocab::Translator::Android.hash_from_xml( path )
         keys = translations.keys.map { |key| Vocab::Translator::Base.ignore_key?( key ) ? nil : key }.compact

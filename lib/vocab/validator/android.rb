@@ -10,8 +10,8 @@ module Vocab
         return Vocab::Translator::Android.hash_from_xml( path ).keys
       end
 
-      def english_keys( path = nil )
-        return Vocab::Translator::Android.english_keys( @locales_dir )
+      def string_keys( path = nil )
+        return Vocab::Translator::Android.string_keys( @locales_dir )
       end
 
       def files_to_validate

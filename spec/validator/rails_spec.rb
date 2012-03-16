@@ -19,7 +19,7 @@ describe "Vocab::Validator::Rails" do
     end
 
     it 'returns a hash containing the extra keys' do
-      @validator.should_receive( :english_keys ).and_return( [ 'foo' ] )
+      @validator.should_receive( :string_keys ).and_return( [ 'foo' ] )
       @validator.should_receive( :other_keys ).and_return( [ 'foo', 'extra', 'stuff' ] )
       result = @validator.validate_file( @path )
       result[ :extra ].should eql( [ 'extra', 'stuff' ] )
@@ -66,7 +66,7 @@ describe "Vocab::Validator::Rails" do
 
   end
 
-  describe 'english_keys' do
+  describe 'string_keys' do
 
     before( :each ) do
       @file = "#{@locales_dir}/es.yml"
@@ -75,7 +75,7 @@ describe "Vocab::Validator::Rails" do
 
     it 'returns the flattened keys from english equivalent file' do
       keys = ["dashboard.chart", "dashboard.details", "marketing.banner", "menu.first", "menu.second", "not_in_es", "users.one", "users.other"]
-      @validator.english_keys( @file ).should =~ keys
+      @validator.string_keys( @file ).should =~ keys
     end
 
   end

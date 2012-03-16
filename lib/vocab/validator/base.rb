@@ -33,7 +33,7 @@ module Vocab
 
       def validate_file( path )
         other = other_keys( path )
-        english = english_keys( path )
+        english = string_keys( path )
 
         result = {}
         result[ :missing ] = ( english - other ).sort

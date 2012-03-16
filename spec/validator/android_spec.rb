@@ -19,7 +19,7 @@ describe "Vocab::Validator::Android" do
     end
 
     it 'returns a hash containing the extra keys' do
-      @validator.should_receive( :english_keys ).and_return( [ 'foo' ] )
+      @validator.should_receive( :string_keys ).and_return( [ 'foo' ] )
       @validator.should_receive( :other_keys ).and_return( [ 'foo', 'extra', 'stuff' ] )
       result = @validator.validate_file( @path )
       result[ :extra ].should eql( [ 'extra', 'stuff' ] )

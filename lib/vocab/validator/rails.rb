@@ -10,7 +10,7 @@ module Vocab
         return flattened_keys( path )
       end
 
-      def english_keys( path )
+      def string_keys( path )
         return flattened_keys( Vocab::Translator::Rails.en_equivalent_path( path ) )
       end
 
