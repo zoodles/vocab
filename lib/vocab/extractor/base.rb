@@ -10,6 +10,7 @@ module Vocab
           updated_plurals = diff( previous_plurals, all_plurals )
           write_diff( updated_strings, updated_plurals, diff_path )
           write_full( all_strings, all_plurals, full_path )
+          update_settings
           mkdir_examples
           print_instructions
         end
@@ -26,6 +27,11 @@ module Vocab
             end
           end
           return diff
+        end
+
+        def update_settings
+          sha = Vocab.settings.update_translation
+          Vocab.ui.say( "Updated current translation to #{sha}" )
         end
 
         def previous_strings

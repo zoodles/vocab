@@ -89,7 +89,6 @@ describe "Vocab::Merger::Rails" do
     before( :each ) do
       init_merge_dir
       @update_dir = "#{vocab_root}/spec/data/rails/translations"
-      Vocab.settings.should_receive( :update_translation )
       @merger = Vocab::Merger::Rails.new( @merge_dir, @update_dir )
       @merger.merge
     end

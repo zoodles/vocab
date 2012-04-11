@@ -98,6 +98,7 @@ describe "Vocab::Extractor::Rails" do
     it "extracts the strings that need to be translated into a yml file" do
       Vocab::Extractor::Rails.should_receive( :current_strings ).and_return( { :en => { 1 => 5, 3 => 4 } } )
       Vocab::Extractor::Rails.should_receive( :previous_strings ).and_return( { :en => { 1 => 2 } } )
+      Vocab.settings.should_receive( :update_translation )
       Vocab::Extractor::Rails.extract( @diff_path, @full_path )
       YAML.load_file( @diff_path ).should == { :en => { 1 => 5, 3 => 4 } }
 

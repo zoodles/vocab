@@ -6,7 +6,6 @@ describe "Vocab::Extractor::Base" do
 
     before( :each ) do
       @merger = Vocab::Merger::Base.new
-      @merger.should_receive( :update_settings )
     end
 
     it 'merges a list of files' do

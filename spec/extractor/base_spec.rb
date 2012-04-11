@@ -70,6 +70,7 @@ describe "Vocab::Extractor::Base" do
       Vocab::Extractor::Base.should_receive( :write_diff ).with( { 1 => 5, 3 => 4 }, {}, @diff_path )
       Vocab::Extractor::Base.should_receive( :write_full ).with( current, {}, @full_path )
       Vocab::Extractor::Base.should_receive( :mkdir_examples )
+      Vocab::Extractor::Base.should_receive( :update_settings )
       Vocab::Extractor::Base.extract( @diff_path, @full_path )
     end
 

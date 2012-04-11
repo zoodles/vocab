@@ -27,7 +27,6 @@ describe "Vocab::Merger::Android" do
   describe "merge" do
 
     before( :each ) do
-      Vocab.settings.should_receive( :update_translation )
       @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
       @merger.merge
     end
