@@ -104,6 +104,8 @@ with 'debug_' to avoid these keys being sent to translators.
 
 # TODO
 
+  * Better documentation (omnigraffle graphic)
+  * Dry run extract
   * Add .processed to each tmp/translation after success
   * Handle full translations under tmp/translations when no existing translation exists in android
   * Add iOS support
