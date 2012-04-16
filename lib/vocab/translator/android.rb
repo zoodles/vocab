@@ -6,7 +6,12 @@ module Vocab
         doc = doc_from_xml( path )
         children = doc.search( 'resources/string' )
         hash = {}
-        children.each { |child| hash[ child['name'] ] = child.text }
+        children.each do |child|
+          text = child.text
+          # escape apostrophes for android resource loader
+          text = text.gsub( /([^\\])'/, %q[\1\\\'] )
+          hash[ child['name'] ] = text
+        end
         return hash
       end
 

@@ -136,7 +136,8 @@ describe "Vocab::Merger::Android" do
       expected = { 'cancel'           => 'Cancelar',
                    'delete'           => "La función Child Lock",
                    'pd_app_name'      => 'el Panel para padres bien',
-                   'translator_cruft' => 'Malo' }
+                   'translator_cruft' => 'Malo',
+                   'apostrophe'       => "Translator\\'s evil apostrophe don\\'t care" }
       merger.update_strings_for_locale( "#{@merge_dir}/values-es/strings.xml" ).should == expected
     end
 

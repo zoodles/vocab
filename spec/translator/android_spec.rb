@@ -24,9 +24,10 @@ describe 'Vocab::Translator::Android' do
   describe 'write' do
 
     it 'writes the strings to a xml file' do
-      strings = { 'app_name' => 'Kid Mode',
-                      'pd_app_name' => 'Parent Dashboard',
-                      'delete' => "La funci&#xF3;n Child Lock" }
+      strings = { 'app_name'    => 'Kid Mode',
+                  'pd_app_name' => 'Parent Dashboard',
+                  'delete'      => "La funci&#xF3;n Child Lock",
+                  'apostrophe'  => "Translator\\'s evil apostrophe don\\'t care"}
       plurals = {}
       path = "#{vocab_root}/spec/tmp/strings.xml"
       Vocab::Translator::Android.write( strings, plurals, path )
@@ -48,6 +49,17 @@ describe 'Vocab::Translator::Android' do
       strings = File.open( path ) { |f| f.read }
       strings.should eql_file( "spec/data/android/write_plurals.xml" )
       File.delete( path )
+    end
+
+  end
+
+  describe 'android resource special cases' do
+
+    it "escapes apostrophes to be compatible with android resources" do
+      hash = Vocab::Translator::Android.hash_from_xml( "#{vocab_root}/spec/data/android/translations/values-es/es-string-file.xml" )
+      hash['apostrophe'].should eql( %q[Translator\'s evil apostrophe don\'t care] )
+
+
     end
 
   end
