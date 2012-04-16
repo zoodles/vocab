@@ -51,7 +51,10 @@ For new language files, just put them directly under the `res` directory.
 
 ### Merging new translations into project string files
 
-Integrate the translations with the following command:
+For new languages, you simply take the file containing the full translation and put
+it in the proper directory under the `res` directory.
+
+Integrate _partial_ the translations with the following command:
 
     cd APP_ROOT
     vocab merge android
