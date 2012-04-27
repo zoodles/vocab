@@ -45,6 +45,8 @@ module Vocab
           Merger::Rails.new.merge
         elsif( options.command == 'merge' && options.platform == 'android' )
           Merger::Android.new.merge
+        elsif( options.command == 'mock' && options.platform == 'rails' )
+          Mock::Rails.new.generate
         elsif( options.command == 'validate' && options.platform == 'android' )
           success = Validator::Android.new.validate
         elsif( options.command == 'validate' && options.platform == 'rails' )

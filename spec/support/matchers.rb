@@ -22,7 +22,7 @@ RSpec::Matchers.define :eql_file do |expected|
   end
   
   match do |actual|
-    File.open( "#{vocab_root}/#{expected}.tmp","wb" ) { |io| io.write actual }
+    File.open( "#{vocab_root}/#{expected}.tmp","w+b" ) { |io| io.write actual }
     slurped = File.open( "#{vocab_root}/#{expected}","rb" ) {|io| io.read }
     actual == slurped
   end

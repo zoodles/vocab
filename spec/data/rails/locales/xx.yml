@@ -1,0 +1,25 @@
+---
+xx:
+  :marketing:
+    :banner: xxxx xxxxxxx xx xx xxxx
+  :dashboard:
+    :chart: xxxx xxxxx xxx xxxxxxx
+    :details: xxxx xxxxxxxxx xxx xxxx xxxxx
+  :menu:
+    :first: xxxxx xxxx xxxx
+    :second: xxxxxx xxxx xxxx
+  :not_in_es: xxxx xxx xxx xx xxxxxxx
+  :users:
+    :one: 1 xxxx
+    :other: ! '%{count} xxxxx'
+  :models:
+    :product:
+      :id_125:
+        :description: xxxxx xxxx xxxxxxxxx
+        :name: xxxxx
+      :id_36:
+        :description: xxxxxxxxx xxx xxxxx xxxxxxxxx
+        :name: xxxx xxxxxx xxxxx xxx xxxxxxx
+      :id_55:
+        :description: x xxx xxxxxx xxxxxxxxxxx
+        :name: x xxx xxxxxx xxxx

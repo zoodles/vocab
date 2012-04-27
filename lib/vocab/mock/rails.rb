@@ -1,4 +1,4 @@
-# Code originally written by Jonathan Thomas @JayTeeSr
+# Code originally written by Jonathan Thomas (@JayTeeSr)
 
 module Vocab
   module Mock
@@ -10,11 +10,13 @@ module Vocab
         new(options).generate
       end
 
-      attr_reader :to_locale, :from_locale, :backend
+      attr_reader :to_locale, :from_locale, :backend, :locale_dir, :output_file
       def initialize(options={})
         @to_locale = options[:to_locale] || TO_LOCALE
         @from_locale = options[:from_locale] || DEFAULT_FROM_LOCALE
         @backend = options[:backend] || I18n.backend
+        @locale_dir = options[ :locale_dir ] || "#{Vocab.root}/config/locales"
+        @output_file = options[ :output_file ] || "#{Vocab.root}/config/locales/#{to_locale}.yml"
       end
 
       def generate
@@ -27,18 +29,16 @@ module Vocab
 
       ## CLEAR METHOD(S)
       def clear
-        if File.exists?(locale_file)
-          raise RuntimeError, "You must remove locale file #{locale_file.inspect}, reload Rails, then try again."
-        end
+        File.delete( @output_file ) if File.exists?(@output_file)
       end
 
       ## PERSIST METHOD(S)
       def persist
         if backend.respond_to?(:write_file)
-          backend.write_file(locale_file)
+          backend.write_file(@output_file)
         else
           yaml = { to_locale.to_s => stored_translation }.to_yaml
-          File.open( locale_file, 'w' ) { |f| f.write( yaml ) }
+          File.open( @output_file, 'w' ) { |f| f.write( yaml ) }
         end
       end
 
@@ -50,10 +50,6 @@ module Vocab
         end
       end
 
-      def locale_file
-        @locale_file ||= "#{Vocab.root}/config/locales/#{to_locale}.yml"
-      end
-
       ## TRANSLATE METHOD(S)
       def translate
         flat_backend.each do |key, original_value|
@@ -63,16 +59,13 @@ module Vocab
       end
 
       def flat_backend
-        @flat_backend ||=
-          begin
-            if backend.respond_to?(:flattened_translations)
-              backend.flattened_translations
-            else
-              I18n::Backend::Simple.send( :include, I18n::Backend::Flatten )
-              backend.load_translations
-              backend.flatten_translations(from_locale, backend.send(:translations)[from_locale], true, false)
-            end
+        @flat_backend ||= begin
+          translator = Vocab::Translator::Rails.new
+          translator.load_dir( @locale_dir )
+          translator.flattened_translations
         end
+
+        return @flat_backend
       end
 
       def store(key, value)

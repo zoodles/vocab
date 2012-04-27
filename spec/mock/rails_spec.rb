@@ -1,4 +1,4 @@
-# Code originally written by Jonathan Thomas @JayTeeSr
+# Code originally written by Jonathan Thomas (@JayTeeSr)
 
 require "spec_helper"
 
@@ -6,13 +6,47 @@ describe "Vocab::Mock::Rails" do
 
   context "with backend" do
 
-    let( :generator ) { Vocab::Mock::Rails.new(:backend => :bogusbackend) }
+    before( :each ) do
+      @local_dir = "#{vocab_root}/spec/data/rails/locales"
+      @output_file = "#{vocab_root}/spec/tmp/mock/xx.yml"
+    end
+
+    let( :generator ) { Vocab::Mock::Rails.new( :locale_dir => @local_dir,
+                                                :output_file => @output_file ) }
 
     describe "#generate" do
-      it "should raise an exception when xx-file already exists" do
-        File.should_receive(:exists?).with(generator.send(:locale_file)).and_return(true)
-        expect { generator.generate }.to raise_error(RuntimeError)
+      it "should not raise an exception when xx-file already exists" do
+        File.should_receive( :delete ).with( @output_file )
+        generator.generate
       end
+
+      it "should output xx.yml file with all values replaced with 'x'" do
+        generator.generate
+        actual = File.open( generator.output_file ) { |f| f.read }
+        actual.should eql_file( "spec/data/rails/locales/xx.yml" )
+      end
+    end
+
+    describe "flat_backend" do
+
+      it "returns a flattened hash of translations" do
+        hash = generator.send( :flat_backend )
+        hash.should == {:"marketing.banner"=>"This product is so good",
+                        :"dashboard.chart"=>"This value has changed",
+                        :"dashboard.details"=>"This key/value has been added",
+                        :"menu.first"=>"First menu item",
+                        :"menu.second"=>"Second menu item",
+                        :not_in_es=>"This key not in spanish",
+                        :"users.one"=>"1 user",
+                        :"users.other"=>"%{count} users",
+                        :"models.product.id_125.description"=>"Green with megawatts",
+                        :"models.product.id_125.name"=>"Lazer",
+                        :"models.product.id_36.description"=>"Polarized and lazer resistant",
+                        :"models.product.id_36.name"=>"This nested value has changed",
+                        :"models.product.id_55.description"=>"A new nested description",
+                        :"models.product.id_55.name"=>"a new nested name"}
+      end
+
     end
 
     # FIXME: don't test private methods -- move translation to a module, once this is in the vocab gem
