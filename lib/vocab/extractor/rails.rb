@@ -24,7 +24,7 @@ module Vocab
         def previous_strings( locales_root = nil )
           locales_root ||= "config/locales"
           tmpdir = "#{Vocab.root}/tmp/last_translation"
-          FileUtils.rm_rf( "#{tmpdir}/*" )
+          `rm -rf #{tmpdir}/*`
 
           sha = Vocab.settings.last_translation
           translation_files = `git ls-tree --name-only -r #{sha}:#{locales_root}`.split( "\n" )

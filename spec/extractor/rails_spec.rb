@@ -58,6 +58,13 @@ describe "Vocab::Extractor::Rails" do
       File.exists?( dir ).should be_true
     end
 
+    it "deletes leftover files from a previous extract in the tmp dir" do
+      path = "#{vocab_root}/tmp/last_translation/deleteme.yml"
+      File.open( path, 'w' ) { |f| f.write( "leftover junk" ) }
+      Vocab::Extractor::Rails.previous_strings( @locales_root )
+      File.exists?( path ).should be_false
+    end
+
   end
 
   describe "current_strings" do
