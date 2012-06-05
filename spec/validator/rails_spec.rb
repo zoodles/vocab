@@ -44,10 +44,14 @@ describe "Vocab::Validator::Rails" do
   describe 'files_to_validate' do
 
     it 'returns the locale files to validate' do
-      files = ["#{@locales_dir}/bom.yml",
-               "#{@locales_dir}/es.yml",
-               "#{@locales_dir}/models/product/es.yml"]
-      @validator.files_to_validate.should eql( files )
+      expected = ["#{@locales_dir}/bom.yml",
+                  "#{@locales_dir}/es.yml",
+                  "#{@locales_dir}/models/product/es.yml"]
+
+      actual = @validator.files_to_validate
+
+      actual.size.should eql( expected.size )
+      expected.each { |path| actual.should include( path ) }
     end
 
   end
