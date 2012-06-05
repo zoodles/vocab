@@ -9,6 +9,7 @@ module Vocab
         files = files_to_validate
         Vocab.ui.say( "#{files.size} file(s) to validate in #{@locales_dir}" )
         files.each do |path|
+          ok &&= pre_validate( path )
           validation = validate_file( path )
           print( path, validation )
           ok &&= validation[ :missing ] && validation[ :missing ].empty?
@@ -39,6 +40,11 @@ module Vocab
         result[ :missing ] = ( english - other ).sort
         result[ :extra ] = ( other - english ).sort
         return result
+      end
+
+      # Override in subclass
+      def pre_validate( path )
+        return true
       end
 
     end

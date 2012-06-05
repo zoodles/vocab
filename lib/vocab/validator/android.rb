@@ -18,6 +18,11 @@ module Vocab
         return Dir.glob( "#{@locales_dir}/values-*/strings.xml" )
       end
 
+      # Override this method to do custom validation on the android xml string file
+      def pre_validate( path )
+        return true
+      end
+
     end
   end
 end

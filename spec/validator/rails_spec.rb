@@ -7,6 +7,20 @@ describe "Vocab::Validator::Rails" do
     @validator = Vocab::Validator::Rails.new( @locales_dir )
   end
 
+  describe 'pre_validate' do
+
+    it "complains about yml files with leading BOM characters" do
+      File.open( "#{@locales_dir}/bom.yml", "w+" ) { |f| f.write( "\xEF\xBB\xBF".force_encoding("UTF-8") ) }
+      File.open( "#{@locales_dir}/bom.yml", "a" ) { |f| f.write( "bom:" ) }
+
+      bom_regex = "\xEF\xBB\xBF".force_encoding("UTF-8")
+      File.open( "#{@locales_dir}/bom.yml" ) { |f| f.read }.force_encoding( "UTF-8" ).match( bom_regex ).should be_true
+
+      @validator.pre_validate( "#{@locales_dir}/bom.yml" ).should be_false
+    end
+
+  end
+
   describe 'validate_file' do
 
     before( :each ) do
@@ -30,7 +44,8 @@ describe "Vocab::Validator::Rails" do
   describe 'files_to_validate' do
 
     it 'returns the locale files to validate' do
-      files = ["#{@locales_dir}/es.yml",
+      files = ["#{@locales_dir}/bom.yml",
+               "#{@locales_dir}/es.yml",
                "#{@locales_dir}/models/product/es.yml"]
       @validator.files_to_validate.should eql( files )
     end
