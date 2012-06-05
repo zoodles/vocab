@@ -1,3 +1,7 @@
+# 0.0.5
+
+  * Print warning messages if there is a leading BOM character in Rails yml files
+
 # 0.0.4
 
   * Delete leftover cruft from tmp dir used in `vocab extract rails`
