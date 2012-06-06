@@ -64,4 +64,25 @@ describe 'Vocab::Translator::Android' do
 
   end
 
+  describe "doc_from_xml" do
+
+    before( :each ) do
+      @translator = Vocab::Translator::Android
+      @input = "#{vocab_root}/spec/data/android/translator/input.xml"
+      @output = "#{vocab_root}/spec/data/android/translator/output.xml"
+    end
+
+    it "does not html escape & characters" do
+      strings = @translator.hash_from_xml( @input )
+
+      @translator.write( strings, {}, @output )
+
+      input_file = File.open( @input ) { |f| f.read }
+      output_file = File.open( @output ) { |f| f.read }
+
+      output_file.should eql( input_file )
+    end
+
+  end
+
 end
