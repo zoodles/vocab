@@ -1,3 +1,7 @@
+# 0.0.6
+
+  * Print a human readable error when looking for invalid locales in translations
+
 # 0.0.5
 
   * Print warning messages if there is a leading BOM character in Rails yml files
