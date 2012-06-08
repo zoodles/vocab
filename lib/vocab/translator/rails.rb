@@ -38,6 +38,10 @@ module Vocab
 
       def flattened_translations( options = {} )
         return @backend.flatten_translations( @locale, translations( options ), true, false )
+      rescue
+        puts "Error fetching locale '#{@locale.inspect}' from keys #{@backend.send(:translations).keys}"
+        # TODO put logic to detect BOM here to give extra clear error message or clean the file
+        raise
       end
 
       def store( key, value )
