@@ -15,8 +15,8 @@ module Vocab
           write( strings, path )
         end
 
-        def write( translations, path )
-          data = hasherize( translations ).to_yaml
+        def write( translations, path, locale = :en )
+          data = hasherize( translations, locale ).to_yaml
           File.open( path, "w+" ) { |f| f.write( data ) }
           Vocab.ui.say( "Extracted to #{path}" )
         end
@@ -56,16 +56,29 @@ module Vocab
           return {}
         end
 
-        def translations( dir )
+        def extract_all( locales_root = nil, result_dir = nil )
+          locales_root ||= "#{Vocab.root}/config/locales"
+          result_dir ||= "#{Vocab.root}"
           translator = Vocab::Translator::Rails.new
+          translator.load_dir( locales_root )
+          @locales = translator.available_locales
+          for locale in @locales do
+            strings = translations( locales_root, locale )
+            path = "#{result_dir}/#{locale.to_s}.full.yml"
+            write( strings, path, locale )
+          end
+        end
+
+        def translations( dir, locale = :en )
+          translator = Vocab::Translator::Rails.new( locale )
           translator.load_dir( dir )
           return translator.flattened_translations( :prefix => true )
         end
 
-        def hasherize( diff )
-          translator = Vocab::Translator::Rails.new
+        def hasherize( diff, locale = :en )
+          translator = Vocab::Translator::Rails.new( locale )
           diff.each do |key, value|
-            key = key.to_s.gsub!( /^en\./, '' )
+            key = key.to_s.gsub!( /^#{locale.to_s}\./, '' )
             translator.store( key, value )
           end
           return translator.translations( :prefix => true )

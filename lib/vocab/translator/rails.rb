@@ -14,6 +14,10 @@ module Vocab
         @locale = locale
       end
 
+      def available_locales
+        return @backend.available_locales
+      end
+
       def load_dir( dir )
         I18n.load_path = Dir.glob( "#{dir}/**/*.{yml,rb}" )
         load_translations

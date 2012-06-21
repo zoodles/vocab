@@ -14,6 +14,21 @@ describe "Vocab::Extractor::Rails" do
 
   end
 
+  describe 'extract_all' do
+
+      it 'writes the translation for each locale to its own file' do
+      translation = { :en => { :full => 'translation' } }
+      locales_path = "#{vocab_root}/spec/data/rails/locales"
+      result_dir = "#{vocab_root}/spec/tmp"
+      Vocab::Extractor::Rails.extract_all( locales_path, result_dir )
+      Dir.entries(result_dir).should include( "en.full.yml" )
+      Dir.entries(result_dir).should include( "es.full.yml" )
+      File.delete( "#{result_dir}/en.full.yml" )
+      File.delete( "#{result_dir}/es.full.yml")
+    end
+
+  end
+
   describe 'hasherize' do
 
     it 'writes the diff in standard rails locale yaml format' do
