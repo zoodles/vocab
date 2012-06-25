@@ -39,6 +39,8 @@ module Vocab
 
         if( options.command == 'init' )
           Vocab::Settings.create
+        elsif( options.command == 'clean' )
+          Cleaner::Rails.clean
         elsif( options.command == 'extract' && options.platform == 'rails' )
           if options.all
             Extractor::Rails.extract_all

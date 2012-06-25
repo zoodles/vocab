@@ -20,6 +20,8 @@ Gem::Specification.new do |s|
   # specify any dependencies here; for example:
   s.add_dependency "i18n"
   s.add_dependency "nokogiri"
+  s.add_dependency "htmlentities"
+  s.add_dependency "ya2yaml"
   s.add_development_dependency "rspec", "~> 2.7.0"
   s.add_development_dependency "simplecov"
   # s.add_runtime_dependency "rest-client"

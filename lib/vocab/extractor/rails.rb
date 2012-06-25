@@ -59,12 +59,13 @@ module Vocab
         def extract_all( locales_root = nil, result_dir = nil )
           locales_root ||= "#{Vocab.root}/config/locales"
           result_dir ||= "#{Vocab.root}"
+          
           translator = Vocab::Translator::Rails.new
           translator.load_dir( locales_root )
-          @locales = translator.available_locales
-          for locale in @locales do
+
+          for locale in translator.available_locales do
             strings = translations( locales_root, locale )
-            path = "#{result_dir}/#{locale.to_s}.full.yml"
+            path = "#{result_dir}/#{locale}.full.yml"
             write( strings, path, locale )
           end
         end
