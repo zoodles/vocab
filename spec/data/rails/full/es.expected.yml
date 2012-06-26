@@ -1,0 +1,8 @@
+--- 
+es: 
+  controllers: 
+    application_controller: 
+      error_account_closed: "Su cuenta se ha cerrado.  Comuníquese con support@zoodles.com para reactivarla."
+      error_facebook: "Acceso denegado para usuarios conectados a facebook"
+    collection_controller: 
+      error_collection: "La colección solicitada no existe"

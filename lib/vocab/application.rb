@@ -25,6 +25,7 @@ module Vocab
         parser.separator "    vocab extract rails"
         parser.separator "    vocab extract rails all"
         parser.separator "    vocab extract android"
+        parser.separator "    vocab clean rails"
         parser.separator "    vocab merge rails"
         parser.separator "    vocab merge android"
         parser.separator "    vocab validate android"
@@ -39,8 +40,10 @@ module Vocab
 
         if( options.command == 'init' )
           Vocab::Settings.create
-        elsif( options.command == 'clean' )
+        elsif( options.command == 'clean' && options.platform == 'rails' )
           Cleaner::Rails.clean
+        elsif( options.command == 'clean' && options.platform == 'android' )
+          Cleaner::Android::clean
         elsif( options.command == 'extract' && options.platform == 'rails' )
           if options.all
             Extractor::Rails.extract_all

@@ -1,0 +1,8 @@
+--- 
+fr: 
+  controllers: 
+    application_controller: 
+      error_account_closed: "Le &gt;"
+      error_facebook: " "
+    collection_controller: 
+      error_collection: " "
