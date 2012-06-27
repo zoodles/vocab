@@ -23,10 +23,10 @@ module Vocab
           cleaned_file.puts( cleaned_text.encode( 'UTF-8' ) )
           cleaned_file.close
 
-          tr = YAML.load( File.open( clean_name, 'rb:UTF-8' ))
+          translation_hash = YAML.load( File.open( clean_name, 'rb:UTF-8' ))
 
           cleaned_file = File.open( clean_name, 'wb:UTF-8')
-          keys =  deep_stringify_keys( tr )
+          keys =  deep_stringify_keys( translation_hash )
           cleaned_file.puts( keys_to_yaml( keys ) )
           cleaned_file.close
         ensure
