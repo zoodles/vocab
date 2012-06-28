@@ -1,8 +1,21 @@
+# Cleans full translation files ending in "full.yml" in the vocab root directory by:
+#   - removing empty keys
+#   - replacing HTML codes with the corresponding UTF-8 characters (e.g. &gt; --> > )
+#   - replacing \x[XX]\x[XX] codes with characters
+#   - removing keys that shouldn't be translated (specified in a blacklist)
+
 module Vocab
   module Cleaner
     class Rails < Base
       FULL_SUFFIX = 'full.yml'
       CLEAN_SUFFIX = 'clean.yml'
+      BLACKLIST = [
+          'devise',
+          'active_record',
+          'activerecord',
+          'number',
+          'datetime'
+        ]
 
       class << self
 
@@ -26,9 +39,10 @@ module Vocab
           translation_hash = YAML.load( File.open( clean_name, 'rb:UTF-8' ))
 
           cleaned_file = File.open( clean_name, 'wb:UTF-8')
-          keys =  deep_stringify_keys( translation_hash )
+          keys =  deep_stringify_valid_keys( translation_hash )
           cleaned_file.puts( keys_to_yaml( keys ) )
           cleaned_file.close
+
         ensure
           YAML::ENGINE.yamler=original_engine
         end
@@ -44,12 +58,26 @@ module Vocab
         end
 
         # Stringifying keys for prettier YAML
-        def deep_stringify_keys( hash )
+        def deep_stringify_valid_keys( hash )
           hash.inject({}) { |result, (key, value)|
-            value = deep_stringify_keys(value) if value.is_a? Hash
-            result[(key.to_s rescue key) || key] = value
+            if valid_key?( key ) 
+              value = deep_stringify_valid_keys(value) if value.is_a? Hash
+              unless value.to_s.empty? or value == {}
+                result[(key.to_s rescue key) || key] = value
+              end
+            end
             result
+
           }
+        end
+
+        def valid_key?( key )
+          BLACKLIST.each do |prefix|
+            if key.to_s.include?( prefix )
+              return false
+            end
+          end
+          return true
         end
       end
     end
