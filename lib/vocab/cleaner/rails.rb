@@ -20,31 +20,13 @@ module Vocab
       class << self
 
         def clean_file( file )
-          # TODO: use psych
-          original_engine = YAML::ENGINE.yamler
-          YAML::ENGINE.yamler='syck'
-          entity_matcher = /&.+?;/
-          coder = HTMLEntities.new( :expanded )
+          @file = file
+          @locale_name = File.basename( @file, '.yml' )
+          @clean_dir = File.dirname( @file )
+          @clean_name = "#{@clean_dir}/#{@locale_name}.#{CLEAN_SUFFIX}"
 
-          translation = File.read( file )
-          locale_name = File.basename(file, '.yml')
-          clean_name = "#{File.dirname( file )}/#{locale_name}.#{CLEAN_SUFFIX}"
-
-          cleaned_text = translation.gsub( entity_matcher ) { |entity| entity == "&quot;" ? "\\\"" : coder.decode( entity ) }
-          cleaned_file = File.open( clean_name, "wb:UTF-8" )
-
-          cleaned_file.puts( cleaned_text.encode( 'UTF-8' ) )
-          cleaned_file.close
-
-          translation_hash = YAML.load( File.open( clean_name, 'rb:UTF-8' ))
-
-          cleaned_file = File.open( clean_name, 'wb:UTF-8')
-          keys =  deep_stringify_valid_keys( translation_hash )
-          cleaned_file.puts( keys_to_yaml( keys ) )
-          cleaned_file.close
-
-        ensure
-          YAML::ENGINE.yamler=original_engine
+          replace_html_codes
+          clean_yaml
         end
 
         def files_to_clean ( dir = Vocab.root )
@@ -52,22 +34,51 @@ module Vocab
         end
 
         private
-        def keys_to_yaml( keys )
+        def replace_html_codes
+          entity_matcher = /&.+?;/
+          coder = HTMLEntities.new( :expanded )
+
+          translation = File.read( @file )
+        
+          cleaned_text = translation.gsub( entity_matcher ) do |entity| 
+            entity == "&quot;" ? "\\\"" : coder.decode( entity )
+          end
+
+          cleaned_file = File.open( @clean_name, 'w' )
+          cleaned_file.puts( cleaned_text )
+          cleaned_file.close
+        end
+
+        def clean_yaml
+          # TODO: use psych
+          original_engine = YAML::ENGINE.yamler
+          YAML::ENGINE.yamler='syck'
+          translation_hash = YAML.load( File.open( @clean_name, 'r' ))
+
+          cleaned_file = File.open( @clean_name, 'w' )
+          keys =  clean_keys( translation_hash )
+          cleaned_file.puts( replace_hex_codes( keys ) )
+          cleaned_file.close
+
+          ensure
+            YAML::ENGINE.yamler=original_engine
+
+        end
+
+        def replace_hex_codes( keys )
             # Using ya2yaml, if available, for UTF8 support
             keys.respond_to?( :ya2yaml ) ? keys.ya2yaml( :escape_as_utf8 => true ) : keys.to_yaml
         end
 
-        # Stringifying keys for prettier YAML
-        def deep_stringify_valid_keys( hash )
+        def clean_keys( hash )
           hash.inject({}) { |result, (key, value)|
             if valid_key?( key ) 
-              value = deep_stringify_valid_keys(value) if value.is_a? Hash
+              value = clean_keys(value) if value.is_a? Hash
               unless value.to_s.empty? or value == {}
                 result[(key.to_s rescue key) || key] = value
               end
             end
             result
-
           }
         end
 
@@ -79,6 +90,8 @@ module Vocab
           end
           return true
         end
+
+
       end
     end
   end
