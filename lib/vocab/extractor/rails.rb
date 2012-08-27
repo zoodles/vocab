@@ -3,15 +3,17 @@ module Vocab
     class Rails < Base
       DIFF = 'en.yml'
       FULL = 'en.full.yml'
+      DIFF_SUFFIX = 'diff.yml'
+      FULL_SUFFIX = 'full.yml'
 
       class << self
-        def write_diff( strings, plurals, path )
-          path ||= "#{Vocab.root}/#{DIFF}"
+        def write_diff( strings, plurals, path, locale = :en )
+          path ||= "#{Vocab.root}/#{locale}.#{DIFF_SUFFIX}"
           write( strings, path )
         end
 
-        def write_full( strings, plurals, path )
-          path ||= "#{Vocab.root}/#{FULL}"
+        def write_full( strings, plurals, path, locale = :en )
+          path ||= "#{Vocab.root}/#{locale}.#{FULL_SUFFIX}"
           write( strings, path )
         end
 
@@ -58,12 +60,12 @@ module Vocab
 
         def extract_all( locales_root = nil, result_dir = nil )
           locales_root ||= "#{Vocab.root}/config/locales"
-          result_dir ||= "#{Vocab.root}"
+          result_dir ||= Vocab.root
           
           translator = Vocab::Translator::Rails.new
           translator.load_dir( locales_root )
 
-          for locale in translator.available_locales do
+          translator.available_locales.each do |locale|
             strings = translations( locales_root, locale )
             path = "#{result_dir}/#{locale}.full.yml"
             write( strings, path, locale )
