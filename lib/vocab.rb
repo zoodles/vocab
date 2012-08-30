@@ -5,12 +5,16 @@ require 'nokogiri'
 require 'htmlentities'
 require 'yaml'
 require 'ya2yaml'
+require 'active_support/core_ext'
+require 'builder'
 
+ 
 
 require 'vocab/application'
 require 'vocab/extractor'
 require 'vocab/translator'
 require 'vocab/cleaner'
+require 'vocab/converter'
 require 'vocab/merger'
 require 'vocab/settings'
 require 'vocab/ui'

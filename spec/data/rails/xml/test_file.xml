@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hash>
+  <en.air.launcher-swf.error-dlg-title>ネットワークの問題</en.air.launcher-swf.error-dlg-title>
+  <en.air.launcher-swf.error-install-failed>インストールに失敗しました。</en.air.launcher-swf.error-install-failed>
+  <en.air.launcher-swf.error-msg-server-connect>サーバーに接続できません。
+しばらくしてからやり直してください。</en.air.launcher-swf.error-msg-server-connect>
+  <en.air.launcher-swf.error-msg-unknown>ズードルズ ブラウザをインストールできません。
+しばらくしてからやり直してください。</en.air.launcher-swf.error-msg-unknown>
+  <en.air.launcher-swf.error-try-again>F5またはCmd+Rキーを押してやり直してください。</en.air.launcher-swf.error-try-again>
+  <en.air.launcher-swf.prompt-install>今すぐインストール</en.air.launcher-swf.prompt-install>
+  <en.air.launcher-swf.prompt-launch>ゲームを始める</en.air.launcher-swf.prompt-launch>
+  <en.air.launcher-swf.prompt-launching>起動中・・・</en.air.launcher-swf.prompt-launching>
+  <en.air.launcher-swf.prompt-open>ダイアログ画面が現れたら「開く」ボタンをクリックします</en.air.launcher-swf.prompt-open>
+  <en.air.launcher-swf.prompt-open-short>ポップアップで「開く」ボタンをクリックします</en.air.launcher-swf.prompt-open-short>
+  <en.air.launcher-swf.prompt-z2-game-install>ズードルズをインストール</en.air.launcher-swf.prompt-z2-game-install>
+</hash>

@@ -22,6 +22,8 @@ Gem::Specification.new do |s|
   s.add_dependency "nokogiri"
   s.add_dependency "htmlentities", "~> 4.3.1"
   s.add_dependency "ya2yaml"
+  s.add_dependency "active_support"
+  s.add_dependency "builder"
   s.add_development_dependency "rspec", "~> 2.7.0"
   s.add_development_dependency "simplecov"
   # s.add_runtime_dependency "rest-client"

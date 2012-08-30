@@ -1,0 +1,19 @@
+--- 
+en: 
+  air: 
+    launcher_swf: 
+      error_dlg_title: ネットワークの問題
+      error_install_failed: インストールに失敗しました。
+      error_msg_server_connect: |-
+          サーバーに接続できません。
+          しばらくしてからやり直してください。
+      error_msg_unknown: |-
+          ズードルズ ブラウザをインストールできません。
+          しばらくしてからやり直してください。
+      error_try_again: F5またはCmd+Rキーを押してやり直してください。
+      prompt_install: 今すぐインストール
+      prompt_launch: ゲームを始める
+      prompt_launching: 起動中・・・
+      prompt_open: ダイアログ画面が現れたら「開く」ボタンをクリックします
+      prompt_open_short: ポップアップで「開く」ボタンをクリックします
+      prompt_z2_game_install: ズードルズをインストール

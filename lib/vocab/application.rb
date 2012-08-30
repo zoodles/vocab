@@ -18,7 +18,7 @@ module Vocab
         options = OpenStruct.new
         parser = OptionParser.new
 
-        parser.banner = 'Usage: vocab [-h] command [platform] [all] [file]'
+        parser.banner = 'Usage: vocab [-h] command [platform] [type] [path]'
         parser.on( '-h', '--help', 'Show this usage message' ) { options.help = true }
         parser.separator ""
         parser.separator "    vocab init"
@@ -26,6 +26,8 @@ module Vocab
         parser.separator "    vocab extract rails all"
         parser.separator "    vocab extract android"
         parser.separator "    vocab clean rails"
+        parser.separator "    vocab convert rails xml2yml <infile>"
+        parser.separator "    vocab convert rails yml2xml <infile>"
         parser.separator "    vocab merge rails"
         parser.separator "    vocab merge android"
         parser.separator "    vocab validate android"
@@ -35,7 +37,7 @@ module Vocab
         commands = parser.parse( ARGV )
         options.command = commands[0]
         options.platform = commands[1]
-        options.all = commands[2]
+        options.type = commands[2]
         options.path = commands[3]
 
         if( options.command == 'init' )
@@ -43,9 +45,17 @@ module Vocab
         elsif( options.command == 'clean' && options.platform == 'rails' )
           Cleaner::Rails.clean
         elsif( options.command == 'clean' && options.platform == 'android' )
-          Cleaner::Android::clean
+          Cleaner::Android.clean
+        elsif( options.command == 'convert' && options.platform == 'rails' )
+          if options.type == 'xml2yml'
+            Converter::Rails.convert_xml_to_yml( options.path )
+          elsif options.type = 'yml2xml'
+            Converter::Rails.convert_yml_to_xml( options.path )
+          else
+            puts parser.help
+          end
         elsif( options.command == 'extract' && options.platform == 'rails' )
-          if options.all
+          if options.type == 'all'
             Extractor::Rails.extract_all
           else
             Extractor::Rails.extract
