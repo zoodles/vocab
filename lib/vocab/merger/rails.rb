@@ -34,12 +34,19 @@ module Vocab
           value = updates[ key ] || locales[ key ]
           if value
             locales_translator.store( key, value )
+            check_matching_interpolations( key, locales[ key ], updates[ key ] )
           else
             Vocab.ui.warn( "No translation found for key #{key} while merging #{locales_path}" )
           end
         end
 
         locales_translator.write_file( locales_path )
+      end
+
+      def check_matching_interpolations( key, old_value, new_value )
+        if old_value.to_s.scan(/%{(.+?)}/) != new_value.to_s.scan(/%{(.+?)}/)
+          Vocab.ui.warn( "New interpolations for key #{key} don't match old interpolations. \n Old value: #{old_value} New value: #{new_value}" )
+        end
       end
 
       def self.keys_for_file( path )

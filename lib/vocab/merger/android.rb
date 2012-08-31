@@ -35,12 +35,20 @@ module Vocab
           value = updates[ key ] || current[ key ]
           if value
             translation[ key ] = value
+            check_matching_format_strings( key, current[ key ], updates[ key ] )
           else
             Vocab.ui.warn( "No translation found for key #{key} while merging #{path}" )
           end
         end
 
         return translation
+      end
+
+       def check_matching_format_strings( key, old_value, new_value )
+        if ( old_value.to_s.scan(/%(.+?)\b/) != new_value.to_s.scan(/%(.+?)\b/) ) ||
+           ( old_value.to_s.scan(/\$(.+?)\b/) != new_value.to_s.scan(/\$(.+?)\b/) )
+          Vocab.ui.warn( "New format strings for key #{key} don't match old format strings. \n Old value: #{old_value} New value: #{new_value}" )
+        end
       end
 
       def string_keys

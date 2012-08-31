@@ -38,6 +38,11 @@ describe "Vocab::Merger::Android" do
       @merged['delete'].should eql( "La función Child Lock" )
     end
 
+    it 'warns about format string changes' do
+      Vocab.ui.should_receive( :warn ).with( "New format strings for key test_key don't match old format strings. \n Old value: %d$1 New value: %d$d" )
+      @merger.check_matching_format_strings( 'test_key', "%d$1", "%d$d" ) 
+    end
+
   end
 
   describe 'merge_file' do

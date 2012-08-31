@@ -145,6 +145,11 @@ describe "Vocab::Merger::Rails" do
       File.delete( english_file ) if File.exists?( english_file )
     end
 
+    it 'warns about interpolation changes' do
+      Vocab.ui.should_receive( :warn ).with( "New interpolations for key test_key don't match old interpolations. \n Old value: %{test_name} New value: %{best_name}" )
+      @merger.check_matching_interpolations( 'test_key', "%{test_name}", "%{best_name}" ) 
+    end
+
   end
 
   describe 'translation_locales' do
