@@ -1,10 +1,17 @@
 module Vocab
   module Merger
     class Android < Base
+      FORMAT_PATTERN = /%(.+?)\b/ 
+      ARG_PATTERN = /\$(.+?)\b/
 
       def initialize( locales_dir = nil, updates_dir = nil )
         @locales_dir = locales_dir || 'res'
         @updates_dir = updates_dir || 'tmp/translations'
+        @english_path = "#{@locales_dir}/values/strings.xml"
+        if File.exists?( @english_path )
+          @english_strings = english_strings
+          @english_plurals = english_plurals
+        end
       end
 
       def merge_file( path )
@@ -17,17 +24,17 @@ module Vocab
         keys = string_keys
         current = current_strings_for_locale( path )
         updates = update_strings_for_locale( path )
-        return translation_hash( keys, current, updates, path )
+        return translation_hash( keys, current, updates, path, :string_format_changed? )
       end
 
       def plurals( path )
         keys = plural_keys
         current = current_plurals_for_locale( path )
         updates = update_plurals_for_locale( path )
-        return translation_hash( keys, current, updates, path )
+        return translation_hash( keys, current, updates, path, :plural_format_changed? )
       end
 
-      def translation_hash( keys, current, updates, path )
+      def translation_hash( keys, current, updates, path, format_checker = :string_format_changed? )
         translation = {}
         keys.each do |key|
           next if Vocab::Translator::Base.ignore_key?( key )
@@ -35,7 +42,7 @@ module Vocab
           value = updates[ key ] || current[ key ]
           if value
             translation[ key ] = value
-            check_matching_format_strings( key, current[ key ], updates[ key ] )
+            check_matching_format_strings( key, value, path, format_checker )
           else
             Vocab.ui.warn( "No translation found for key #{key} while merging #{path}" )
           end
@@ -44,10 +51,31 @@ module Vocab
         return translation
       end
 
-       def check_matching_format_strings( key, old_value, new_value )
-        if ( old_value.to_s.scan(/%(.+?)\b/) != new_value.to_s.scan(/%(.+?)\b/) ) ||
-           ( old_value.to_s.scan(/\$(.+?)\b/) != new_value.to_s.scan(/\$(.+?)\b/) )
-          Vocab.ui.warn( "New format strings for key #{key} don't match old format strings. \n Old value: #{old_value} New value: #{new_value}" )
+      def english_strings
+        return Vocab::Translator::Android.hash_from_xml( @english_path )
+      end
+
+      def english_plurals
+        return Vocab::Translator::Android.plurals_from_xml( @english_path )
+      end
+      
+      def check_matching_format_strings( key, new_value, path, format_checker )
+        send( format_checker, key, new_value, path) 
+      end
+
+      def plural_format_changed?( key, new_value, path )
+        new_value.each do |inner_key,inner_value|
+          if ( @english_plurals[ key ][ inner_key ].to_s.scan( FORMAT_PATTERN ) != inner_value.to_s.scan( FORMAT_PATTERN ) ) ||
+           ( @english_plurals[ key ][ inner_key ].to_s.scan( ARG_PATTERN ) != inner_value.to_s.scan( ARG_PATTERN ) )
+            Vocab.ui.warn( "Format string mismatch for key #{key}, quantity #{inner_key} while merging #{path}. \n English: #{@english_plurals[ key ][ inner_key ]} \n Translation: #{new_value[ inner_key ]}" )
+          end
+        end
+      end
+
+      def string_format_changed?( key, new_value, path )
+        if ( @english_strings[ key ].to_s.scan( FORMAT_PATTERN ) != new_value.to_s.scan( FORMAT_PATTERN ) ) ||
+           ( @english_strings[ key ].to_s.scan( ARG_PATTERN ) != new_value.to_s.scan( ARG_PATTERN ) )
+          Vocab.ui.warn( "Format string mismatch for key #{key} while merging #{path}. \n English: #{@english_strings[ key ]} \n Translation: #{new_value}" )
         end
       end
 

@@ -1,6 +1,7 @@
 module Vocab
   module Merger
     class Rails < Base
+      INTERPOLATION_PATTERN = /%{(.+?)}/
 
       def initialize( locales_dir = nil, updates_dir = nil )
         @locales_dir = locales_dir || 'config/locales'
@@ -13,6 +14,8 @@ module Vocab
 
         # list of keys that need to be in the translated file
         keys = Vocab::Merger::Rails.keys_for_file( locales_path )
+        english = Vocab::Merger::Rails.load_english( locales_path )
+
 
         # existing translations already in the file
         locales_translator = translator( locales_path )
@@ -27,6 +30,7 @@ module Vocab
         updates_translator = translator( update_path )
         updates = updates_translator.flattened_translations
 
+
         # apply updated keys to locales hash
         keys.each do |key|
           next if Vocab::Translator::Base.ignore_key?( key )
@@ -34,7 +38,7 @@ module Vocab
           value = updates[ key ] || locales[ key ]
           if value
             locales_translator.store( key, value )
-            check_matching_interpolations( key, locales[ key ], updates[ key ] )
+            check_matching_interpolations( key, english[ key ], value, locales_path )
           else
             Vocab.ui.warn( "No translation found for key #{key} while merging #{locales_path}" )
           end
@@ -43,9 +47,9 @@ module Vocab
         locales_translator.write_file( locales_path )
       end
 
-      def check_matching_interpolations( key, old_value, new_value )
-        if old_value.to_s.scan(/%{(.+?)}/) != new_value.to_s.scan(/%{(.+?)}/)
-          Vocab.ui.warn( "New interpolations for key #{key} don't match old interpolations. \n Old value: #{old_value} New value: #{new_value}" )
+      def check_matching_interpolations( key, old_value, new_value, locales_path )
+        if old_value.to_s.scan( INTERPOLATION_PATTERN ) != new_value.to_s.scan( INTERPOLATION_PATTERN )
+          Vocab.ui.warn( "Interpolation mismatch for key #{key} while merging #{locales_path}. \n English: #{old_value} Translation: #{new_value}" )
         end
       end
 
@@ -54,6 +58,13 @@ module Vocab
         translator = Vocab::Translator::Rails.new
         translator.load_file( en_path )
         return translator.flattened_translations.keys
+      end
+
+      def self.load_english( path )
+        en_path = Vocab::Translator::Rails.en_equivalent_path( path )
+        translator = Vocab::Translator::Rails.new
+        translator.load_file( en_path )
+        return translator.flattened_translations
       end
 
       def translatable?( path )

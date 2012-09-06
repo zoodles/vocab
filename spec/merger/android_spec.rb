@@ -37,12 +37,20 @@ describe "Vocab::Merger::Android" do
       @merged['pd_app_name'].should eql( 'el Panel para padres bien' )
       @merged['delete'].should eql( "La función Child Lock" )
     end
+  end
 
-    it 'warns about format string changes' do
-      Vocab.ui.should_receive( :warn ).with( "New format strings for key test_key don't match old format strings. \n Old value: %d$1 New value: %d$d" )
-      @merger.check_matching_format_strings( 'test_key', "%d$1", "%d$d" ) 
+  describe "check_matching_format_strings" do
+    it 'warns about format string changes in singular strings' do
+      @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      Vocab.ui.should_receive( :warn ).with( "Format string mismatch for key delete while merging #{@merge_dir}/values-fr/strings.xml. \n English: Delete %1$d \n Translation: Deletee %2$d" )
+      @merger.check_matching_format_strings( 'delete', "Deletee %2$d", "#{@merge_dir}/values-fr/strings.xml", :string_format_changed? ) 
     end
 
+    it 'warns about format string changes in plurals' do
+      @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      Vocab.ui.should_receive( :warn ).with( "Format string mismatch for key user_count, quantity many while merging #{@merge_dir}/values-fr/strings.xml. \n English: %d users \n Translation: %f users" )
+      @merger.check_matching_format_strings( 'user_count', {  "one" => "1 user", "many" => "%f users" }, "#{@merge_dir}/values-fr/strings.xml", :plural_format_changed? ) 
+    end
   end
 
   describe 'merge_file' do

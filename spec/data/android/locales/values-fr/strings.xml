@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Kid Mode</string>
-    <string name="pd_app_name">Parent Dashboard</string>
+    <string name="app_name">Le Kid Mode</string>
+    <string name="pd_app_name">Le Parent Dashboard</string>
     <!-- This is a comment -->
-    <string name="app_current">current</string>
+    <string name="app_current">le current</string>
     <string name="cancel">Cancel</string>
-    <string name="delete">Delete %1$d</string>
+    <string name="delete">Deletee %2$d</string>
     <string name="not_in_es">This key not in spanish</string>
     <string name="debug_key">Should be ignored</string>
 
     <plurals name="user_count">
          <item quantity="one">1 user</item>
-         <item quantity="many">%d users</item>
+         <item quantity="many">%f users</item>
     </plurals>
 
     <plurals name="fish_count">

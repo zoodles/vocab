@@ -11,7 +11,7 @@ describe "Vocab::Extractor::Android" do
     it "extracts hash of current string translations" do
       actual = Vocab::Extractor::Android.current_strings( @locale )
       actual.should eql( { "app_name"   =>"Kid Mode",
-                           "delete"     =>"Delete",
+                           "delete"     =>"Delete %1$d",
                            "cancel"     =>"Cancel",
                            "app_current"=>"current",
                            "pd_app_name"=>"Parent Dashboard",
@@ -103,7 +103,7 @@ describe "Vocab::Extractor::Android" do
     it 'returns file names for completed translations' do
       dir = "#{vocab_root}/spec/data/android/locales"
       actual = Vocab::Extractor::Android.examples( dir )
-      actual.should =~ [ "tmp/translations/values-es" ]
+      actual.should include( "tmp/translations/values-es" )
     end
 
     it 'uses the conventional android locales directory by default' do

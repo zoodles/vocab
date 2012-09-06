@@ -30,8 +30,8 @@ describe "Vocab::Validator::Android" do
   describe 'files_to_validate' do
 
     it 'returns the locale files to validate' do
-      files = [ "#{@locales_dir}/values-es/strings.xml" ]
-      @validator.files_to_validate.should eql( files )
+      file = "#{@locales_dir}/values-es/strings.xml"
+      @validator.files_to_validate.should include( file )
     end
 
   end
