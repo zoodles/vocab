@@ -149,7 +149,7 @@ describe "Vocab::Merger::Rails" do
   describe "check_matching_interpolations" do
     it 'warns about interpolation changes' do
       @merger = Vocab::Merger::Rails.new
-      Vocab.ui.should_receive( :warn ).with( "Interpolation mismatch for key test_key while merging test.yml. \n English: %{test_name} Translation: %{best_name}" )
+      Vocab.ui.should_receive( :warn ).with( "Interpolation mismatch for key test_key in test.yml. \n English: %{test_name} Translation: %{best_name}" )
       @merger.check_matching_interpolations( 'test_key', "%{test_name}", "%{best_name}", "test.yml") 
     end
   end

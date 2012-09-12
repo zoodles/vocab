@@ -12,7 +12,7 @@ describe 'Vocab::Translator::Rails' do
     it 'loads translations from a directory of yml files' do
 
       actual = @translator.translations
-      expected = {:marketing=>{:banner=>"This product is so good"},
+      expected = {:marketing=>{:banner=>"This product is so good %{user}"},
                   :dashboard=>{:chart=>"This value has changed",
                                :details=>"This key/value has been added"},
                   :menu=>{:first=>"First menu item",
@@ -97,7 +97,7 @@ describe 'Vocab::Translator::Rails' do
       translator = Vocab::Translator::Rails.new
       translator.load_dir( "#{vocab_root}/spec/data/rails/locales" )
       actual = translator.flattened_translations
-      expected = {:"marketing.banner"=>"This product is so good",
+      expected = {:"marketing.banner"=>"This product is so good %{user}",
                   :"dashboard.chart"=>"This value has changed",
                   :"dashboard.details"=>"This key/value has been added",
                   :"menu.first"=>"First menu item",
@@ -119,7 +119,7 @@ describe 'Vocab::Translator::Rails' do
       translator.load_dir( "#{vocab_root}/spec/data/rails/locales" )
       actual = translator.flattened_translations
       expected = { :"models.product.id_125.name"       =>"Lazero",
-                   :"marketing.banner"                 =>"hola",
+                   :"marketing.banner"                 =>"hola %{user }",
                    :"models.product.id_55.name"        =>"Muy bonita",
                    :"models.product.id_125.description"=>"Verde",
                    :"models.product.id_36.name"        =>"No Lazero",

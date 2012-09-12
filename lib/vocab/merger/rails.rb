@@ -1,7 +1,7 @@
 module Vocab
   module Merger
     class Rails < Base
-      INTERPOLATION_PATTERN = /%{(.+?)}/
+      INTERPOLATION_PATTERN = /%{(.*?)}/
 
       def initialize( locales_dir = nil, updates_dir = nil )
         @locales_dir = locales_dir || 'config/locales'
@@ -15,7 +15,6 @@ module Vocab
         # list of keys that need to be in the translated file
         keys = Vocab::Merger::Rails.keys_for_file( locales_path )
         english = Vocab::Merger::Rails.load_english( locales_path )
-
 
         # existing translations already in the file
         locales_translator = translator( locales_path )
@@ -49,8 +48,28 @@ module Vocab
 
       def check_matching_interpolations( key, old_value, new_value, locales_path )
         if old_value.to_s.scan( INTERPOLATION_PATTERN ) != new_value.to_s.scan( INTERPOLATION_PATTERN )
-          Vocab.ui.warn( "Interpolation mismatch for key #{key} while merging #{locales_path}. \n English: #{old_value} Translation: #{new_value}" )
+          Vocab.ui.warn( "Interpolation mismatch for key #{key} in #{locales_path}. \n English: #{old_value} Translation: #{new_value}" )
         end
+      end
+
+      def check_all_interpolations( file )
+        # list of keys that need to be in the translated file
+        keys = Vocab::Merger::Rails.keys_for_file( file )
+        english = Vocab::Merger::Rails.load_english( file )
+
+        # existing translations already in the file
+        locales_translator = translator( file )
+        locales = locales_translator.flattened_translations
+
+        keys.each do |key|
+          next if Vocab::Translator::Base.ignore_key?( key )
+
+          value = locales[ key ]
+          if value
+            check_matching_interpolations( key, english[ key ], value, file )
+          end
+        end
+        return nil
       end
 
       def self.keys_for_file( path )

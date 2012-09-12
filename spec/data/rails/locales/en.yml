@@ -1,6 +1,6 @@
 en:
   marketing:
-    banner: This product is so good
+    banner: This product is so good %{user}
   dashboard:
     chart: This value has changed
     details: This key/value has been added

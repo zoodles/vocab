@@ -32,6 +32,7 @@ module Vocab
         parser.separator "    vocab merge android"
         parser.separator "    vocab validate android"
         parser.separator "    vocab validate rails"
+        parser.separator "    vocab interpolation rails <file>"
         parser.separator ""
 
         commands = parser.parse( ARGV )
@@ -70,6 +71,8 @@ module Vocab
           success = Validator::Android.new.validate
         elsif( options.command == 'validate' && options.platform == 'rails' )
           success = Validator::Rails.new.validate
+        elsif( options.command == 'interpolation' && options.platform == 'rails' && !options.type.nil? )
+          Vocab::Merger::Rails.new.check_all_interpolations( options.type )
         else
           puts parser.help
         end

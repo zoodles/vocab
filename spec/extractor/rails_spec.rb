@@ -91,7 +91,7 @@ describe "Vocab::Extractor::Rails" do
 
     it "creates a hash of the english translation strings currently in the config" do
       actual = Vocab::Extractor::Rails.current_strings( @locales_root )
-      expected = {:"en.marketing.banner"=>"This product is so good",
+      expected = {:"en.marketing.banner"=>"This product is so good %{user}",
                   :"en.dashboard.chart"=>"This value has changed",
                   :"en.dashboard.details"=>"This key/value has been added",
                   :"en.menu.first"=>"First menu item",
