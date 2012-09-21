@@ -8,7 +8,7 @@ module Vocab
         @updates_dir = updates_dir || 'tmp/translations'
       end
 
-      def merge_file( locales_path )
+      def merge_file( locales_path, strict = false )
         return unless translatable?( locales_path )
         create_if_missing( locales_path )
 
@@ -37,7 +37,7 @@ module Vocab
           value = updates[ key ] || locales[ key ]
           if value
             locales_translator.store( key, value )
-            check_matching_interpolations( key, english[ key ], value, locales_path )
+            check_matching_interpolations( key, english[ key ], value, locales_path, strict )
           else
             Vocab.ui.warn( "No translation found for key #{key} while merging #{locales_path}" )
           end
@@ -46,13 +46,20 @@ module Vocab
         locales_translator.write_file( locales_path )
       end
 
-      def check_matching_interpolations( key, old_value, new_value, locales_path )
-        if old_value.to_s.scan( INTERPOLATION_PATTERN ) != new_value.to_s.scan( INTERPOLATION_PATTERN )
+      def check_matching_interpolations( key, old_value, new_value, locales_path, strict = false )
+        old_interpolations = old_value.to_s.scan( INTERPOLATION_PATTERN )
+        new_interpolations = new_value.to_s.scan( INTERPOLATION_PATTERN )
+        unless strict
+          old_interpolations.sort!
+          new_interpolations.sort!
+        end
+
+        if old_interpolations != new_interpolations
           Vocab.ui.warn( "Interpolation mismatch for key #{key} in #{locales_path}. \n English: #{old_value} Translation: #{new_value}" )
         end
       end
 
-      def check_all_interpolations( file )
+      def check_all_interpolations( file, strict = false )
         # list of keys that need to be in the translated file
         keys = Vocab::Merger::Rails.keys_for_file( file )
         english = Vocab::Merger::Rails.load_english( file )
@@ -66,7 +73,7 @@ module Vocab
 
           value = locales[ key ]
           if value
-            check_matching_interpolations( key, english[ key ], value, file )
+            check_matching_interpolations( key, english[ key ], value, file, strict )
           end
         end
         return nil

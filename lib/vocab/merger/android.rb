@@ -14,7 +14,7 @@ module Vocab
         end
       end
 
-      def merge_file( path )
+      def merge_file( path, strict = true )
         strings = strings( path )
         plurals = plurals( path )
         Vocab::Translator::Android.write( strings, plurals, path )
@@ -61,6 +61,11 @@ module Vocab
       
       def check_matching_format_strings( key, new_value, path, format_checker )
         send( format_checker, key, new_value, path) 
+      end
+
+      def check_all_format_strings( file )
+        strings( file )
+        plurals( file )
       end
 
       def plural_format_changed?( key, new_value, path )

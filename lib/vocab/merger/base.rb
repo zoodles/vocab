@@ -4,10 +4,10 @@ module Vocab
 
       attr_accessor :locales_dir, :updates_dir
 
-      def merge
+      def merge( strict = false )
         files_to_merge.each do |file|
           Vocab.ui.say( "Merging file: #{file}" )
-          merge_file( file )
+          merge_file( file, strict )
         end
       end
     end

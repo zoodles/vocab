@@ -12,7 +12,7 @@ describe "Vocab::Extractor::Base" do
       files = [ 'es.yml', 'zh.yml' ]
       @merger.should_receive( :files_to_merge ).and_return( files )
       files.each do |file|
-        @merger.should_receive( :merge_file ).with( file )
+        @merger.should_receive( :merge_file ).with( file, false )
         Vocab.ui.should_receive( :say ).with( "Merging file: #{file}" )
       end
       @merger.merge
