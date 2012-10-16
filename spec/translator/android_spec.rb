@@ -6,7 +6,7 @@ describe 'Vocab::Translator::Android' do
 
     it 'returns the english keys for a locales dir' do
       locales_dir = "#{vocab_root}/spec/data/android/locales"
-      expected = ["app_name", "delete", "cancel", "app_current", "not_in_es", "pd_app_name"]
+      expected = ["app_name", "delete", "cancel", "app_current", "not_in_es", "pd_app_name", "free", "guarantee", "price"]
       Vocab::Translator::Android.string_keys( locales_dir ).should =~ expected
     end
 

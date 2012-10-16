@@ -8,6 +8,10 @@
     <string name="delete">Delete %1$d</string>
     <string name="not_in_es">This key not in spanish</string>
     <string name="debug_key">Should be ignored</string>
+    <string name="price">All this for only $3.50 a month!</string>
+    <string name="free">%s\'s free weekly app!</string>
+    <string name="guarantee">100% money back guarantee!</string>
+
 
     <plurals name="user_count">
          <item quantity="one">1 user</item>

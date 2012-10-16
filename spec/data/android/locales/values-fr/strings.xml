@@ -8,6 +8,9 @@
     <string name="delete">Deletee %2$d</string>
     <string name="not_in_es">This key not in spanish</string>
     <string name="debug_key">Should be ignored</string>
+    <string name="price">Alles zu einem Preis von 3,50 USD pro Monat.</string>
+    <string name="free">%s의 주간 무료 앱!</string>
+    <string name="guarantee">Rimborso garantito al 100%!</string>
 
     <plurals name="user_count">
          <item quantity="one">1 user</item>

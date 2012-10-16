@@ -1,8 +1,8 @@
 module Vocab
   module Merger
     class Android < Base
-      FORMAT_PATTERN = /%(.+?)\b/ 
-      ARG_PATTERN = /\$(.+?)\b/
+      FORMAT_PATTERN = /%\w/ 
+      ARG_PATTERN = /\$[a-zA-Z]/
 
       def initialize( locales_dir = nil, updates_dir = nil )
         @locales_dir = locales_dir || 'res'
@@ -72,7 +72,7 @@ module Vocab
         new_value.each do |inner_key,inner_value|
           if ( @english_plurals[ key ][ inner_key ].to_s.scan( FORMAT_PATTERN ) != inner_value.to_s.scan( FORMAT_PATTERN ) ) ||
            ( @english_plurals[ key ][ inner_key ].to_s.scan( ARG_PATTERN ) != inner_value.to_s.scan( ARG_PATTERN ) )
-            Vocab.ui.warn( "Format string mismatch for key #{key}, quantity #{inner_key} while merging #{path}. \n English: #{@english_plurals[ key ][ inner_key ]} \n Translation: #{new_value[ inner_key ]}" )
+            Vocab.ui.warn( "Format string mismatch for key #{key}, quantity #{inner_key} while merging #{path}. \n English: #{@english_plurals[ key ][ inner_key ]} \n Translation: #{new_value[ inner_key ]}\n\n" )
           end
         end
       end
@@ -80,7 +80,7 @@ module Vocab
       def string_format_changed?( key, new_value, path )
         if ( @english_strings[ key ].to_s.scan( FORMAT_PATTERN ) != new_value.to_s.scan( FORMAT_PATTERN ) ) ||
            ( @english_strings[ key ].to_s.scan( ARG_PATTERN ) != new_value.to_s.scan( ARG_PATTERN ) )
-          Vocab.ui.warn( "Format string mismatch for key #{key} while merging #{path}. \n English: #{@english_strings[ key ]} \n Translation: #{new_value}" )
+          Vocab.ui.warn( "Format string mismatch for key #{key} while merging #{path}. \n English: #{@english_strings[ key ]} \n Translation: #{new_value}\n\n" )
         end
       end
 

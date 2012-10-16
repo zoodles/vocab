@@ -15,7 +15,7 @@ describe "Vocab::Validator::Android" do
 
     it 'returns a hash containing the missing keys' do
       result = @validator.validate_file( @path )
-      result[ :missing ].should eql( [ "cancel", "delete", "not_in_es" ] )
+      result[ :missing ].should eql( [ "cancel", "delete", "free", "guarantee", "not_in_es", "price" ] )
     end
 
     it 'returns a hash containing the extra keys' do

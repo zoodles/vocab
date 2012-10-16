@@ -10,7 +10,7 @@ describe "Vocab::Extractor::Android" do
 
     it "extracts hash of current string translations" do
       actual = Vocab::Extractor::Android.current_strings( @locale )
-      actual.should eql( { "app_name"   =>"Kid Mode",
+      actual.should include( { "app_name"   =>"Kid Mode",
                            "delete"     =>"Delete %1$d",
                            "cancel"     =>"Cancel",
                            "app_current"=>"current",

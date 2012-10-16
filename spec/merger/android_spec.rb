@@ -42,14 +42,33 @@ describe "Vocab::Merger::Android" do
   describe "check_matching_format_strings" do
     it 'warns about format string changes in singular strings' do
       @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
-      Vocab.ui.should_receive( :warn ).with( "Format string mismatch for key delete while merging #{@merge_dir}/values-fr/strings.xml. \n English: Delete %1$d \n Translation: Deletee %2$d" )
+      Vocab.ui.should_receive( :warn ).with( "Format string mismatch for key delete while merging #{@merge_dir}/values-fr/strings.xml. \n English: Delete %1$d \n Translation: Deletee %2$d\n\n" )
       @merger.check_matching_format_strings( 'delete', "Deletee %2$d", "#{@merge_dir}/values-fr/strings.xml", :string_format_changed? ) 
     end
 
     it 'warns about format string changes in plurals' do
       @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
-      Vocab.ui.should_receive( :warn ).with( "Format string mismatch for key user_count, quantity many while merging #{@merge_dir}/values-fr/strings.xml. \n English: %d users \n Translation: %f users" )
+      Vocab.ui.should_receive( :warn ).with( "Format string mismatch for key user_count, quantity many while merging #{@merge_dir}/values-fr/strings.xml. \n English: %d users \n Translation: %f users\n\n" )
       @merger.check_matching_format_strings( 'user_count', {  "one" => "1 user", "many" => "%f users" }, "#{@merge_dir}/values-fr/strings.xml", :plural_format_changed? ) 
+    end
+
+
+    it 'does not warn about $ in currency' do
+      @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      Vocab.ui.should_not_receive( :warn )
+      @merger.check_matching_format_strings( 'price', "Alles zu einem Preis von 3,50 USD pro Monat.", "#{@merge_dir}/values-fr/strings.xml", :string_format_changed? ) 
+    end
+
+    it 'does not warn about % as actual percent sign' do
+      @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      Vocab.ui.should_not_receive( :warn )
+      @merger.check_matching_format_strings( 'guarantee', "Rimborso garantito al 100%!", "#{@merge_dir}/values-fr/strings.xml", :string_format_changed? ) 
+    end
+
+    it 'only checks for one character after %' do
+      @merger = Vocab::Merger::Android.new( @merge_dir, @update_dir )
+      Vocab.ui.should_not_receive( :warn )
+      @merger.check_matching_format_strings( 'free', "%s의 주간 무료 앱!", "#{@merge_dir}/values-fr/strings.xml", :string_format_changed? ) 
     end
   end
 
@@ -114,7 +133,7 @@ describe "Vocab::Merger::Android" do
 
     it 'fetches the english keys' do
       merger = Vocab::Merger::Android.new( @merge_dir )
-      keys = ["app_name", "delete", "cancel", "app_current", "not_in_es", "pd_app_name"]
+      keys = ["app_name", "delete", "cancel", "app_current", "not_in_es", "pd_app_name", "free", "guarantee", "price" ]
       merger.string_keys.should =~ keys
     end
 
