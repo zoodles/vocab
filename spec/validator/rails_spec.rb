@@ -11,7 +11,7 @@ describe "Vocab::Validator::Rails" do
 
     it "complains about yml files with leading BOM characters" do
       File.open( "#{@locales_dir}/bom.yml", "w+" ) { |f| f.write( "\xEF\xBB\xBF".force_encoding("UTF-8") ) }
-      File.open( "#{@locales_dir}/bom.yml", "a" ) { |f| f.write( "bom:" ) }
+      File.open( "#{@locales_dir}/bom.yml", "a" ) { |f| f.write( "bom:\n  test: \"bogus\"" ) }
 
       bom_regex = "\xEF\xBB\xBF".force_encoding("UTF-8")
       File.open( "#{@locales_dir}/bom.yml" ) { |f| f.read }.force_encoding( "UTF-8" ).match( bom_regex ).should be_true
